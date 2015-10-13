@@ -1,4 +1,4 @@
-package sk.upjs.ics;
+package sk.upjs.ics.swib.tests;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
