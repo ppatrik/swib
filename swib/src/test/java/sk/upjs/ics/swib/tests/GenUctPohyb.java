@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 
@@ -20,6 +21,22 @@ public class GenUctPohyb {
 	private Set<Integer> cislaUctov;
 	private Random random;
 	private long pohybId = 1;
+
+        public static void main(String[] args) {
+            // ukazka vygenerovania klientov s uctami a pohybmi a vypisanie informacie o nahodnom z nich
+        GenUctPohyb gup = new GenUctPohyb();
+        List<UctyKlienta> ucty = gup.genUctyKlienta();
+        int random =(int) (Math.random()*ucty.size());
+        Klient klient = ucty.get(random).getKlient();
+        System.out.println(klient.getMeno() + " "+ klient.getPriezvisko());
+            for (Entry<Ucet, Set<Pohyb>> entrySet : ucty.get(random).getUcetAPohyby().entrySet()) {
+                Ucet key = entrySet.getKey();
+                Set<Pohyb> value = entrySet.getValue();
+                for(Pohyb pohyb: value){
+                    System.out.println(pohyb.getSuma() + " "+ pohyb.getDatum().getTime());            
+                }
+            }
+    }
 
 	public List<UctyKlienta> genUctyKlienta() {
 		menaUctov = new HashSet<Long>();
@@ -104,8 +121,8 @@ public class GenUctPohyb {
 	}
 
 	public static class UctyKlienta {
-		Klient klient;
-		Map<Ucet, Set<Pohyb>> ucetAPohyby;
+		private Klient klient;
+		private Map<Ucet, Set<Pohyb>> ucetAPohyby;
 
 		public Klient getKlient() {
 			return klient;
