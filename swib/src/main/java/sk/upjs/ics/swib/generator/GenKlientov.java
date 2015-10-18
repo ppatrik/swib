@@ -1,4 +1,4 @@
-package sk.upjs.ics.swib.tests;
+package sk.upjs.ics.swib.generator;
 
 import java.io.BufferedReader;
 import java.io.File;
