@@ -1,13 +1,13 @@
 # Production env
-- host: db4free.net
+- host: 46.229.230.241
 - port: 3306
-- db: swib
-- name: swib
+- db: hq007700db
+- name: hq007700
 - pass: NaseTimoveHeslo2015
 
 # Test env
-- host: db4free.net
+- host: 46.229.230.241
 - port: 3306
-- db: swib_test
-- name: swib_test
+- db: hq007701db
+- name: hq007700
 - pass: NaseTimoveHeslo2015
