@@ -3,34 +3,34 @@ package sk.upjs.ics.swib.entity;
 import java.math.BigDecimal;
 
 public class Ucet {
-    private long id;
-    private long klientId;
-    private long name;
+    private int id;
+    private int klientId;
+    private int name; //Nazov (db)
     private BigDecimal zostatok;
     private String cisloUctu;
     private boolean spor;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getKlientId() {
+    public int getKlientId() {
         return klientId;
     }
 
-    public void setKlientId(long klientId) {
+    public void setKlientId(int klientId) {
         this.klientId = klientId;
     }
 
-    public long getName() {
+    public int getName() {
         return name;
     }
 
-    public void setName(long name) {
+    public void setName(int name) {
         this.name = name;
     }
 
