@@ -3,27 +3,27 @@ package sk.upjs.ics.swib.entity;
 import java.math.BigDecimal;
 
 public class Bonus {
-    private int id;
-    private int uverId;
+    private long id;
+    private long uverId;
     private String nazov;
     private BigDecimal jeVacsiAko;
     private BigDecimal kolkoJeBonus;
-    private int multiplikatorId;
-    private int porovnavacId;
+    private long multiplikatorId;
+    private long porovnavacId;
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public int getUverId() {
+    public long getUverId() {
         return uverId;
     }
 
-    public void setUverId(int uverId) {
+    public void setUverId(long uverId) {
         this.uverId = uverId;
     }
 
@@ -51,19 +51,19 @@ public class Bonus {
         this.kolkoJeBonus = kolkoJeBonus;
     }
 
-    public int getMultiplikatorId() {
+    public long getMultiplikatorId() {
         return multiplikatorId;
     }
 
-    public void setMultiplikatorId(int multiplikatorId) {
+    public void setMultiplikatorId(long multiplikatorId) {
         this.multiplikatorId = multiplikatorId;
     }
 
-    public int getPorovnavacId() {
+    public long getPorovnavacId() {
         return porovnavacId;
     }
 
-    public void setPorovnavacId(int porovnavacId) {
+    public void setPorovnavacId(long porovnavacId) {
         this.porovnavacId = porovnavacId;
     }
 }
