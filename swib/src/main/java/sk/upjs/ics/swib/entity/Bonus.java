@@ -10,6 +10,15 @@ public class Bonus {
     private BigDecimal kolkoJeBonus;
     private int multiplikatorId;
     private int porovnavacId;
+    private int orderNumber;
+
+    public int getOrderNumber() {
+        return orderNumber;
+    }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
+    }
 
     public int getId() {
         return id;
