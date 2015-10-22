@@ -3,20 +3,20 @@ package sk.upjs.ics.swib.entity;
 import java.util.Calendar;
 
 public class Klient {
-    private long id;
+    private int id;
     private String meno;
     private String priezvisko;
-    private long adresaId;
-    private long cisloKarty;
-    private Calendar datumNarodenia;
-    private String rodneCislo;
-    private String cisloPreukazu;
+    //private long adresaId;
+    private int cisloKarty; //C_karty (db)
+    private Calendar datumNarodenia; //Dat_nar (db)
+    private String rodneCislo; //Rodne_cislo (db)
+    private String cisloPreukazu; //C_preukazu (db)
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -35,7 +35,7 @@ public class Klient {
     public void setPriezvisko(String priezvisko) {
         this.priezvisko = priezvisko;
     }
-
+    /*
     public long getAdresaId() {
         return adresaId;
     }
@@ -43,12 +43,12 @@ public class Klient {
     public void setAdresaId(long adresaId) {
         this.adresaId = adresaId;
     }
-
-    public long getCisloKarty() {
+    */
+    public int getCisloKarty() {
         return cisloKarty;
     }
 
-    public void setCisloKarty(long cisloKarty) {
+    public void setCisloKarty(int cisloKarty) {
         this.cisloKarty = cisloKarty;
     }
 

@@ -4,26 +4,26 @@ import java.math.BigDecimal;
 import java.util.Calendar;
 
 public class Pohyb {
-    private long id;
-    private long ucetId;
+    private int id;
+    private int ucetId;
     private String kamIBAN;
     private BigDecimal suma;
     private Calendar datum;
     private boolean spracovane;
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public long getUcetId() {
+    public int getUcetId() {
         return ucetId;
     }
 
-    public void setUcetId(long ucetId) {
+    public void setUcetId(int ucetId) {
         this.ucetId = ucetId;
     }
 
