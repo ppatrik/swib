@@ -31,30 +31,26 @@ public class GenKlientov {
 
 	public List<Klient> generujKlientov() {
 		List<Klient> klienti = new ArrayList<Klient>();
-		for (int i = 0; i < muzskeMena.size(); i++) {
-			int random = (int) (Math.random() * priezviska.size());
+		for (int i = 0; i < priezviska.size(); i++) {
 			DatNarARodCislo datNarARodCislo = generujDatNarARodCislo(true);
 			Klient klient = new Klient();
 			klient.setId(i + 1);
 			klient.setMeno(muzskeMena.get(i));
-			klient.setPriezvisko(priezviska.get(random));
+			klient.setPriezvisko(priezviska.get(i));
 			klient.setDatumNarodenia(datNarARodCislo.getDatumNarodenia());
 			klient.setRodneCislo(datNarARodCislo.getRodneCislo());
 			klient.setCisloPreukazu(generujCisloPreukazu());
-			// TODO priradenie adresy
 			klienti.add(klient);
 		}
-		for (int i = 0; i < zenskeMena.size(); i++) {
-			int random = (int) (Math.random() * priezviska.size());
+		for (int i = 0; i < priezviska.size(); i++) {
 			DatNarARodCislo datNarARodCislo = generujDatNarARodCislo(false);
 			Klient klient = new Klient();
 			klient.setId(i + 1 + muzskeMena.size());
 			klient.setMeno(zenskeMena.get(i));
-			klient.setPriezvisko(priezviska.get(random) + "ova");
+			klient.setPriezvisko(priezviska.get(i) + "ova");
 			klient.setDatumNarodenia(datNarARodCislo.getDatumNarodenia());
 			klient.setRodneCislo(datNarARodCislo.getRodneCislo());
 			klient.setCisloPreukazu(generujCisloPreukazu());
-			// TODO priradenie adresy
 			klienti.add(klient);
 		}
 

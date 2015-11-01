@@ -1,34 +1,31 @@
-
 package sk.upjs.ics.swib.dao;
 
-import java.math.BigDecimal;
 import java.util.List;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-iimport sk.upjs.ics.swib.entity.Ucet;
-
+import sk.upjs.ics.swib.entity.Ucet;
+import sk.upjs.ics.swib.mappers.UcetRowMapper;
 
 public class DatabazovyUcetDao implements UcetDao {
 
     private JdbcTemplate jdbcTemplate;
-    private BeanPropertyRowMapper<Ucet> mapovac
-            = new BeanPropertyRowMapper<>(Ucet.class);
+    private UcetRowMapper mapovac;
 
     public DatabazovyUcetDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.mapovac = new UcetRowMapper();
 
     }
 
     @Override
-    public List<Ucet> dajVsetkych() {
+    public List<Ucet> dajVsetky() {
         String sql = "SELECT * FROM Ucet";
         return jdbcTemplate.query(sql, mapovac);
     }
 
     @Override
     public void pridaj(Ucet ucet) {
-        String sql = "INSERT INTO Ucet VALUES (? ,?, ?, ?, ?)";
-        jdbcTemplate.update(sql, null, ucet.getKlientId(), ucet.getName(), ucet.getZostatok(),ucet.getCisloUctu());
+        String sql = "INSERT INTO Ucet VALUES (? ,?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, null , ucet.getKlientId(), ucet.getName(), ucet.getZostatok(), ucet.getCisloUctu(), ucet.isSpor() ? 1 : 0);
     }
 
     @Override
@@ -39,9 +36,8 @@ public class DatabazovyUcetDao implements UcetDao {
 
     @Override
     public void uprav(Ucet ucet) {
-        String sql = "UPDATE Ucet SET KlientID = ?, Nazov = ?, Zostatok = ?, C_uctu = ?, Spor = ?,WHERE ID = ?";
-        jdbcTemplate.update(sql,ucet.getKlientId(), ucet.getName(), ucet.getZostatok(),ucet.getCisloUctu(), ucet.getId() );
+        String sql = "UPDATE Ucet SET KlientID = ?, Nazov = ?, Zostatok = ?, C_uctu = ?, Spor = ? WHERE ID = ?";
+        jdbcTemplate.update(sql, ucet.getKlientId(), ucet.getName(), ucet.getZostatok(), ucet.getCisloUctu(), ucet.isSpor() ? 1 : 0, ucet.getId());
     }
-
 
 }
