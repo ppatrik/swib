@@ -1,4 +1,4 @@
-SELECT ID, UveryId, Nazov, Vacsi_ako, Vyska_bonusu, MultiplikatorID, CoPorovnavamID FROM Bonusy;
+SELECT ID, UveryId, Nazov, Vacsi_ako, Vyska_bonusu, Poradie_bonusu, MultiplikatorID, CoPorovnavamID FROM Bonusy;
 SELECT id, Nazov FROM CoPorovnavam;
 SELECT ID, Meno, Priezvisko, C_Karty, Dat_nar, Rodne_cislo, C_preukazu FROM Klient;
 SELECT id, Nazov FROM Multiplikator;
