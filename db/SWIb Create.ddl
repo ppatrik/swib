@@ -1,4 +1,4 @@
-CREATE TABLE Bonusy (ID int(10) NOT NULL AUTO_INCREMENT, UveryId int(10) NOT NULL, Nazov varchar(20) NOT NULL, Vacsi_ako decimal(19, 4) NOT NULL, Vyska_bonusu decimal(19, 4) NOT NULL, MultiplikatorID int(10) NOT NULL, CoPorovnavamID int(10) NOT NULL, PRIMARY KEY (ID));
+CREATE TABLE Bonusy (ID int(10) NOT NULL AUTO_INCREMENT, UveryId int(10) NOT NULL, Nazov varchar(20) NOT NULL, Vacsi_ako decimal(19, 4) NOT NULL, Vyska_bonusu decimal(19, 4) NOT NULL, Poradie_bonusu int(10) NOT NULL, MultiplikatorID int(10) NOT NULL, CoPorovnavamID int(10) NOT NULL, PRIMARY KEY (ID));
 CREATE TABLE CoPorovnavam (id int(10) NOT NULL AUTO_INCREMENT, Nazov varchar(10) NOT NULL, PRIMARY KEY (id));
 CREATE TABLE Klient (ID int(10) NOT NULL AUTO_INCREMENT, Meno varchar(35) NOT NULL UNIQUE, Priezvisko varchar(35) NOT NULL UNIQUE, C_Karty int(10) NOT NULL, Dat_nar date NOT NULL, Rodne_cislo varchar(10) NOT NULL UNIQUE, C_preukazu varchar(10) NOT NULL UNIQUE, PRIMARY KEY (ID));
 CREATE TABLE Multiplikator (id int(10) NOT NULL AUTO_INCREMENT, Nazov varchar(10) NOT NULL, PRIMARY KEY (id));

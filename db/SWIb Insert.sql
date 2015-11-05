@@ -1,4 +1,4 @@
-INSERT INTO Bonusy(ID, UveryId, Nazov, Vacsi_ako, Vyska_bonusu, MultiplikatorID, CoPorovnavamID) VALUES (?, ?, ?, ?, ?, ?, ?);
+INSERT INTO Bonusy(ID, UveryId, Nazov, Vacsi_ako, Vyska_bonusu, Poradie_bonusu, MultiplikatorID, CoPorovnavamID) VALUES (?, ?, ?, ?, ?, ?, ?, ?);
 INSERT INTO CoPorovnavam(id, Nazov) VALUES (?, ?);
 INSERT INTO Klient(ID, Meno, Priezvisko, C_Karty, Dat_nar, Rodne_cislo, C_preukazu) VALUES (?, ?, ?, ?, ?, ?, ?);
 INSERT INTO Multiplikator(id, Nazov) VALUES (?, ?);
