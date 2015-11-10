@@ -1,4 +1,4 @@
 Slovák, Kučera, Šimek, Bednár, Tóth, Kráľ, Kubík, Vaško, Zachar, Bartko, Chovan, Vozár, Michalec, Kelemen, Bezák, Majerník,	Mihalík,
 Jurkovič, Kardoš,	Šesták, Bartek,	Štrba, Kostka, Kocka, Uličný, Vaňo, Németh, Zaťko, Richter, Varga, Sabol, Lacko
-Bielik, Belko, Poliak, Polák, Pollák, Novák, Nováková	Sabo, Szabo, Bučko, Prokop, Filip, Krištof, Gálik, Gajdošík
+Bielik, Belko, Poliak, Polák, Pollák, Novák, Sabo, Szabo, Bučko, Prokop, Filip, Krištof, Gálik, Gajdošík
 Petrík, Jančo, Kiss, Kišš, Majer, Sokol,Košík, Líška, Liška, Bugár, Franko, Kubica, Rác, Rácz, Daniel, Gál, Chudý, Gábor,	Krajči,	Lukáč, Unix, Linux

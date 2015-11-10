@@ -25,7 +25,7 @@ public class DatabazovyPohybDaoTest {
     private JdbcTemplate jdbcTemplate;
     private DatabazovyPohybDao databazovyPohybDao;
 
-    private static final int POCET_POHYBOV = 12512;
+    private static final int POCET_POHYBOV = 71736;
 
     public DatabazovyPohybDaoTest() {
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();

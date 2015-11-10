@@ -4,6 +4,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.FixMethodOrder;
+import org.junit.runners.MethodSorters;
 import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
 import sk.upjs.ics.swib.entity.Klient;
@@ -13,6 +15,9 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  *
  * @author kubedo8
  */
+// anotacia zabezpeci, ze testy budu bezat v poradi podla abecedy
+// POZOR treba mat junit-4.11 a vyssie
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DatabazovyKlientDaoTest {
 
     /*
@@ -22,16 +27,12 @@ public class DatabazovyKlientDaoTest {
      Pocet pre pocet klientov sa moze zmenit, teda treba pred testovanim overit,
      kolko ich v dazabaze naozaj je (napr cez squirell)
     
-     Scenar:
-     najprv spustit pridajTest
-     potom upravTest
-     a nakoniecc odstranTest
      */
     private JdbcTemplate jdbcTemplate;
 
     private DatabazovyKlientDao databazovyKlientDao;
 
-    private static final int POCET_KLIENTOV = 136;
+    private static final int POCET_KLIENTOV = 392;
 
     public DatabazovyKlientDaoTest() {
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
@@ -39,13 +40,14 @@ public class DatabazovyKlientDaoTest {
     }
 
     @Test
-    public void dajVsetkychTest() {
+    public void testAdajVsetkych() {
         List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
         assertEquals(POCET_KLIENTOV, zoznamKlientov.size());
     }
 
     @Test
-    public void pridajTest() {
+    public void testBpridaj() {
+        List<Klient> zoznamKlientovPov = databazovyKlientDao.dajVsetkych();
         Klient klient = new Klient();
         klient.setMeno("skuska");
         klient.setPriezvisko("skuska");
@@ -56,18 +58,20 @@ public class DatabazovyKlientDaoTest {
 
         databazovyKlientDao.pridaj(klient);
         List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
-        assertEquals(POCET_KLIENTOV + 1, zoznamKlientov.size());
+        assertEquals(zoznamKlientovPov.size() + 1, zoznamKlientov.size());
     }
 
     @Test
-    public void upravTest() {
+    public void testCuprav() {
         List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
-
+        if (zoznamKlientov.isEmpty()) {
+            return;
+        }
         Klient klient = zoznamKlientov.get(zoznamKlientov.size() - 1);
-        klient.setRodneCislo("1111111111");
-        klient.setMeno("skuskaa");
-        klient.setPriezvisko("skuskaa");
-        klient.setCisloPreukazu("yyyyyyyyyy");
+        klient.setRodneCislo("2222222222");
+        klient.setMeno("skuskaaa");
+        klient.setPriezvisko("skuskaaa");
+        klient.setCisloPreukazu("zzzzzzzzzz");
         GregorianCalendar cal = new GregorianCalendar(1993, 12, 24);
         klient.setDatumNarodenia(cal);
 
@@ -75,22 +79,25 @@ public class DatabazovyKlientDaoTest {
         zoznamKlientov = databazovyKlientDao.dajVsetkych();
         klient = zoznamKlientov.get(zoznamKlientov.size() - 1);
 
-        assertEquals("1111111111", klient.getRodneCislo());
-        assertEquals("skuskaa", klient.getMeno());
-        assertEquals("skuskaa", klient.getPriezvisko());
-        assertEquals("yyyyyyyyyy", klient.getCisloPreukazu());
+        assertEquals("2222222222", klient.getRodneCislo());
+        assertEquals("skuskaaa", klient.getMeno());
+        assertEquals("skuskaaa", klient.getPriezvisko());
+        assertEquals("zzzzzzzzzz", klient.getCisloPreukazu());
         assertEquals(cal, klient.getDatumNarodenia());
     }
 
     @Test
-    public void odstranTest() {
-        List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
-        Klient klient = zoznamKlientov.get(zoznamKlientov.size() - 1);
+    public void testDodstran() {
+        List<Klient> zoznamKlientovPov = databazovyKlientDao.dajVsetkych();
+        if (zoznamKlientovPov.isEmpty()) {
+            return;
+        }
+        Klient klient = zoznamKlientovPov.get(zoznamKlientovPov.size() - 1);
 
         databazovyKlientDao.odstran(klient);
 
-        zoznamKlientov = databazovyKlientDao.dajVsetkych();
-        assertEquals(POCET_KLIENTOV, zoznamKlientov.size());
+        List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
+        assertEquals(zoznamKlientovPov.size() - 1, zoznamKlientov.size());
 
     }
 }

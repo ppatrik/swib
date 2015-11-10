@@ -1,12 +1,12 @@
-Drahoslav, Severín, Alexej, Ernest, Rastislav, Radovan, Dobroslav, Dalibor, Vincent, Miloš, Timotej, Gejza, Bohuš, Alfonz, Gašpar, Emil
-Erik, Blaej, Zdenko, Dezider, Arpád, Valentín, Pravoslav, Jaromír, Roman, Matej, Frederik, Viktor, Alexander, Radomí
-Albín, Bohumil, Kazimír, Fridrich, Radoslav, Tomáš, Alan, Branislav, Bruno, Gregor, Vlastimil, Boleslav, Eduard, Jozef, Víazoslav, Blahoslav, Beòadik, Adrián, Gabriel, Marián, Emanuel, Miroslav, Benjamín
-Hugo, Richard, Izidor, Zoltán, Albert, Igor, Július, Aleš, Fedor, Rudolf, Valér, Marcel, Ervín, Slavomír, Vojtech, Juraj, Marek, Jaroslav
-igmund, Florián, Roland, Pankrác, Servác, Bonifác, Svetozár, Bernard, Júlia, Urban, Dušan, Viliam, Ferdinand
-Norbert, Róbert, Medard, Zlatko, Anton, Vasil, Vít, Adolf, Vratislav, Alfréd, Alojz, Ján, Tadeáš, Ladislav, Peter, Pavol
-Miloslav, Prokop, Cyril, Metod, Patrik, Oliver, Ivan, Kamil, Henrich, Drahomír, Bohuslav, I¾ja, Daniel, Vladimír, Jakub, Krištof, Ignác
-Gustáv, Jerguš, Dominik, Oskar, Vavrinec, ¼ubomír, Mojmír, Leonard, Tichomír, Filip, Bartolomej, ¼udovít, Samuel, Augustín
-Belo, Oleg, Bystrík, Ctibor, ¼udomil, Konštantín, ¼uboslav, Matúš, Móric, ¼uboš, ¼ubor, Vladislav, Cyprián, Václav, Michal, Jarolím
-Arnold, Levoslav, František, Dionız, Maximilián, Koloman, Boris, Lukáš, Kristián, Vendelín, Sergej, Aurel, Demeter
-Denis, Hubert, Karol, Imrich, René, Bohumír, Teodor, Tibor, Maroš, Martin, Svätopluk, Stanislav, Leopold, Eugen, Félix, Klement, Kornel, Milan, Vratko, Ondrej, Andrej
-Edmund, Oldrich, Oto, Mikuláš, Ambróz, Radúz, Bohdan, Adam, Štefan, Dávid, Silvester
+Drahoslav, SeverÃ­n, Alexej, Ernest, Rastislav, Radovan, Dobroslav, Dalibor, Vincent, MiloÅ¡, Timotej, Gejza, BohuÅ¡, Alfonz, GaÅ¡par, Emil
+Erik, BlaÅ¾ej, Zdenko, Dezider, ArpÃ¡d, ValentÃ­n, Pravoslav, JaromÃ­r, Roman, Matej, Frederik, Viktor, Alexander, RadomÃ­
+AlbÃ­n, Bohumil, KazimÃ­r, Fridrich, Radoslav, TomÃ¡Å¡, Alan, Branislav, Bruno, Gregor, Vlastimil, Boleslav, Eduard, Jozef, VÃ­Å¥azoslav, Blahoslav, BeÅˆadik, AdriÃ¡n, Gabriel, MariÃ¡n, Emanuel, Miroslav, BenjamÃ­n
+Hugo, Richard, Izidor, ZoltÃ¡n, Albert, Igor, JÃºlius, AleÅ¡, Fedor, Rudolf, ValÃ©r, Marcel, ErvÃ­n, SlavomÃ­r, Vojtech, Juraj, Marek, Jaroslav
+Å½igmund, FloriÃ¡n, Roland, PankrÃ¡c, ServÃ¡c, BonifÃ¡c, SvetozÃ¡r, Bernard, JÃºlia, Urban, DuÅ¡an, Viliam, Ferdinand
+Norbert, RÃ³bert, Medard, Zlatko, Anton, Vasil, VÃ­t, Adolf, Vratislav, AlfrÃ©d, Alojz, JÃ¡n, TadeÃ¡Å¡, Ladislav, Peter, Pavol
+Miloslav, Prokop, Cyril, Metod, Patrik, Oliver, Ivan, Kamil, Henrich, DrahomÃ­r, Bohuslav, IÄ¾ja, Daniel, VladimÃ­r, Jakub, KriÅ¡tof, IgnÃ¡c
+GustÃ¡v, JerguÅ¡, Dominik, Oskar, Vavrinec, Ä½ubomÃ­r, MojmÃ­r, Leonard, TichomÃ­r, Filip, Bartolomej, Ä½udovÃ­t, Samuel, AugustÃ­n
+Belo, Oleg, BystrÃ­k, Ctibor, Ä½udomil, KonÅ¡tantÃ­n, Ä½uboslav, MatÃºÅ¡, MÃ³ric, Ä½uboÅ¡, Ä½ubor, Vladislav, CypriÃ¡n, VÃ¡clav, Michal, JarolÃ­m
+Arnold, Levoslav, FrantiÅ¡ek, DionÃ½z, MaximiliÃ¡n, Koloman, Boris, LukÃ¡Å¡, KristiÃ¡n, VendelÃ­n, Sergej, Aurel, Demeter
+Denis, Hubert, Karol, Imrich, RenÃ©, BohumÃ­r, Teodor, Tibor, MaroÅ¡, Martin, SvÃ¤topluk, Stanislav, Leopold, Eugen, FÃ©lix, Klement, Kornel, Milan, Vratko, Ondrej, Andrej
+Edmund, Oldrich, Oto, MikulÃ¡Å¡, AmbrÃ³z, RadÃºz, Bohdan, Adam, Å tefan, DÃ¡vid, Silvester

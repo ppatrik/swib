@@ -9,6 +9,7 @@ public class DatabazovyPohybDao implements PohybDao {
 
     private JdbcTemplate jdbcTemplate;
     private PohybRowMapper mapovac;
+    private static final String TABLE_NAME = "Pohyby";
 
     public DatabazovyPohybDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -17,7 +18,7 @@ public class DatabazovyPohybDao implements PohybDao {
 
     @Override
     public List<Pohyb> dajVsetky() {
-        String sql = "SELECT * FROM Pohyby";
+        String sql = "SELECT * FROM " + TABLE_NAME;
         return jdbcTemplate.query(sql, mapovac);
     }
 
