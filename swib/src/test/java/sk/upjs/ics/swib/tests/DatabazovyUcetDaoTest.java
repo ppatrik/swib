@@ -8,7 +8,9 @@ import static org.junit.Assert.*;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.springframework.jdbc.core.JdbcTemplate;
+import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
 import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
+import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Ucet;
 import sk.upjs.ics.swib.factory.DaoFactory;
 
@@ -30,39 +32,42 @@ public class DatabazovyUcetDaoTest {
      */
     private JdbcTemplate jdbcTemplate;
     private DatabazovyUcetDao databazovyUcetDao;
-
-    private static final int POCET_UCTOV = 392;
+    private Klient klient;
+    private static final int POCET_UCTOV = 1;
+    
 
     public DatabazovyUcetDaoTest() {
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
         this.databazovyUcetDao = new DatabazovyUcetDao(jdbcTemplate);
+        DatabazovyKlientDao dao = new DatabazovyKlientDao(jdbcTemplate);
+        klient = dao.dajVsetkych().get(0);
     }
 
     @Test
     public void testAdajVsetky() {
-        List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky();
+        List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky(klient);
         assertEquals(POCET_UCTOV, zoznamUctov.size());
     }
 
     @Test
     public void testBpridaj() {
-        List<Ucet> zoznamUctovPov = databazovyUcetDao.dajVsetky();
+        List<Ucet> zoznamUctovPov = databazovyUcetDao.dajVsetky(klient);
         Ucet ucet = new Ucet();
         ucet.setCisloUctu("xxxxxxxxxx");
         ucet.setId(100000);
-        ucet.setKlientId(1);
+        ucet.setKlientId(klient.getId());
         ucet.setName(10101010);
         ucet.setSpor(false);
         ucet.setZostatok(new BigDecimal(BigInteger.ONE));
 
         databazovyUcetDao.pridaj(ucet);
-        List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky();
+        List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky(klient);
         assertEquals(zoznamUctovPov.size() + 1, zoznamUctov.size());
     }
 
     @Test
     public void testCuprav() {
-        List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky();
+        List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky(klient);
         if (zoznamUctov.isEmpty()) {
             return;
         }
@@ -72,7 +77,7 @@ public class DatabazovyUcetDaoTest {
         ucet.setZostatok(new BigDecimal("11.1100"));
 
         databazovyUcetDao.uprav(ucet);
-        zoznamUctov = databazovyUcetDao.dajVsetky();
+        zoznamUctov = databazovyUcetDao.dajVsetky(klient);
         ucet = zoznamUctov.get(zoznamUctov.size() - 1);
 
         assertEquals("zzzzzzzzzz", ucet.getCisloUctu());
@@ -82,13 +87,13 @@ public class DatabazovyUcetDaoTest {
 
     @Test
     public void testDodstran() {
-        List<Ucet> zoznamUctovPov = databazovyUcetDao.dajVsetky();
+        List<Ucet> zoznamUctovPov = databazovyUcetDao.dajVsetky(klient);
         if (zoznamUctovPov.isEmpty()) {
             return;
         }
         Ucet ucet = zoznamUctovPov.get(zoznamUctovPov.size() - 1);
         databazovyUcetDao.odstran(ucet);
-        List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky();
+        List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky(klient);
         assertEquals(zoznamUctovPov.size() - 1, zoznamUctov.size());
 
     }

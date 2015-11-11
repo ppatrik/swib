@@ -3,6 +3,7 @@ package sk.upjs.ics.swib.dao;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Ucet;
 import sk.upjs.ics.swib.mappers.UcetRowMapper;
 
@@ -20,9 +21,9 @@ public class DatabazovyUcetDao implements UcetDao {
     }
 
     @Override
-    public List<Ucet> dajVsetky() {
-        String sql = "SELECT * FROM " + TABLE_NAME;
-        return jdbcTemplate.query(sql, mapovac);
+    public List<Ucet> dajVsetky(Klient klient) {
+        String sql = "SELECT * FROM " + TABLE_NAME+ " WHERE KlientId = ?";
+        return jdbcTemplate.query(sql, mapovac, klient.getId());
     }
 
     @Override

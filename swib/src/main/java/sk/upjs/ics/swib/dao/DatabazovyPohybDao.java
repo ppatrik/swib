@@ -3,6 +3,7 @@ package sk.upjs.ics.swib.dao;
 import java.util.List;
 import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.entity.Pohyb;
+import sk.upjs.ics.swib.entity.Ucet;
 import sk.upjs.ics.swib.mappers.PohybRowMapper;
 
 public class DatabazovyPohybDao implements PohybDao {
@@ -17,9 +18,9 @@ public class DatabazovyPohybDao implements PohybDao {
     }
 
     @Override
-    public List<Pohyb> dajVsetky() {
-        String sql = "SELECT * FROM " + TABLE_NAME;
-        return jdbcTemplate.query(sql, mapovac);
+    public List<Pohyb> dajVsetky(Ucet ucet) {
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE UcetID = ?";
+        return jdbcTemplate.query(sql, mapovac, ucet.getId());
     }
 
 }

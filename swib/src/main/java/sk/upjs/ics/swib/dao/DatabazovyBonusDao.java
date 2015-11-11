@@ -4,6 +4,7 @@ import java.util.List;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.entity.Bonus;
+import sk.upjs.ics.swib.entity.Uver;
 import sk.upjs.ics.swib.mappers.BonusyRowMapper;
 
 public class DatabazovyBonusDao implements BonusDao {
@@ -19,9 +20,9 @@ public class DatabazovyBonusDao implements BonusDao {
     }
 
     @Override
-    public List<Bonus> dajVsetky() {
-        String sql = "SELECT * FROM " + TABLE_NAME;
-        return jdbcTemplate.query(sql, mapovac);
+    public List<Bonus> dajVsetky(Uver uver) {
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE UveryId = ?";
+        return jdbcTemplate.query(sql, mapovac, uver.getId());
     }
 
     @Override

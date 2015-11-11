@@ -4,8 +4,12 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
+import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
 import sk.upjs.ics.swib.dao.DatabazovyPohybDao;
+import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
+import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Pohyb;
+import sk.upjs.ics.swib.entity.Ucet;
 import sk.upjs.ics.swib.factory.DaoFactory;
 
 /**
@@ -24,17 +28,22 @@ public class DatabazovyPohybDaoTest {
      */
     private JdbcTemplate jdbcTemplate;
     private DatabazovyPohybDao databazovyPohybDao;
+    private Ucet ucet;
 
-    private static final int POCET_POHYBOV = 71736;
+    private static final int POCET_POHYBOV = 183;
 
     public DatabazovyPohybDaoTest() {
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
         databazovyPohybDao = new DatabazovyPohybDao(jdbcTemplate);
+        DatabazovyKlientDao dao1 = new DatabazovyKlientDao(jdbcTemplate);
+        Klient klient = dao1.dajVsetkych().get(0);
+        DatabazovyUcetDao dao2 = new DatabazovyUcetDao(jdbcTemplate);
+        ucet = dao2.dajVsetky(klient).get(0);
     }
 
     @Test
     public void dajVsetkyTest() {
-        List<Pohyb> zoznamPohybov = databazovyPohybDao.dajVsetky();
+        List<Pohyb> zoznamPohybov = databazovyPohybDao.dajVsetky(ucet);
         assertEquals(POCET_POHYBOV, zoznamPohybov.size());
     }
 }
