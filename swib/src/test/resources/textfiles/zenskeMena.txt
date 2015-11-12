@@ -1,12 +1,12 @@
-Alexandra, Karina, Daniela, Andrea, Antónia, Bohuslava, Dáša, Malvína, Kristína, Nataša, Bohdana, Drahomíra, Sára, Zora, Tamara, Ema
-Tatiana, Erika, Veronika, Agáta, Dorota, Vanda, Zoja, Gabriela, Perla, Ida, Liana, Miloslava, Vlasta, Lívia, Eleonóra, Etela, Romana, Zlatica
-Aneka, Bohumila, Františka, Angela, Matilda, Svetlana, ¼ubica, Alena, Soòa, Vieroslava
-Zita, Miroslava, Irena, Milena, Estera, Justína, Dana, Danica, Jela, Jaroslava, Jarmila, Lea, Anastázia
-Galina, Lesana, Hermína, Monika, Ingrida, Viktória, Blaena, ofia, Sofia, Gizela, Viola, Gertrúda, Zina, Júlia, Juliana, elmíra, Ela, Vanesa, Iveta, Vilma, Petronela
-aneta, Xénia, Karolína, Lenka, Laura, Stanislava, Margaréta, Dobroslava, Blanka, Valéria, Paulína, Sidónia, Adriána, Beáta, Petra, Melánia
-Diana, Berta, Patrícia, Lujza, Amália, Milota, Nina, Margita, Kamila, Dušana, Magdaléna, O¾ga, Anna,¨Hana, Boena, Marta, Libuša
-Boidara, Dominika, Hortenzia, Jozefína, Štefánia, ¼ubomíra, Zuzana, Darina, Marcela, Milica, Elena, Helena, Lıdia, Anabela, Jana, Silvia, Nikola, Ruena, Nora
-Drahoslava, Linda, Melinda, Rebeka, Rozália, Regína, Alica, Marianna, Miriama, Martina, Mária, Jolana, ¼udomila, ¼udmila, Olympia, Eugénia, ¼uboslava, Zdenka, Edita, Michaela
-Stela, Viera, Natália, Eliška, Brigita, Valentína, Terézia, Vladimíra, Hedviga, Uršu¾a, Alojza, Kvetoslava, Sabína, Dobromila, Klára, Simona, Aurélia
-Denisa, Renáta, Irma, Agnesa, Klaudia, Albeta, Elvíra, Cecília, Emília, Katarína, Henrieta
-Bibiána, Barbora, Marína, Izabela, Hilda, Otília, Lucia, Branislava, Bronislava, Ivica, Albína, Kornélia, Sláva, Slávka, Judita, Dagmara, Adela, Nadeda, Eva, Filoména, Ivana, Milada
+Alexandra, Karina, Daniela, Andrea, AntÃ³nia, Bohuslava, DÃ¡Å¡a, MalvÃ­na, KristÃ­na, NataÅ¡a, Bohdana, DrahomÃ­ra, SÃ¡ra, Zora, Tamara, Ema
+Tatiana, Erika, Veronika, AgÃ¡ta, Dorota, Vanda, Zoja, Gabriela, Perla, Ida, Liana, Miloslava, Vlasta, LÃ­via, EleonÃ³ra, Etela, Romana, Zlatica
+AneÅ¾ka, Bohumila, FrantiÅ¡ka, Angela, Matilda, Svetlana, Ä½ubica, Alena, SoÅˆa, Vieroslava
+Zita, Miroslava, Irena, Milena, Estera, JustÃ­na, Dana, Danica, Jela, Jaroslava, Jarmila, Lea, AnastÃ¡zia
+Galina, Lesana, HermÃ­na, Monika, Ingrida, ViktÃ³ria, BlaÅ¾ena, Å½ofia, Sofia, Gizela, Viola, GertrÃºda, Zina, JÃºlia, Juliana, Å½elmÃ­ra, Ela, Vanesa, Iveta, Vilma, Petronela
+Å½aneta, XÃ©nia, KarolÃ­na, Lenka, Laura, Stanislava, MargarÃ©ta, Dobroslava, Blanka, ValÃ©ria, PaulÃ­na, SidÃ³nia, AdriÃ¡na, BeÃ¡ta, Petra, MelÃ¡nia
+Diana, Berta, PatrÃ­cia, Lujza, AmÃ¡lia, Milota, Nina, Margita, Kamila, DuÅ¡ana, MagdalÃ©na, OÄ¾ga, Anna,Â¨Hana, BoÅ¾ena, Marta, LibuÅ¡a
+BoÅ¾idara, Dominika, Hortenzia, JozefÃ­na, Å tefÃ¡nia, Ä½ubomÃ­ra, Zuzana, Darina, Marcela, Milica, Elena, Helena, LÃ½dia, Anabela, Jana, Silvia, Nikola, RuÅ¾ena, Nora
+Drahoslava, Linda, Melinda, Rebeka, RozÃ¡lia, RegÃ­na, Alica, Marianna, Miriama, Martina, MÃ¡ria, Jolana, Ä½udomila, Ä½udmila, Olympia, EugÃ©nia, Ä½uboslava, Zdenka, Edita, Michaela
+Stela, Viera, NatÃ¡lia, EliÅ¡ka, Brigita, ValentÃ­na, TerÃ©zia, VladimÃ­ra, Hedviga, UrÅ¡uÄ¾a, Alojza, Kvetoslava, SabÃ­na, Dobromila, KlÃ¡ra, Simona, AurÃ©lia
+Denisa, RenÃ¡ta, Irma, Agnesa, Klaudia, AlÅ¾beta, ElvÃ­ra, CecÃ­lia, EmÃ­lia, KatarÃ­na, Henrieta
+BibiÃ¡na, Barbora, MarÃ­na, Izabela, Hilda, OtÃ­lia, Lucia, Branislava, Bronislava, Ivica, AlbÃ­na, KornÃ©lia, SlÃ¡va, SlÃ¡vka, Judita, Dagmara, Adela, NadeÅ¾da, Eva, FilomÃ©na, Ivana, Milada

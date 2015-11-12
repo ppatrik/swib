@@ -14,8 +14,6 @@ import java.util.Set;
 import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
 import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
-import sk.upjs.ics.swib.dao.KlientDao;
-import sk.upjs.ics.swib.dao.UcetDao;
 
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Pohyb;
@@ -103,7 +101,7 @@ public class GenUctPohyb {
         GregorianCalendar iterate = new GregorianCalendar();
         // nastavim sa na rok dozadu prveho v mesiaci a vygenerujem prijmy za
         // predch 3 mesiace
-        iterate.add(GregorianCalendar.MONTH, -3);
+        iterate.add(GregorianCalendar.MONTH, -12);
         BigDecimal zostatok = ucet.getZostatok();
         Set<Pohyb> pohyby = new LinkedHashSet<Pohyb>();
         while (iterate.before(dnes)) {
@@ -122,7 +120,7 @@ public class GenUctPohyb {
 
             zostatok = zostatok.add(suma);
             pohyby.add(pohyb);
-            iterate.add(GregorianCalendar.DATE, 1);
+            iterate.add(GregorianCalendar.DATE, 2);
         }
         ucet.setZostatok(zostatok);
         return pohyby;

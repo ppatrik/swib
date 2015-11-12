@@ -31,23 +31,25 @@ public class GenKlientov {
 
 	public List<Klient> generujKlientov() {
 		List<Klient> klienti = new ArrayList<Klient>();
-		for (int i = 0; i < priezviska.size(); i++) {
+		for (int i = 0; i < muzskeMena.size(); i++) {
 			DatNarARodCislo datNarARodCislo = generujDatNarARodCislo(true);
 			Klient klient = new Klient();
 			klient.setId(i + 1);
 			klient.setMeno(muzskeMena.get(i));
-			klient.setPriezvisko(priezviska.get(i));
+                        int random = (int) (Math.random() * priezviska.size());
+			klient.setPriezvisko(priezviska.get(random));
 			klient.setDatumNarodenia(datNarARodCislo.getDatumNarodenia());
 			klient.setRodneCislo(datNarARodCislo.getRodneCislo());
 			klient.setCisloPreukazu(generujCisloPreukazu());
 			klienti.add(klient);
 		}
-		for (int i = 0; i < priezviska.size(); i++) {
+		for (int i = 0; i < zenskeMena.size(); i++) {
 			DatNarARodCislo datNarARodCislo = generujDatNarARodCislo(false);
 			Klient klient = new Klient();
 			klient.setId(i + 1 + muzskeMena.size());
 			klient.setMeno(zenskeMena.get(i));
-			klient.setPriezvisko(priezviska.get(i) + "ova");
+                        int random = (int) (Math.random() * priezviska.size());
+			klient.setPriezvisko(priezviska.get(random) + "ova");
 			klient.setDatumNarodenia(datNarARodCislo.getDatumNarodenia());
 			klient.setRodneCislo(datNarARodCislo.getRodneCislo());
 			klient.setCisloPreukazu(generujCisloPreukazu());
@@ -115,7 +117,7 @@ public class GenKlientov {
 		String[] names;
 		try {
 			bf = new BufferedReader(new InputStreamReader(
-					new FileInputStream(new File("src/test/resources/textfiles/muzskeMena.txt"))));
+					new FileInputStream(new File("src/test/resources/textfiles/muzskeMena.txt")),"UTF8"));
 			String line;
 			while ((line = bf.readLine()) != null) {
 				names = line.split(",");
@@ -124,7 +126,7 @@ public class GenKlientov {
 				}
 			}
 			bf = new BufferedReader(new InputStreamReader(
-					new FileInputStream(new File("src/test/resources/textfiles/zenskeMena.txt"))));
+					new FileInputStream(new File("src/test/resources/textfiles/zenskeMena.txt")),"UTF8"));
 			while ((line = bf.readLine()) != null) {
 				names = line.split(",");
 				for (String meno : names) {
@@ -144,7 +146,7 @@ public class GenKlientov {
 		String[] names;
 		try {
 			bf = new BufferedReader(new InputStreamReader(
-					new FileInputStream(new File("src/test/resources/textfiles/priezviska.txt"))));
+					new FileInputStream(new File("src/test/resources/textfiles/priezviska.txt")),"UTF8"));
 			String line;
 			while ((line = bf.readLine()) != null) {
 				names = line.split(",");

@@ -74,21 +74,15 @@ public class TestUtils {
 
     public static BigDecimal generujSumu(int financnePostavenie, GregorianCalendar iterate, BigDecimal plat,
             BigDecimal zostatok) {
-        if (iterate.get(GregorianCalendar.DATE) == 15) {
+        if (iterate.get(GregorianCalendar.DATE) == 15 || iterate.get(GregorianCalendar.DATE) == 14) {
             return plat;
         }
-        // @divisor bude urcovat cislo, ktorym sa vydeli zostatok na ucte a
-        // to bude suma ktora bude prijem/vydaj podla nahody
-        // @random bude urcovat nahodne cislo od 1 do 50, a ak sa
-        // vygeneruje 50, tak to bude urcovat velky vydaj, konkretne 1/4
-        // zostatku na ucte.. pravdep je teda 2%
-        // @randomPrijemVydaj bude urcovat ci ide o vydaj alebo prijem
-        // kedze vydaje su castejsie, sanca na prijem bude 2:5 u norm a chud
-        // a 3:5 pri bohacoch a milionaroch (castejsie maju prijmy)
-        BigDecimal divisor = new BigDecimal((int) (Math.random() * 90) + 30);
+
+        int minDivisor = (financnePostavenie == KLIENT_BOHAC ||financnePostavenie == KLIENT_MILIONAR) ? 30 : 45;
+        BigDecimal divisor = new BigDecimal((int) (Math.random() * 60) + minDivisor);
         int random = (int) (Math.random() * 50) + 1;
         boolean vydaj = false;
-        int randomPrijemVydaj = (int) (Math.random() * 5) + 1;
+        int randomPrijemVydaj = (int) (Math.random() * 4) + 1;
         switch (financnePostavenie) {
             case KLIENT_MILIONAR:
             case KLIENT_BOHAC:
@@ -96,7 +90,7 @@ public class TestUtils {
                 break;
             case KLIENT_NORMAL:
             case KLIENT_CHUDOBNY:
-                vydaj = (randomPrijemVydaj == 1 || randomPrijemVydaj == 2 || randomPrijemVydaj == 3);
+                vydaj = true;
                 break;
             default:
                 break;

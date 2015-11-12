@@ -5,7 +5,7 @@ import sk.upjs.ics.swib.entity.Bonus;
 import sk.upjs.ics.swib.entity.Uver;
 
 public interface BonusDao {
-    List<Bonus> dajVsetky(Bonus bonus);
+    List<Bonus> dajVsetky(Uver uver);
     void pridaj(Bonus bonus);
     void odstran(Bonus bonus);
     void uprav(Bonus bonus);

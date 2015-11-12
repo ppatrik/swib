@@ -16,31 +16,33 @@ public class DatabazovyUverDao implements UverDao {
     private BeanPropertyRowMapper<Uver> mapovac
             = new BeanPropertyRowMapper<>(Uver.class);
 
+    private static final String TABLE_NAME = "Uvery";
+
     public DatabazovyUverDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
     public List<Uver> dajVsetky() {
-        String sql = "SELECT * FROM Uvery";
+        String sql = "SELECT * FROM " + TABLE_NAME;
         return jdbcTemplate.query(sql, mapovac);
     }
 
     @Override
     public void pridaj(Uver uver) {
-        String sql = "INSERT INTO Uvery VALUES (?,?)";
-        jdbcTemplate.update(sql,null, uver.getNazov());
-        }
+        String sql = "INSERT INTO " + TABLE_NAME + " VALUES (?,?)";
+        jdbcTemplate.update(sql, null, uver.getNazov());
+    }
 
     @Override
     public void odstran(Uver uver) {
-        String sql = "DELETE FROM Uver WHERE ID = ?";
+        String sql = "DELETE FROM " + TABLE_NAME + " WHERE ID = ?";
         jdbcTemplate.update(sql, uver.getId());
-        }
+    }
 
     @Override
     public void uprav(Uver uver) {
-        String sql = "UPDATE Uvery SET Nazov = ? WHERE ID = ?";
-        jdbcTemplate.update(sql, uver.getNazov());
-         }
+        String sql = "UPDATE " + TABLE_NAME + " SET Nazov = ? WHERE ID = ?";
+        jdbcTemplate.update(sql, uver.getNazov(), uver.getId());
+    }
 }
