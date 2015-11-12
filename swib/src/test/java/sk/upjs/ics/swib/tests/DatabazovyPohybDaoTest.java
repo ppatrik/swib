@@ -2,6 +2,7 @@ package sk.upjs.ics.swib.tests;
 
 import java.util.List;
 import static org.junit.Assert.assertEquals;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
@@ -32,7 +33,9 @@ public class DatabazovyPohybDaoTest {
 
     private static final int POCET_POHYBOV = 183;
 
-    public DatabazovyPohybDaoTest() {
+    @Before
+    public void setUp() {
+        System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
         databazovyPohybDao = new DatabazovyPohybDao(jdbcTemplate);
         DatabazovyKlientDao dao1 = new DatabazovyKlientDao(jdbcTemplate);

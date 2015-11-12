@@ -6,7 +6,6 @@ public class Klient {
     private int id;
     private String meno;
     private String priezvisko;
-    //private long adresaId;
     private int cisloKarty; //C_karty (db)
     private Calendar datumNarodenia; //Dat_nar (db)
     private String rodneCislo; //Rodne_cislo (db)
@@ -35,15 +34,7 @@ public class Klient {
     public void setPriezvisko(String priezvisko) {
         this.priezvisko = priezvisko;
     }
-    /*
-    public long getAdresaId() {
-        return adresaId;
-    }
 
-    public void setAdresaId(long adresaId) {
-        this.adresaId = adresaId;
-    }
-    */
     public int getCisloKarty() {
         return cisloKarty;
     }

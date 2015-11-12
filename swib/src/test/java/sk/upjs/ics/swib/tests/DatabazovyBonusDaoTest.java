@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -18,7 +19,6 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  *
  * @author kubedo8
  */
-
 // anotacia zabezpeci, ze testy budu bezat v poradi podla abecedy
 // POZOR treba mat junit-4.11 a vyssie
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -38,7 +38,9 @@ public class DatabazovyBonusDaoTest {
 
     private static final int POCET_BONUSOV = 1;
 
-    public DatabazovyBonusDaoTest() {
+    @Before
+    public void setUp() {
+        System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
         this.databazovyBonusDao = new DatabazovyBonusDao(jdbcTemplate);
         DatabazovyUverDao dao = new DatabazovyUverDao(jdbcTemplate);

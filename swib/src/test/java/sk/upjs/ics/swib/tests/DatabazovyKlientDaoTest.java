@@ -4,6 +4,7 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,7 +35,9 @@ public class DatabazovyKlientDaoTest {
 
     private static final int POCET_KLIENTOV = 392;
 
-    public DatabazovyKlientDaoTest() {
+    @Before
+    public void setUp() {
+        System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
         databazovyKlientDao = new DatabazovyKlientDao(jdbcTemplate);
     }

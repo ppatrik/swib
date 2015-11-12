@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -34,13 +35,15 @@ public class DatabazovyUcetDaoTest {
     private DatabazovyUcetDao databazovyUcetDao;
     private Klient klient;
     private static final int POCET_UCTOV = 1;
-    
 
-    public DatabazovyUcetDaoTest() {
+    @Before
+    public void setUp() {
+        System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
         this.databazovyUcetDao = new DatabazovyUcetDao(jdbcTemplate);
         DatabazovyKlientDao dao = new DatabazovyKlientDao(jdbcTemplate);
         klient = dao.dajVsetkych().get(0);
+
     }
 
     @Test

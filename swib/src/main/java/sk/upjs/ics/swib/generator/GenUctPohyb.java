@@ -30,6 +30,7 @@ public class GenUctPohyb {
     public static void main(String[] args) {
         GenUctPohyb gup = new GenUctPohyb();
         List<UctyKlienta> ucty = gup.genUctyKlienta();
+        System.setProperty("testovaciRezim", "true");
         JdbcTemplate jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
         DatabazovyKlientDao klientDao = new DatabazovyKlientDao(jdbcTemplate);
         DatabazovyUcetDao ucetDao = new DatabazovyUcetDao(jdbcTemplate);
