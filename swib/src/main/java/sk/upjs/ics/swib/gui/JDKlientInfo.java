@@ -13,18 +13,20 @@ import sk.upjs.ics.swib.entity.Klient;
  */
 public class JDKlientInfo extends javax.swing.JDialog {
     private Klient klient;
+    private UctyTableModel uctyTableModel;
 
     /**
      * Creates new form JDKlientInfo
      */
-    public JDKlientInfo(java.awt.Frame parent, boolean modal) {
+    JDKlientInfo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);        
     }
 
     JDKlientInfo(java.awt.Frame parent, Klient klient) {
         this(parent, true);
         this.klient = klient;
-        this.setTitle(klient.getMeno()+" "+klient.getPriezvisko());
+        uctyTableModel = new UctyTableModel(klient);
+        setTitle(klient.getMeno()+" "+klient.getPriezvisko());
         initComponents();
     }
 
@@ -44,7 +46,8 @@ public class JDKlientInfo extends javax.swing.JDialog {
         lblCisloPreukazu = new javax.swing.JLabel();
         lblCisloPreukazuKlienta = new javax.swing.JLabel();
         btnOK = new javax.swing.JButton();
-        btnUcty = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTUctyKlienta = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -60,7 +63,7 @@ public class JDKlientInfo extends javax.swing.JDialog {
         lblPriezviskoKlienta.setText(klient.getPriezvisko());
 
         lblCisloPreukazu.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblCisloPreukazu.setText("Preukaz číslo: ");
+        lblCisloPreukazu.setText("Číslo preukazu: ");
 
         lblCisloPreukazuKlienta.setText(klient.getCisloPreukazu());
 
@@ -71,7 +74,9 @@ public class JDKlientInfo extends javax.swing.JDialog {
             }
         });
 
-        btnUcty.setText("Účty");
+        jTUctyKlienta.setModel(uctyTableModel);
+        jTUctyKlienta.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane1.setViewportView(jTUctyKlienta);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,24 +85,25 @@ public class JDKlientInfo extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnOK))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblMeno)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblMenoKlienta))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblPriezvisko)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPriezviskoKlienta))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCisloPreukazu)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblCisloPreukazuKlienta)))
-                .addContainerGap(238, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnUcty)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOK)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblMeno)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblMenoKlienta))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPriezvisko)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblPriezviskoKlienta))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCisloPreukazu)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCisloPreukazuKlienta)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,11 +121,11 @@ public class JDKlientInfo extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCisloPreukazu)
                     .addComponent(lblCisloPreukazuKlienta))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOK)
-                    .addComponent(btnUcty))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnOK)
+                .addContainerGap())
         );
 
         pack();
@@ -173,7 +179,8 @@ public class JDKlientInfo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOK;
-    private javax.swing.JButton btnUcty;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTUctyKlienta;
     private javax.swing.JLabel lblCisloPreukazu;
     private javax.swing.JLabel lblCisloPreukazuKlienta;
     private javax.swing.JLabel lblMeno;
