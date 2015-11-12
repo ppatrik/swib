@@ -33,7 +33,7 @@ public class DatabazovyKlientDaoTest {
 
     private DatabazovyKlientDao databazovyKlientDao;
 
-    private static final int POCET_KLIENTOV = 392;
+    private static final int POCET_KLIENTOV = 37;
 
     @Before
     public void setUp() {
