@@ -3,6 +3,7 @@
 <Form version="1.3" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JDialogFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="2"/>
+    <Property name="resizable" type="boolean" value="false"/>
   </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
@@ -41,6 +42,8 @@
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
               <Component id="btnPocitaj" min="-2" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
+              <Component id="btnStorno" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -64,7 +67,10 @@
                   <Component id="lblTypUveru" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="247" max="32767" attributes="0"/>
-              <Component id="btnPocitaj" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="btnPocitaj" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="btnStorno" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -105,6 +111,14 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Po&#x10d;&#xed;taj"/>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnStorno">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Storno"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnStornoActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

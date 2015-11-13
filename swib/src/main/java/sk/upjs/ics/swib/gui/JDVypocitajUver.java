@@ -1,18 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sk.upjs.ics.swib.gui;
 
 /**
  *
- * @author Uživateľ
+ * @author Johnny
  */
 public class JDVypocitajUver extends javax.swing.JDialog {
 
     /**
      * Creates new form JDVypocitajUver
+     * @param parent
      */
     public JDVypocitajUver(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
@@ -35,8 +31,10 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         jtfPocetMesiacov = new javax.swing.JTextField();
         jtfTypUveru = new javax.swing.JTextField();
         btnPocitaj = new javax.swing.JButton();
+        btnStorno = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         lblSuma.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblSuma.setText("Suma");
@@ -48,6 +46,13 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         lblTypUveru.setText("Typ úveru");
 
         btnPocitaj.setText("Počítaj");
+
+        btnStorno.setText("Storno");
+        btnStorno.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnStornoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -68,6 +73,8 @@ public class JDVypocitajUver extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnPocitaj)
+                .addGap(5, 5, 5)
+                .addComponent(btnStorno)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -86,12 +93,18 @@ public class JDVypocitajUver extends javax.swing.JDialog {
                     .addComponent(jtfTypUveru, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTypUveru))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 247, Short.MAX_VALUE)
-                .addComponent(btnPocitaj)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnPocitaj)
+                    .addComponent(btnStorno))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnStornoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnStornoActionPerformed
+        dispose();
+    }//GEN-LAST:event_btnStornoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -137,6 +150,7 @@ public class JDVypocitajUver extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPocitaj;
+    private javax.swing.JButton btnStorno;
     private javax.swing.JTextField jtfPocetMesiacov;
     private javax.swing.JTextField jtfSuma;
     private javax.swing.JTextField jtfTypUveru;

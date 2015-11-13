@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sk.upjs.ics.swib.gui;
 
 import sk.upjs.ics.swib.entity.Klient;
@@ -11,9 +6,9 @@ import sk.upjs.ics.swib.entity.Klient;
  *
  * @author Johnny
  */
-public class JFZoznamKlientov extends javax.swing.JFrame {
+public class JFZoznamKlientov extends javax.swing.JFrame {        
     
-    private final KlientTableModel zoznamKlientovModel = new KlientTableModel();
+    private final KlientTableModel klientTableModel = new KlientTableModel();
     private Klient vybranyKlient;
 
     /**
@@ -33,15 +28,37 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
     private void initComponents() {
 
         lblHladaj = new javax.swing.JTextField();
-        btnZobraz = new javax.swing.JToggleButton();
-        btnUprav = new javax.swing.JToggleButton();
-        btnVymaz = new javax.swing.JToggleButton();
-        btnPocitajUver = new javax.swing.JToggleButton();
-        btnSpravujUvery = new javax.swing.JToggleButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTZoznamKlientov = new javax.swing.JTable();
+        btnVymaz = new javax.swing.JButton();
+        btnUprav = new javax.swing.JButton();
+        btnZobraz = new javax.swing.JButton();
+        btnPocitajUver = new javax.swing.JButton();
+        btnSpravujUvery = new javax.swing.JButton();
+        btnKoniec = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        jTZoznamKlientov.setModel(klientTableModel);
+        jTZoznamKlientov.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTZoznamKlientov.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTZoznamKlientovMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTZoznamKlientov);
+
+        btnVymaz.setText("Vymaž");
+        btnVymaz.setEnabled(false);
+        btnVymaz.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVymazActionPerformed(evt);
+            }
+        });
+
+        btnUprav.setText("Uprav");
+        btnUprav.setEnabled(false);
 
         btnZobraz.setText("Zobraz");
         btnZobraz.setEnabled(false);
@@ -51,23 +68,22 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
             }
         });
 
-        btnUprav.setText("Uprav");
-        btnUprav.setEnabled(false);
-
-        btnVymaz.setText("Vymaž");
-        btnVymaz.setEnabled(false);
-
-        btnPocitajUver.setText("Počítaj Úver");
+        btnPocitajUver.setText("Počítaj úver");
+        btnPocitajUver.setEnabled(false);
+        btnPocitajUver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPocitajUverActionPerformed(evt);
+            }
+        });
 
         btnSpravujUvery.setText("Spravuj úvery");
 
-        jTZoznamKlientov.setModel(zoznamKlientovModel);
-        jTZoznamKlientov.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTZoznamKlientovMouseClicked(evt);
+        btnKoniec.setText("Koniec");
+        btnKoniec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKoniecActionPerformed(evt);
             }
         });
-        jScrollPane1.setViewportView(jTZoznamKlientov);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -87,10 +103,12 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPocitajUver)
                         .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btnSpravujUvery))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addComponent(btnSpravujUvery)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnKoniec)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -99,14 +117,16 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblHladaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnZobraz)
-                    .addComponent(btnUprav)
                     .addComponent(btnVymaz)
+                    .addComponent(btnUprav)
+                    .addComponent(btnZobraz)
                     .addComponent(btnPocitajUver))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 392, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnSpravujUvery)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSpravujUvery)
+                    .addComponent(btnKoniec))
                 .addGap(5, 5, 5))
         );
 
@@ -116,26 +136,53 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
     private void jTZoznamKlientovMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTZoznamKlientovMouseClicked
         int riadok = jTZoznamKlientov.getSelectedRow();
         int index = jTZoznamKlientov.convertRowIndexToModel(riadok);
-        vybranyKlient = zoznamKlientovModel.getKlient(index);
-        
-        this.btnUprav.setEnabled(true);
-        this.btnVymaz.setEnabled(true);
-        this.btnZobraz.setEnabled(true);
+        vybranyKlient = klientTableModel.getKlient(index);        
+        enableButtons();
             
         if (evt.getClickCount() == 2) {            
             zobrazKlientInfo();
         }
     }//GEN-LAST:event_jTZoznamKlientovMouseClicked
 
+    private void btnVymazActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVymazActionPerformed
+        klientTableModel.zmaz(vybranyKlient);
+        vybranyKlient = null;
+        disableButtons();
+    }//GEN-LAST:event_btnVymazActionPerformed
+
+    private void btnZobrazActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZobrazActionPerformed
+        JDKlientInfo jDKlientInfo = new JDKlientInfo(this, vybranyKlient);
+        jDKlientInfo.setVisible(true);
+    }//GEN-LAST:event_btnZobrazActionPerformed
+
+    private void btnKoniecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKoniecActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnKoniecActionPerformed
+
+    private void btnPocitajUverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPocitajUverActionPerformed
+        JDVypocitajUver jDVypocitajUver = new JDVypocitajUver(this, true);
+        jDVypocitajUver.setVisible(true);
+    }//GEN-LAST:event_btnPocitajUverActionPerformed
+
     private void zobrazKlientInfo() {
         JDKlientInfo klientInfo = new JDKlientInfo(this, vybranyKlient);
         klientInfo.setVisible(true);
     }
+    
+    private void disableButtons() {
+        this.btnUprav.setEnabled(false);
+        this.btnVymaz.setEnabled(false);
+        this.btnZobraz.setEnabled(false);
+        this.btnPocitajUver.setEnabled(false);
+    }
 
-    private void btnZobrazActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZobrazActionPerformed
-        zobrazKlientInfo();
-    }//GEN-LAST:event_btnZobrazActionPerformed
-
+    private void enableButtons() {
+        this.btnUprav.setEnabled(true);
+        this.btnVymaz.setEnabled(true);
+        this.btnZobraz.setEnabled(true);
+        this.btnPocitajUver.setEnabled(true);
+    }
+    
     /**
      * @param args the command line arguments
      */
@@ -175,11 +222,12 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnPocitajUver;
-    private javax.swing.JToggleButton btnSpravujUvery;
-    private javax.swing.JToggleButton btnUprav;
-    private javax.swing.JToggleButton btnVymaz;
-    private javax.swing.JToggleButton btnZobraz;
+    private javax.swing.JButton btnKoniec;
+    private javax.swing.JButton btnPocitajUver;
+    private javax.swing.JButton btnSpravujUvery;
+    private javax.swing.JButton btnUprav;
+    private javax.swing.JButton btnVymaz;
+    private javax.swing.JButton btnZobraz;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTZoznamKlientov;
     private javax.swing.JTextField lblHladaj;

@@ -1,30 +1,32 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package sk.upjs.ics.swib.gui;
 
 import sk.upjs.ics.swib.entity.Klient;
+import sk.upjs.ics.swib.entity.Ucet;
 
 /**
  *
- * @author Uživateľ
+ * @author Johnny
  */
 public class JDKlientInfo extends javax.swing.JDialog {
+    
     private Klient klient;
+    private UctyTableModel uctyTableModel;
+    private PohybTableModel pohybTableModel;
+    
+    private Ucet vybranyUcet;
 
     /**
      * Creates new form JDKlientInfo
      */
-    public JDKlientInfo(java.awt.Frame parent, boolean modal) {
+    JDKlientInfo(java.awt.Frame parent, boolean modal) {
         super(parent, modal);        
     }
 
     JDKlientInfo(java.awt.Frame parent, Klient klient) {
         this(parent, true);
         this.klient = klient;
-        this.setTitle(klient.getMeno()+" "+klient.getPriezvisko());
+        uctyTableModel = new UctyTableModel(klient);
+        setTitle(klient.getMeno()+" "+klient.getPriezvisko());
         initComponents();
     }
 
@@ -44,9 +46,14 @@ public class JDKlientInfo extends javax.swing.JDialog {
         lblCisloPreukazu = new javax.swing.JLabel();
         lblCisloPreukazuKlienta = new javax.swing.JLabel();
         btnOK = new javax.swing.JButton();
-        btnUcty = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTUctyKlienta = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTPohybyUctu = new javax.swing.JTable();
+        lblOddelovac = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         lblMeno.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMeno.setText("Meno:");
@@ -60,7 +67,7 @@ public class JDKlientInfo extends javax.swing.JDialog {
         lblPriezviskoKlienta.setText(klient.getPriezvisko());
 
         lblCisloPreukazu.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        lblCisloPreukazu.setText("Preukaz číslo: ");
+        lblCisloPreukazu.setText("Číslo preukazu: ");
 
         lblCisloPreukazuKlienta.setText(klient.getCisloPreukazu());
 
@@ -71,7 +78,29 @@ public class JDKlientInfo extends javax.swing.JDialog {
             }
         });
 
-        btnUcty.setText("Účty");
+        jTUctyKlienta.setModel(uctyTableModel);
+        jTUctyKlienta.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jTUctyKlienta.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTUctyKlientaMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jTUctyKlienta);
+
+        jTPohybyUctu.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jTPohybyUctu.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_NEXT_COLUMN);
+        jTPohybyUctu.setRowSelectionAllowed(false);
+        jTPohybyUctu.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(jTPohybyUctu);
+
+        lblOddelovac.setText("»");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -80,24 +109,30 @@ public class JDKlientInfo extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btnOK))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblMeno)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblMenoKlienta))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblMeno)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblMenoKlienta))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblPriezvisko)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblPriezviskoKlienta))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCisloPreukazu)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCisloPreukazuKlienta)))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblPriezvisko)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblPriezviskoKlienta))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblCisloPreukazu)
+                        .addComponent(lblOddelovac)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblCisloPreukazuKlienta)))
-                .addContainerGap(238, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnUcty)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnOK)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -115,11 +150,15 @@ public class JDKlientInfo extends javax.swing.JDialog {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCisloPreukazu)
                     .addComponent(lblCisloPreukazuKlienta))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnOK)
-                    .addComponent(btnUcty))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 218, Short.MAX_VALUE))
+                    .addComponent(lblOddelovac))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnOK)
+                .addContainerGap())
         );
 
         pack();
@@ -128,6 +167,17 @@ public class JDKlientInfo extends javax.swing.JDialog {
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
         this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed
+
+    private void jTUctyKlientaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTUctyKlientaMouseClicked
+        int riadok = jTUctyKlienta.getSelectedRow();
+        int index = jTUctyKlienta.convertRowIndexToModel(riadok);
+        vybranyUcet = uctyTableModel.getUcet(index);
+        
+        if (!(vybranyUcet == null)){
+            pohybTableModel = new PohybTableModel(vybranyUcet);
+            jTPohybyUctu.setModel(pohybTableModel);
+        }
+    }//GEN-LAST:event_jTUctyKlientaMouseClicked
 
     /**
      * @param args the command line arguments
@@ -173,11 +223,15 @@ public class JDKlientInfo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOK;
-    private javax.swing.JButton btnUcty;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTPohybyUctu;
+    private javax.swing.JTable jTUctyKlienta;
     private javax.swing.JLabel lblCisloPreukazu;
     private javax.swing.JLabel lblCisloPreukazuKlienta;
     private javax.swing.JLabel lblMeno;
     private javax.swing.JLabel lblMenoKlienta;
+    private javax.swing.JLabel lblOddelovac;
     private javax.swing.JLabel lblPriezvisko;
     private javax.swing.JLabel lblPriezviskoKlienta;
     // End of variables declaration//GEN-END:variables
