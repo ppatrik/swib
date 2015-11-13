@@ -15,7 +15,7 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 public class UctyTableModel extends AbstractTableModel{
     
-    private final Klient klient; //neviem ci mi to vlastne treba
+    private Klient klient; //neviem ci mi to vlastne treba
     private final JdbcTemplate jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
     private final DatabazovyUcetDao databazovyUcetDao = new DatabazovyUcetDao(jdbcTemplate);    
     private List<Ucet> ucty;
