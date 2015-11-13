@@ -3,6 +3,7 @@ package sk.upjs.ics.swib.tests;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Before;
 import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyPorovnavacDao;
 import sk.upjs.ics.swib.entity.Porovnavac;
@@ -27,7 +28,9 @@ public class DatabazovyPorovnavacDaoTest {
 
     private static final int POCET = 1;
 
-    public DatabazovyPorovnavacDaoTest() {
+    @Before
+    public void setUp() {
+        System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
         this.databazovyPorovnavacDao = new DatabazovyPorovnavacDao(jdbcTemplate);
     }
