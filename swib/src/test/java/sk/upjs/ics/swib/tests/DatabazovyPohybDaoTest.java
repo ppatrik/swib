@@ -31,7 +31,7 @@ public class DatabazovyPohybDaoTest {
     private DatabazovyPohybDao databazovyPohybDao;
     private Ucet ucet;
 
-    private static final int POCET_POHYBOV = 183;
+    private static final int POCET_POHYBOV = 122;
 
     @Before
     public void setUp() {

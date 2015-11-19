@@ -106,7 +106,7 @@ public class GenUctPohyb {
         BigDecimal zostatok = ucet.getZostatok();
         Set<Pohyb> pohyby = new LinkedHashSet<Pohyb>();
         while (iterate.before(dnes)) {
-            BigDecimal suma = TestUtils.generujSumu(financnePostavenie, iterate, plat, zostatok);
+            BigDecimal suma = TestUtils.generujSumu(financnePostavenie, iterate.get(GregorianCalendar.DATE), plat, zostatok);
             pohybId++;
             int pohybIdCopy = pohybId;
             Pohyb pohyb = new Pohyb();
@@ -121,7 +121,7 @@ public class GenUctPohyb {
 
             zostatok = zostatok.add(suma);
             pohyby.add(pohyb);
-            iterate.add(GregorianCalendar.DATE, 2);
+            iterate.add(GregorianCalendar.DATE, 3);
         }
         ucet.setZostatok(zostatok);
         return pohyby;

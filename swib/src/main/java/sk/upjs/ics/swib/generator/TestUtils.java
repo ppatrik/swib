@@ -72,21 +72,20 @@ public class TestUtils {
         return new BigDecimal(plat);
     }
 
-    public static BigDecimal generujSumu(int financnePostavenie, GregorianCalendar iterate, BigDecimal plat,
+    public static BigDecimal generujSumu(int financnePostavenie, int date, BigDecimal plat,
             BigDecimal zostatok) {
-        if (iterate.get(GregorianCalendar.DATE) == 15 || iterate.get(GregorianCalendar.DATE) == 14) {
+        if (date / 3 == 4) {
             return plat;
         }
-
-        int minDivisor = (financnePostavenie == KLIENT_BOHAC ||financnePostavenie == KLIENT_MILIONAR) ? 30 : 45;
-        BigDecimal divisor = new BigDecimal((int) (Math.random() * 60) + minDivisor);
+        int minDivisor = (financnePostavenie == KLIENT_BOHAC || financnePostavenie == KLIENT_MILIONAR) ? 15 : 20;
+        BigDecimal divisor = new BigDecimal((int) (Math.random() * 10) + minDivisor);
         int random = (int) (Math.random() * 50) + 1;
         boolean vydaj = false;
-        int randomPrijemVydaj = (int) (Math.random() * 4) + 1;
+        int randomPrijemVydaj = (int) (Math.random() * 3) + 1;
         switch (financnePostavenie) {
             case KLIENT_MILIONAR:
             case KLIENT_BOHAC:
-                vydaj = (randomPrijemVydaj == 1 || randomPrijemVydaj == 2);
+                vydaj = (randomPrijemVydaj == 1);
                 break;
             case KLIENT_NORMAL:
             case KLIENT_CHUDOBNY:
@@ -95,7 +94,7 @@ public class TestUtils {
             default:
                 break;
         }
-        BigDecimal suma = new BigDecimal(zostatok.doubleValue());
+        BigDecimal suma = new BigDecimal(plat.doubleValue());
         if (random == 50) {
             suma = suma.divide(new BigDecimal(4), 2, RoundingMode.HALF_UP);
             suma = suma.negate();

@@ -45,13 +45,10 @@ public class DatabazovyKlientDao implements KlientDao {
 
     @Override
     public BigDecimal mozeNaMesiacMaximalneSplacat(Klient klient) {
-   
-String sql = "select AVG(items.Sumy) from (
-
-select SUM(p.suma) AS Sumy from Ucet as uk inner join Pohyby as p on p.UcetID=uk.ID where uk.KlientID = ? group by month(p.datum), year(p.datum) )items";
- 
-      return jdbcTemplate.query(sql,klient.getId());
-
-}
+        String sql = "select AVG(items.Sumy) from ("
+                + "select SUM(p.suma) AS Sumy from Ucet as uk inner join Pohyby as p on p.UcetID=uk.ID "
+                + "where uk.KlientID = ? group by month(p.datum), year(p.datum) )items";
+        return (BigDecimal) jdbcTemplate.queryForObject(sql, BigDecimal.class, klient.getId());
+    }
 
 }

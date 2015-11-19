@@ -1,5 +1,7 @@
 package sk.upjs.ics.swib.tests;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.junit.Test;
@@ -33,7 +35,7 @@ public class DatabazovyKlientDaoTest {
 
     private DatabazovyKlientDao databazovyKlientDao;
 
-    private static final int POCET_KLIENTOV = 37;
+    private static final int POCET_KLIENTOV = 48;
 
     @Before
     public void setUp() {
@@ -102,5 +104,18 @@ public class DatabazovyKlientDaoTest {
         List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
         assertEquals(zoznamKlientovPov.size() - 1, zoznamKlientov.size());
 
+    }
+
+    @Test
+    public void testEMozeNaMesiacMaximalneSplacat() {
+        List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
+        if (zoznamKlientov.isEmpty()) {
+            return;
+        }
+        Klient klient = zoznamKlientov.get(0);
+        System.out.println(klient.getId());
+        BigDecimal maxSplacat = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient).setScale(4, RoundingMode.DOWN);
+        BigDecimal expected = new BigDecimal("417.56385").setScale(4, RoundingMode.DOWN);
+        assertEquals(expected, maxSplacat);
     }
 }
