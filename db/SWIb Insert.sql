@@ -5,5 +5,5 @@ INSERT INTO Multiplikator(id, Nazov) VALUES (?, ?);
 INSERT INTO Pohyby(ID, UcetID, KamIBAN, Suma, Datum, Spracovane) VALUES (?, ?, ?, ?, ?, ?);
 INSERT INTO Ucet(ID, KlientID, Nazov, Zostatok, C_uctu, Spor) VALUES (?, ?, ?, ?, ?, ?);
 INSERT INTO Ucet_Klient(UcetID, KlientID) VALUES (?, ?);
-INSERT INTO Uvery(ID, Nazov) VALUES (?, ?);
+INSERT INTO Uvery(ID, Nazov, Bonus_naManzelku, Bonus_naDieta) VALUES (?, ?, ?, ?);
 

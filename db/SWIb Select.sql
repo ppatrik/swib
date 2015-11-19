@@ -5,5 +5,5 @@ SELECT id, Nazov FROM Multiplikator;
 SELECT ID, UcetID, KamIBAN, Suma, Datum, Spracovane FROM Pohyby;
 SELECT ID, KlientID, Nazov, Zostatok, C_uctu, Spor FROM Ucet;
 SELECT UcetID, KlientID FROM Ucet_Klient;
-SELECT ID, Nazov FROM Uvery;
+SELECT ID, Nazov, Bonus_naManzelku, Bonus_naDieta FROM Uvery;
 

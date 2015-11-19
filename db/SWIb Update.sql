@@ -5,5 +5,5 @@ UPDATE Multiplikator SET Nazov = ? WHERE id = ?;
 UPDATE Pohyby SET UcetID = ?, KamIBAN = ?, Suma = ?, Datum = ?, Spracovane = ? WHERE ID = ?;
 UPDATE Ucet SET KlientID = ?, Nazov = ?, Zostatok = ?, C_uctu = ?, Spor = ? WHERE ID = ?;
 UPDATE Ucet_Klient SET  WHERE UcetID = ? AND KlientID = ?;
-UPDATE Uvery SET Nazov = ? WHERE ID = ?;
+UPDATE Uvery SET Nazov = ?, Bonus_naManzelku = ?, Bonus_naDieta = ? WHERE ID = ?;
 
