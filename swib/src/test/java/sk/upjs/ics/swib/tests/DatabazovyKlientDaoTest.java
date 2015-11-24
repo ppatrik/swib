@@ -115,7 +115,7 @@ public class DatabazovyKlientDaoTest {
         Klient klient = zoznamKlientov.get(0);
         System.out.println(klient.getId());
         BigDecimal maxSplacat = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient).setScale(4, RoundingMode.DOWN);
-        BigDecimal expected = new BigDecimal("417.56385").setScale(4, RoundingMode.DOWN);
+        BigDecimal expected = new BigDecimal("172.23615").setScale(4, RoundingMode.DOWN);
         assertEquals(expected, maxSplacat);
     }
 }
