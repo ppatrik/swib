@@ -32,8 +32,8 @@ public class GenUctPohyb {
         List<UctyKlienta> ucty = gup.genUctyKlienta();
         System.setProperty("testovaciRezim", "true");
         JdbcTemplate jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        DatabazovyKlientDao klientDao = new DatabazovyKlientDao(jdbcTemplate);
-        DatabazovyUcetDao ucetDao = new DatabazovyUcetDao(jdbcTemplate);
+        DatabazovyKlientDao klientDao = DaoFactory.INSTANCE.databazovyKlientDao();
+        DatabazovyUcetDao ucetDao = DaoFactory.INSTANCE.databazovyUcetDao();
         for (UctyKlienta u : ucty) {
             Klient klient = u.getKlient();
             klientDao.pridaj(klient);

@@ -2,8 +2,6 @@
 package sk.upjs.ics.swib.logic;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import sk.upjs.ics.swib.dao.DatabazovyBonusDao;
 import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
@@ -15,9 +13,10 @@ import sk.upjs.ics.swib.factory.DaoFactory;
 
 
 public class OfiCalculator implements Calculator{
-
-    DatabazovyBonusDao databazovyBonusDao = new DatabazovyBonusDao(DaoFactory.INSTANCE.jdbcTemplate());
-    DatabazovyKlientDao databazovyKlientDao = new DatabazovyKlientDao(DaoFactory.INSTANCE.jdbcTemplate());
+ 
+    DatabazovyBonusDao databazovyBonusDao = DaoFactory.INSTANCE.databazovyBonusDao();
+    DatabazovyKlientDao databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
+    
     
     @Override
     public void uplatniBonus(BigDecimal nasobic, Bonus bonus) {
