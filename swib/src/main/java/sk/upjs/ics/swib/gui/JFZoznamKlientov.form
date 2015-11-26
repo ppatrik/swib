@@ -76,10 +76,6 @@
   </Layout>
   <SubComponents>
     <Component class="javax.swing.JTextField" name="lblHladaj">
-      <Events>
-        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="lblHladajKeyReleased"/>
-        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="lblHladajKeyTyped"/>
-      </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
       <AuxValues>
@@ -140,9 +136,6 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Spravuj &#xfa;very"/>
       </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSpravujUveryActionPerformed"/>
-      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnKoniec">
       <Properties>

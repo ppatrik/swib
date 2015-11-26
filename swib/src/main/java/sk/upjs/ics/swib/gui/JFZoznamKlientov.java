@@ -1,22 +1,21 @@
 package sk.upjs.ics.swib.gui;
 
-import java.awt.event.KeyEvent;
 import sk.upjs.ics.swib.entity.Klient;
 
 /**
  *
  * @author Johnny
  */
-public class JFZoznamKlientov extends javax.swing.JFrame {
-
+public class JFZoznamKlientov extends javax.swing.JFrame {        
+    
     private final KlientTableModel klientTableModel = new KlientTableModel();
     private Klient vybranyKlient;
 
     /**
      * Creates new form JFListOfUsers
      */
-    public JFZoznamKlientov() {
-        initComponents();
+    public JFZoznamKlientov() {        
+        initComponents();                
     }
 
     /**
@@ -40,15 +39,6 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
-
-        lblHladaj.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                lblHladajKeyReleased(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                lblHladajKeyTyped(evt);
-            }
-        });
 
         jTZoznamKlientov.setModel(klientTableModel);
         jTZoznamKlientov.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
@@ -87,11 +77,6 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
         });
 
         btnSpravujUvery.setText("Spravuj úvery");
-        btnSpravujUvery.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSpravujUveryActionPerformed(evt);
-            }
-        });
 
         btnKoniec.setText("Koniec");
         btnKoniec.addActionListener(new java.awt.event.ActionListener() {
@@ -151,10 +136,10 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
     private void jTZoznamKlientovMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTZoznamKlientovMouseClicked
         int riadok = jTZoznamKlientov.getSelectedRow();
         int index = jTZoznamKlientov.convertRowIndexToModel(riadok);
-        vybranyKlient = klientTableModel.getKlient(index);
+        vybranyKlient = klientTableModel.getKlient(index);        
         enableButtons();
-
-        if (evt.getClickCount() == 2) {
+            
+        if (evt.getClickCount() == 2) {            
             zobrazKlientInfo();
         }
     }//GEN-LAST:event_jTZoznamKlientovMouseClicked
@@ -179,36 +164,11 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
         jDVypocitajUver.setVisible(true);
     }//GEN-LAST:event_btnPocitajUverActionPerformed
 
-    private void lblHladajKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblHladajKeyTyped
-        String hladanyTex = lblHladaj.getText();
-        hladajKlienta(hladanyTex);
-    }//GEN-LAST:event_lblHladajKeyTyped
-
-    private void lblHladajKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_lblHladajKeyReleased
-        if (evt.getKeyCode() == KeyEvent.VK_BACK_SPACE || evt.getKeyCode() == KeyEvent.VK_DELETE) {
-            String hladanyTex = lblHladaj.getText();
-            hladajKlienta(hladanyTex);
-        }
-        if (evt.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            lblHladaj.setText("");
-            hladajKlienta("");
-        }
-    }//GEN-LAST:event_lblHladajKeyReleased
-
-    private void btnSpravujUveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSpravujUveryActionPerformed
-        JDSpravujUvery jDSpravujUvery = new JDSpravujUvery(this, true);
-        jDSpravujUvery.setVisible(true);
-    }//GEN-LAST:event_btnSpravujUveryActionPerformed
-
-    private void hladajKlienta(String hladanyText) {
-        klientTableModel.hladaj(hladanyText);
-    }
-
     private void zobrazKlientInfo() {
         JDKlientInfo klientInfo = new JDKlientInfo(this, vybranyKlient);
         klientInfo.setVisible(true);
     }
-
+    
     private void disableButtons() {
         this.btnUprav.setEnabled(false);
         this.btnVymaz.setEnabled(false);
@@ -222,7 +182,7 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
         this.btnZobraz.setEnabled(true);
         this.btnPocitajUver.setEnabled(true);
     }
-
+    
     /**
      * @param args the command line arguments
      */
