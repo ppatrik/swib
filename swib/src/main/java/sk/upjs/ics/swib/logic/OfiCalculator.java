@@ -38,6 +38,8 @@ public class OfiCalculator implements Calculator{
        BigDecimal nasobic = BigDecimal.ONE;
        uplatniBonusy(nasobic, uver);
        sumaNaPozicanie = sumaNaPozicanie.multiply(nasobic);
+       BigDecimal decimalDobaVMesiacoch = new BigDecimal(dobaVMesiacoch);
+       sumaNaPozicanie = sumaNaPozicanie.divide(decimalDobaVMesiacoch);
        if (sumaNaPozicanie.compareTo(maxKlientoveMesacneSplatky) <= 0){
            return sumaNaPozicanie;
        } else{
