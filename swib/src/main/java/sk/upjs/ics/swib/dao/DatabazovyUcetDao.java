@@ -29,7 +29,7 @@ public class DatabazovyUcetDao implements UcetDao {
     @Override
     public void pridaj(Ucet ucet) {
         String sql = "INSERT INTO " + TABLE_NAME + " VALUES (? ,?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, null, ucet.getKlientId(), ucet.getName(), ucet.getZostatok(), ucet.getCisloUctu(), ucet.isSpor() ? 1 : 0);
+        jdbcTemplate.update(sql, ucet.getId(), ucet.getKlientId(), ucet.getName(), ucet.getZostatok(), ucet.getCisloUctu(), ucet.isSpor() ? 1 : 0);
     }
 
     @Override

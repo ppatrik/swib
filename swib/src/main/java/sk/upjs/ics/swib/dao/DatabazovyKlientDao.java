@@ -28,7 +28,7 @@ public class DatabazovyKlientDao implements KlientDao {
     @Override
     public void pridaj(Klient klient) {
         String sql = "INSERT INTO " + TABLE_NAME + " VALUES (?, ?, ?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, null, klient.getMeno(), klient.getPriezvisko(), klient.getCisloKarty(), klient.getDatumNarodenia(), klient.getRodneCislo(), klient.getCisloPreukazu());
+        jdbcTemplate.update(sql, klient.getId(), klient.getMeno(), klient.getPriezvisko(), klient.getCisloKarty(), klient.getDatumNarodenia(), klient.getRodneCislo(), klient.getCisloPreukazu());
     }
 
     @Override

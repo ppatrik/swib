@@ -1,5 +1,6 @@
 package sk.upjs.ics.swib.tests;
 
+import java.math.BigDecimal;
 import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -51,6 +52,8 @@ public class DatabazovyUverDaoTest {
         List<Uver> zoznamUverovPov = databazovyUverDao.dajVsetky();
         Uver uver = new Uver();
         uver.setNazov("skuska2");
+        uver.setBonusNaManzelku(BigDecimal.ONE);
+        uver.setBonusNaDieta(BigDecimal.TEN);
         databazovyUverDao.pridaj(uver);
         List<Uver> zoznamUverov = databazovyUverDao.dajVsetky();
 
@@ -65,10 +68,15 @@ public class DatabazovyUverDaoTest {
         }
         Uver uver = zoznamUverov.get(zoznamUverov.size() - 1);
         uver.setNazov("skuska3");
+        uver.setBonusNaManzelku(new BigDecimal("111.1111"));
+        uver.setBonusNaDieta(new BigDecimal("123.1234"));
         databazovyUverDao.uprav(uver);
         zoznamUverov = databazovyUverDao.dajVsetky();
 
-        assertEquals("skuska3", zoznamUverov.get(zoznamUverov.size() - 1).getNazov());
+        Uver uverZDB = zoznamUverov.get(zoznamUverov.size() - 1);
+        assertEquals("skuska3", uverZDB.getNazov());
+        assertEquals(new BigDecimal("111.1111"), uverZDB.getBonusNaManzelku());
+        assertEquals(new BigDecimal("123.1234"), uverZDB.getBonusNaDieta());
     }
 
     @Test
