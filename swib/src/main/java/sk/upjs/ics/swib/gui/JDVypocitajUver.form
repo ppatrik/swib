@@ -52,6 +52,10 @@
                               </Group>
                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                           </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Component id="btnVyplnUpraveny" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
@@ -68,6 +72,7 @@
                           <Component id="jtfPMPU" alignment="1" max="32767" attributes="0"/>
                           <Component id="jtfPMP" alignment="1" max="32767" attributes="0"/>
                           <Component id="jtfPMZ" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jtfPMPUpraveny" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="102" attributes="0">
@@ -133,7 +138,12 @@
                           <Component id="jtfPMZ" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lblPMZ" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="34" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="jtfPMPUpraveny" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnVyplnUpraveny" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="btnPocitaj" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="btnStorno" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -301,6 +311,22 @@
           <SpinnerModel initial="0" minimum="0" numberType="java.lang.Integer" stepSize="1" type="number"/>
         </Property>
       </Properties>
+    </Component>
+    <Component class="javax.swing.JTextField" name="jtfPMPUpraveny">
+      <Properties>
+        <Property name="horizontalAlignment" type="int" value="4"/>
+        <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnVyplnUpraveny">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Upraven&#xfd; &#xfa;bytok"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVyplnUpravenyActionPerformed"/>
+      </Events>
     </Component>
   </SubComponents>
 </Form>

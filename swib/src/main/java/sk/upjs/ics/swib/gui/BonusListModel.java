@@ -21,6 +21,10 @@ public class BonusListModel extends AbstractListModel {
     List<Bonus> zoznamBonusov = null;
     Uver uver;
 
+    /**
+     * konstruktor
+     * @param uver 
+     */
     public BonusListModel(Uver uver) {
         this.uver = uver;
         zoznamBonusov = databazovyBonusDao.dajVsetky(uver);        
@@ -32,6 +36,11 @@ public class BonusListModel extends AbstractListModel {
         return zoznamBonusov.size();
     }
 
+    /**
+     * vypis pre comboBox
+     * @param index
+     * @return 
+     */
     @Override
     public String getElementAt(int index) {
         return zoznamBonusov.get(index).getOrderNumber() + "." + zoznamBonusov.get(index).getNazov() + "(" + zoznamBonusov.get(index).getId() + ")";
@@ -46,6 +55,10 @@ public class BonusListModel extends AbstractListModel {
         zoznamBonusov = databazovyBonusDao.dajVsetky(uver);
     }   
     
+    /**
+     * vymeni vybrany bonus s bonusom, ktory je v poradi nad nim
+     * @param bonus 
+     */
     void hore(Bonus bonus) {
         int poradie = bonus.getOrderNumber();        
         for (Bonus b : zoznamBonusov) {
@@ -60,6 +73,10 @@ public class BonusListModel extends AbstractListModel {
         refresh();
     }
 
+    /**
+     * vymeni vybrany bonus s bonus o jedna pod nim;
+     * @param bonus 
+     */
     void dole(Bonus bonus) {
         int poradie = bonus.getOrderNumber();        
         for (Bonus b : zoznamBonusov) {

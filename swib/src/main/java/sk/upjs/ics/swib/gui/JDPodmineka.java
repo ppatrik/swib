@@ -27,10 +27,7 @@ public class JDPodmineka extends javax.swing.JDialog {
         this(parent, true);
         this.bonus = bonus;
         this.uver = uver;
-        this.owner = owner;
-        
-        
-        //System.out.println(nazov+" "+multiplikator+" "+porovnavac);
+        this.owner = owner;        
         
         if (bonus != null){
             jtfNazov.setText(bonus.getNazov());
@@ -175,6 +172,10 @@ public class JDPodmineka extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * vytvori novy alebo upravy stary bonus
+     * @param evt 
+     */
     private void btnUlozActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUlozActionPerformed
         String novyNazov = jtfNazov.getText().substring(0, Math.min(MAX_LENGTH, jtfNazov.getText().length()));
         BigDecimal novyJeVacsiAko = new BigDecimal(jftfVacsiAko.getText());

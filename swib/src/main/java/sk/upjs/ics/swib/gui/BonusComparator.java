@@ -6,6 +6,7 @@ import sk.upjs.ics.swib.entity.Bonus;
 /**
  *
  * @author Johnny
+ * ale nechce sa mi uz
  */
 public class BonusComparator implements Comparator<Bonus> {
 
