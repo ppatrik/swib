@@ -30,6 +30,11 @@ public class JDSpravujUvery extends javax.swing.JDialog {
         initComponents();
         jcombUvery.setModel(uverComboBoxModel);
     }
+    
+    void setBonusListModel(BonusListModel bonusListModel){
+        this.bonusListModel = bonusListModel;
+        jlZoznamUverov.setModel(bonusListModel);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -145,12 +150,12 @@ public class JDSpravujUvery extends javax.swing.JDialog {
     }//GEN-LAST:event_jlZoznamUverovMouseClicked
 
     private void btnPridajPodmienkuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPridajPodmienkuActionPerformed
-        JDPodmineka jDPodmineka = new JDPodmineka(myParent, vybranyUver);
-        jDPodmineka.setVisible(true);
+        JDPodmineka jDPodmineka = new JDPodmineka(myParent, vybranyUver, this);
+        jDPodmineka.setVisible(true);        
     }//GEN-LAST:event_btnPridajPodmienkuActionPerformed
 
     private void btnUpravPodmienkuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpravPodmienkuActionPerformed
-        JDPodmineka jDPodmineka = new JDPodmineka(myParent, vybranyUver, vybranyBonus);
+        JDPodmineka jDPodmineka = new JDPodmineka(myParent, vybranyUver, vybranyBonus, this);
         jDPodmineka.setVisible(true);
     }//GEN-LAST:event_btnUpravPodmienkuActionPerformed
 
