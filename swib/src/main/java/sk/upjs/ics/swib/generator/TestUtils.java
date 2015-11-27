@@ -23,20 +23,20 @@ public class TestUtils {
         int rangeMax = 0;
         switch (financnePostavenie) {
             case KLIENT_MILIONAR:
-                rangeMin = 1000000;
-                rangeMax = 1000000000;
+                rangeMin = 100000;
+                rangeMax = 10000000;
                 break;
             case KLIENT_BOHAC:
-                rangeMin = 50000;
-                rangeMax = 5000000;
+                rangeMin = 3000;
+                rangeMax = 10000;
                 break;
             case KLIENT_NORMAL:
                 rangeMin = 1000;
-                rangeMax = 300000;
+                rangeMax = 3000;
                 break;
             case KLIENT_CHUDOBNY:
                 rangeMin = 0;
-                rangeMax = 2500;
+                rangeMax = 1000;
                 break;
             default:
                 break;
@@ -50,20 +50,20 @@ public class TestUtils {
         int rangeMax = 0;
         switch (financnePostavenie) {
             case KLIENT_MILIONAR:
-                rangeMin = 100000;
+                rangeMin = 10000;
                 rangeMax = 1000000;
                 break;
             case KLIENT_BOHAC:
-                rangeMin = 10000;
-                rangeMax = 100000;
+                rangeMin = 2500;
+                rangeMax = 20000;
                 break;
             case KLIENT_NORMAL:
-                rangeMin = 1000;
-                rangeMax = 5000;
+                rangeMin = 800;
+                rangeMax = 2000;
                 break;
             case KLIENT_CHUDOBNY:
                 rangeMin = 300;
-                rangeMax = 1000;
+                rangeMax = 600;
                 break;
             default:
                 break;
@@ -77,15 +77,17 @@ public class TestUtils {
         if (date / 3 == 4) {
             return plat;
         }
-        int minDivisor = (financnePostavenie == KLIENT_BOHAC || financnePostavenie == KLIENT_MILIONAR) ? 15 : 20;
+        int minDivisor = (financnePostavenie == KLIENT_BOHAC || financnePostavenie == KLIENT_MILIONAR) ? 10 : 15;
         BigDecimal divisor = new BigDecimal((int) (Math.random() * 10) + minDivisor);
         int random = (int) (Math.random() * 50) + 1;
         boolean vydaj = false;
-        int randomPrijemVydaj = (int) (Math.random() * 3) + 1;
+        int randomPrijemVydaj = (int) (Math.random() * 10) + 1;
         switch (financnePostavenie) {
             case KLIENT_MILIONAR:
+                vydaj = (randomPrijemVydaj <= 5);
+                break;
             case KLIENT_BOHAC:
-                vydaj = (randomPrijemVydaj == 1);
+                vydaj = (randomPrijemVydaj <= 2);
                 break;
             case KLIENT_NORMAL:
             case KLIENT_CHUDOBNY:

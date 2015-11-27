@@ -45,6 +45,7 @@ public class GenUctPohyb {
                     TestUtils.pridajPohyb(pohyb, jdbcTemplate);
                 }
             }
+            System.out.println(klientDao.mozeNaMesiacMaximalneSplacat(klient));
         }
     }
 
@@ -80,7 +81,17 @@ public class GenUctPohyb {
         } while (cislaUctov.contains(randomIntCisUc));
         cislaUctov.add(randomIntCisUc);
 
-        int financnePostavenie = (int) (Math.random() * 4);
+        int financnePostavenie = 1;
+        int randomFP = (int) (Math.random()*50) + 1;
+        if (randomFP > 0 && randomFP <= 10) {
+            financnePostavenie = 0;
+        } else if(randomFP > 10 && randomFP <=44){
+            financnePostavenie = 1;
+        } else if (randomFP > 44 && randomFP <= 49){
+            financnePostavenie = 2;
+        } else if (randomFP == 50){
+            financnePostavenie = 3;
+        }
 
         Ucet ucet = new Ucet();
         ucet.setId(klient.getId());
