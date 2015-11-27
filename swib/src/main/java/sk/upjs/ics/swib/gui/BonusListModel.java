@@ -44,5 +44,39 @@ public class BonusListModel extends AbstractListModel {
     public void pirdajBonus(Bonus bonus) {
         databazovyBonusDao.pridaj(bonus);
         zoznamBonusov = databazovyBonusDao.dajVsetky(uver);
+    }   
+    
+    void hore(Bonus bonus) {
+        int poradie = bonus.getOrderNumber();        
+        for (Bonus b : zoznamBonusov) {
+            if (b.getOrderNumber() == poradie-1){
+                b.setOrderNumber(poradie);
+                bonus.setOrderNumber(poradie-1);
+                databazovyBonusDao.uprav(bonus);
+                databazovyBonusDao.uprav(b);
+                break;
+            }
+        }      
+        refresh();
+    }
+
+    void dole(Bonus bonus) {
+        int poradie = bonus.getOrderNumber();        
+        for (Bonus b : zoznamBonusov) {
+            if (b.getOrderNumber() == poradie+1){
+                b.setOrderNumber(poradie);
+                bonus.setOrderNumber(poradie+1);
+                databazovyBonusDao.uprav(bonus);
+                databazovyBonusDao.uprav(b);
+                break;
+            }
+        }
+        refresh();
+    }
+    
+    private void refresh(){
+        zoznamBonusov = databazovyBonusDao.dajVsetky(uver);
+        Collections.sort(zoznamBonusov, bonusComparator);
+        fireContentsChanged(uver, 0, zoznamBonusov.size());
     }
 }

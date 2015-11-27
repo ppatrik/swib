@@ -176,7 +176,7 @@ public class JDPodmineka extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnUlozActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUlozActionPerformed
-        String novyNazov = jtfNazov.getText().substring(0, MAX_LENGTH);
+        String novyNazov = jtfNazov.getText().substring(0, Math.min(MAX_LENGTH, jtfNazov.getText().length()));
         BigDecimal novyJeVacsiAko = new BigDecimal(jftfVacsiAko.getText());
         BigDecimal novaVyskaBonusu = new BigDecimal(jftfVyskaBonusu.getText());
         Multiplikator novyM = multiplicatorComboBoxModel.getMultiplikator(jcombMultiplikator.getSelectedIndex());
@@ -190,7 +190,7 @@ public class JDPodmineka extends javax.swing.JDialog {
             novyBonus.setKolkoJeBonus(novaVyskaBonusu);
             novyBonus.setMultiplikatorId(novyM.getId());
             novyBonus.setPorovnavacId(novyP.getId());
-            novyBonus.setOrderNumber(new BonusListModel(uver).getSize());
+            novyBonus.setOrderNumber(Math.max(new BonusListModel(uver).getSize(), 1));
             databazovyBonusDao.pridaj(novyBonus);            
             System.out.println("Pridany novy bonus");
         } else {            
