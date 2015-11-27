@@ -18,7 +18,7 @@ public class JDPodmineka extends javax.swing.JDialog {
     
     private final MultiplicatorComboBoxModel multiplicatorComboBoxModel = new MultiplicatorComboBoxModel();
     private final PorovnavacComboBoxModel porovnavacComboBoxModel = new PorovnavacComboBoxModel();    
-    private final DatabazovyBonusDao databazovyBonusDao = new DatabazovyBonusDao(DaoFactory.INSTANCE.jdbcTemplate());
+    private final DatabazovyBonusDao databazovyBonusDao = DaoFactory.INSTANCE.databazovyBonusDao();
     private Uver uver;
     private Bonus bonus;
     private JDSpravujUvery owner;
@@ -48,7 +48,8 @@ public class JDPodmineka extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         jcombMultiplikator.setModel(multiplicatorComboBoxModel);
-        jcombPorovnavac.setModel(porovnavacComboBoxModel);                     
+        jcombPorovnavac.setModel(porovnavacComboBoxModel);         
+        setTitle("Správa podmienok");
     }
 
     /**

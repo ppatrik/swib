@@ -3,7 +3,6 @@ package sk.upjs.ics.swib.gui;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyPohybDao;
 import sk.upjs.ics.swib.entity.Pohyb;
 import sk.upjs.ics.swib.entity.Ucet;
@@ -17,8 +16,7 @@ public class PohybTableModel extends AbstractTableModel{
     
     private Ucet ucet;
     private List<Pohyb> pohyby;
-    private final JdbcTemplate jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-    private final DatabazovyPohybDao databazovyPohybDao = new DatabazovyPohybDao(jdbcTemplate);
+    private final DatabazovyPohybDao databazovyPohybDao = DaoFactory.INSTANCE.databazovyPohybDao();
     
     private static final int COLUMN_NUMBER = 2;
     private static final String[] COLUMN_TITLE = {"Dátum", "Suma"};
@@ -61,6 +59,7 @@ public class PohybTableModel extends AbstractTableModel{
         fireTableDataChanged();
     }
     
+    @Override
     public String getColumnName(int column){
         return COLUMN_TITLE[column];
     }

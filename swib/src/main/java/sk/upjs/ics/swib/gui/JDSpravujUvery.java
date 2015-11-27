@@ -1,8 +1,6 @@
 package sk.upjs.ics.swib.gui;
 
-import java.awt.Frame;
 import java.math.BigDecimal;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import sk.upjs.ics.swib.entity.Bonus;
 import sk.upjs.ics.swib.entity.Uver;
@@ -31,6 +29,7 @@ public class JDSpravujUvery extends javax.swing.JDialog {
         setTitle("Spravuj úvery");
         initComponents();
         jcombUvery.setModel(uverComboBoxModel);
+        setTitle("Správa úverov");
     }
 
     void setBonusListModel(BonusListModel bonusListModel) {

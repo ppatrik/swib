@@ -27,7 +27,8 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         jcombZoznamUverov.setModel(uverComboBoxModel);
-        jtfPMP.setText("0");
+        jtfPMP.setText("0");       
+        setTitle("Vzpočítaj úver • " + klient.getMeno() + " " + klient.getPriezvisko());
     }
 
     public JDVypocitajUver(java.awt.Frame parent, Klient klient) {
@@ -299,6 +300,13 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
+        /* zerem parky na ranajky
+         * mozem kaslat paradajky
+         * zerem buchty plne maku
+         * ponuknem aj tvoju mamku
+         * zerem salam buchty syry
+         * uz ti isto tecu sliny
+        */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JDVypocitajUver dialog = new JDVypocitajUver(new javax.swing.JFrame(), true);

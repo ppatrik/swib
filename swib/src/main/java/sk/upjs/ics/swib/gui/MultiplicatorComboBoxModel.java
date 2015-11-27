@@ -3,7 +3,6 @@ package sk.upjs.ics.swib.gui;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyMultiplikatorDao;
 import sk.upjs.ics.swib.entity.Multiplikator;
 import sk.upjs.ics.swib.factory.DaoFactory;
@@ -12,11 +11,11 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  *
  * @author Johnny
  */
-class MultiplicatorComboBoxModel extends AbstractListModel implements ComboBoxModel{
-    JdbcTemplate jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-    DatabazovyMultiplikatorDao databazovyMultiplikatorDao = new DatabazovyMultiplikatorDao(jdbcTemplate);
-    List<Multiplikator> zoznamMultiplikatorov = databazovyMultiplikatorDao.dajVsetky();
-    Object vybranyMultiplikator;
+class MultiplicatorComboBoxModel extends AbstractListModel implements ComboBoxModel{    
+    
+    private final DatabazovyMultiplikatorDao databazovyMultiplikatorDao = DaoFactory.INSTANCE.databazovyMultiplikatorDao();
+    private final List<Multiplikator> zoznamMultiplikatorov = databazovyMultiplikatorDao.dajVsetky();
+    private Object vybranyMultiplikator;
 
     @Override
     public int getSize() {

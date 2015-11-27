@@ -28,11 +28,9 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="lblHladaj" min="-2" pref="108" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="lblHladaj" min="-2" pref="171" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="btnZobraz" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnUprav" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnVymaz" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -58,7 +56,6 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblHladaj" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnVymaz" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="btnUprav" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnZobraz" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnPocitajUver" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
@@ -111,12 +108,6 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVymazActionPerformed"/>
       </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="btnUprav">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="Uprav"/>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JButton" name="btnZobraz">
       <Properties>

@@ -17,6 +17,7 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
      */
     public JFZoznamKlientov() {
         initComponents();
+        setTitle("NÁŠ ÚŽASNÝ PROJEKT");
     }
 
     /**
@@ -32,7 +33,6 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTZoznamKlientov = new javax.swing.JTable();
         btnVymaz = new javax.swing.JButton();
-        btnUprav = new javax.swing.JButton();
         btnZobraz = new javax.swing.JButton();
         btnPocitajUver = new javax.swing.JButton();
         btnSpravujUvery = new javax.swing.JButton();
@@ -66,9 +66,6 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
                 btnVymazActionPerformed(evt);
             }
         });
-
-        btnUprav.setText("Uprav");
-        btnUprav.setEnabled(false);
 
         btnZobraz.setText("Zobraz");
         btnZobraz.setEnabled(false);
@@ -108,11 +105,9 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(lblHladaj, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblHladaj, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnZobraz)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnUprav)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnVymaz)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -133,7 +128,6 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblHladaj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVymaz)
-                    .addComponent(btnUprav)
                     .addComponent(btnZobraz)
                     .addComponent(btnPocitajUver))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
@@ -210,14 +204,12 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
     }
 
     private void disableButtons() {
-        this.btnUprav.setEnabled(false);
         this.btnVymaz.setEnabled(false);
         this.btnZobraz.setEnabled(false);
         this.btnPocitajUver.setEnabled(false);
     }
 
     private void enableButtons() {
-        this.btnUprav.setEnabled(true);
         this.btnVymaz.setEnabled(true);
         this.btnZobraz.setEnabled(true);
         this.btnPocitajUver.setEnabled(true);
@@ -250,7 +242,7 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
-        //</editor-fold>
+        //</editor-fold>        
         //</editor-fold>
 
         /* Create and display the form */
@@ -265,7 +257,6 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
     private javax.swing.JButton btnKoniec;
     private javax.swing.JButton btnPocitajUver;
     private javax.swing.JButton btnSpravujUvery;
-    private javax.swing.JButton btnUprav;
     private javax.swing.JButton btnVymaz;
     private javax.swing.JButton btnZobraz;
     private javax.swing.JScrollPane jScrollPane1;
