@@ -14,6 +14,7 @@ import sk.upjs.ics.swib.dao.DatabazovyUverDao;
 import sk.upjs.ics.swib.entity.Bonus;
 import sk.upjs.ics.swib.entity.Uver;
 import sk.upjs.ics.swib.factory.DaoFactory;
+import sk.upjs.ics.swib.generator.TestUtils;
 
 /**
  *
@@ -24,37 +25,37 @@ import sk.upjs.ics.swib.factory.DaoFactory;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DatabazovyBonusDaoTest {
 
-    /*
-    
-     UPOZORNENIE!!!
-    
-     Pocet bonusov sa moze zmenit, teda treba pred testovanim overit,
-     kolko ich v dazabaze naozaj je (napr cez squirell)
-
-     */
     private JdbcTemplate jdbcTemplate;
     private DatabazovyBonusDao databazovyBonusDao;
     private Uver uver;
 
-    private static final int POCET_BONUSOV = 1;
-
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
+
+        DatabazovyUverDao dao = DaoFactory.INSTANCE.databazovyUverDao();
+        List<Uver> uvery = dao.dajVsetky();
+        if (!uvery.isEmpty()) {
+            uver = uvery.get(0);
+        }
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyBonusDao = new DatabazovyBonusDao(jdbcTemplate);
-        DatabazovyUverDao dao = new DatabazovyUverDao(jdbcTemplate);
-        uver = dao.dajVsetky().get(0);
+        this.databazovyBonusDao = DaoFactory.INSTANCE.databazovyBonusDao();
     }
 
     @Test
     public void testAdajVsetky() {
+        if (uver == null) {
+            return;
+        }
         List<Bonus> zoznamBonusov = databazovyBonusDao.dajVsetky(uver);
-        assertEquals(POCET_BONUSOV, zoznamBonusov.size());
+        assertEquals(TestUtils.pocetBonusov(uver), zoznamBonusov.size());
     }
 
     @Test
     public void testBpridaj() {
+        if (uver == null) {
+            return;
+        }
         List<Bonus> zoznamBonusovPov = databazovyBonusDao.dajVsetky(uver);
         Bonus bonus = new Bonus();
         bonus.setJeVacsiAko(new BigDecimal(BigInteger.ONE));
@@ -71,6 +72,9 @@ public class DatabazovyBonusDaoTest {
 
     @Test
     public void testCuprav() {
+        if (uver == null) {
+            return;
+        }
         List<Bonus> zoznamBonusov = databazovyBonusDao.dajVsetky(uver);
         if (zoznamBonusov.isEmpty()) {
             return;
@@ -91,6 +95,9 @@ public class DatabazovyBonusDaoTest {
 
     @Test
     public void testDodstran() {
+        if (uver == null) {
+            return;
+        }
         List<Bonus> zoznamBonusovPov = databazovyBonusDao.dajVsetky(uver);
         if (zoznamBonusovPov.isEmpty()) {
             return;

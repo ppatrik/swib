@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyUverDao;
 import sk.upjs.ics.swib.entity.Uver;
 import sk.upjs.ics.swib.factory.DaoFactory;
+import sk.upjs.ics.swib.generator.TestUtils;
 
 /**
  *
@@ -21,30 +22,20 @@ import sk.upjs.ics.swib.factory.DaoFactory;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DatabazovyUverDaoTest {
 
-    /*
-    
-     UPOZORNENIE!!!
-    
-     Pocet uverov sa moze zmenit, teda treba pred testovanim overit,
-     kolko ich v dazabaze naozaj je (napr cez squirell)
-
-     */
     private JdbcTemplate jdbcTemplate;
     private DatabazovyUverDao databazovyUverDao;
-
-    private static final int POCET_UVEROV = 1;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyUverDao = new DatabazovyUverDao(jdbcTemplate);
+        this.databazovyUverDao = DaoFactory.INSTANCE.databazovyUverDao();
     }
 
     @Test
     public void testAdajVsetky() {
         List<Uver> zoznamUverov = databazovyUverDao.dajVsetky();
-        assertEquals(POCET_UVEROV, zoznamUverov.size());
+        assertEquals(TestUtils.pocetZDB("Uvery"), zoznamUverov.size());
     }
 
     @Test

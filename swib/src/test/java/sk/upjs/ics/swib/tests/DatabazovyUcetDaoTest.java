@@ -14,6 +14,7 @@ import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Ucet;
 import sk.upjs.ics.swib.factory.DaoFactory;
+import sk.upjs.ics.swib.generator.TestUtils;
 
 /**
  * @author kubedo8
@@ -23,33 +24,27 @@ import sk.upjs.ics.swib.factory.DaoFactory;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DatabazovyUcetDaoTest {
 
-    /*
-    
-     UPOZORNENIE!!!
-    
-     Pocet uctov sa moze zmenit, teda treba pred testovanim overit,
-     kolko ich v dazabaze naozaj je (napr cez squirell)
-
-     */
     private JdbcTemplate jdbcTemplate;
     private DatabazovyUcetDao databazovyUcetDao;
     private Klient klient;
-    private static final int POCET_UCTOV = 1;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
-        this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyUcetDao = new DatabazovyUcetDao(jdbcTemplate);
-        DatabazovyKlientDao dao = new DatabazovyKlientDao(jdbcTemplate);
-        klient = dao.dajVsetkych().get(0);
 
+        DatabazovyKlientDao dao = DaoFactory.INSTANCE.databazovyKlientDao();
+        List<Klient> klienti = dao.dajVsetkych();
+        if (!klienti.isEmpty()) {
+            klient = klienti.get(0);
+        }
+        this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
+        this.databazovyUcetDao = DaoFactory.INSTANCE.databazovyUcetDao();
     }
 
     @Test
     public void testAdajVsetky() {
         List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky(klient);
-        assertEquals(POCET_UCTOV, zoznamUctov.size());
+        assertEquals(TestUtils.pocetUctov(klient), zoznamUctov.size());
     }
 
     @Test

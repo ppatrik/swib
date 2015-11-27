@@ -13,6 +13,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.factory.DaoFactory;
+import sk.upjs.ics.swib.generator.TestUtils;
 
 /**
  *
@@ -23,31 +24,20 @@ import sk.upjs.ics.swib.factory.DaoFactory;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class DatabazovyKlientDaoTest {
 
-    /*
-    
-     UPOZORNENIE!!!
-    
-     Pocet pre pocet klientov sa moze zmenit, teda treba pred testovanim overit,
-     kolko ich v dazabaze naozaj je (napr cez squirell)
-    
-     */
     private JdbcTemplate jdbcTemplate;
-
     private DatabazovyKlientDao databazovyKlientDao;
-
-    private static final int POCET_KLIENTOV = 48;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        databazovyKlientDao = new DatabazovyKlientDao(jdbcTemplate);
+        this.databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
     }
 
     @Test
     public void testAdajVsetkych() {
         List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
-        assertEquals(POCET_KLIENTOV, zoznamKlientov.size());
+        assertEquals(TestUtils.pocetZDB("Klient"), zoznamKlientov.size());
     }
 
     @Test
@@ -103,7 +93,6 @@ public class DatabazovyKlientDaoTest {
 
         List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
         assertEquals(zoznamKlientovPov.size() - 1, zoznamKlientov.size());
-
     }
 
     @Test
@@ -113,9 +102,7 @@ public class DatabazovyKlientDaoTest {
             return;
         }
         Klient klient = zoznamKlientov.get(0);
-        System.out.println(klient.getId());
         BigDecimal maxSplacat = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient).setScale(4, RoundingMode.DOWN);
-        BigDecimal expected = new BigDecimal("172.23615").setScale(4, RoundingMode.DOWN);
-        assertEquals(expected, maxSplacat);
+        assertEquals(TestUtils.maxSplatky(klient), maxSplacat);
     }
 }

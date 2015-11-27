@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyMultiplikatorDao;
 import sk.upjs.ics.swib.entity.Multiplikator;
 import sk.upjs.ics.swib.factory.DaoFactory;
+import sk.upjs.ics.swib.generator.TestUtils;
 
 /**
  *
@@ -15,36 +16,31 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 public class DatabazovyMultiplikatorDaoTest {
 
-    /*
-    
-     UPOZORNENIE!!!
-    
-     Pocet sa moze zmenit, teda treba pred testovanim overit,
-     kolko ich v dazabaze naozaj je (napr cez squirell)
-
-     */
     private JdbcTemplate jdbcTemplate;
     private DatabazovyMultiplikatorDao databazovyMultiplikatorDao;
-
-    private static final int POCET = 1;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyMultiplikatorDao = new DatabazovyMultiplikatorDao(jdbcTemplate);
+        this.databazovyMultiplikatorDao = DaoFactory.INSTANCE.databazovyMultiplikatorDao();
     }
 
     @Test
     public void dajVsetkyTest() {
         List<Multiplikator> vsetky = databazovyMultiplikatorDao.dajVsetky();
-        assertEquals(POCET, vsetky.size());
+        assertEquals(TestUtils.pocetZDB("Multiplikator"), vsetky.size());
     }
 
     @Test
     public void dajIndexTest() {
-        int id = databazovyMultiplikatorDao.dajIndex("skuska");
-        assertEquals(id, 1);
+        List<Multiplikator> vsetky = databazovyMultiplikatorDao.dajVsetky();
+        if (vsetky.isEmpty()) {
+            return;
+        }
+        Multiplikator multiplikator = vsetky.get(0);
+        int id = databazovyMultiplikatorDao.dajIndex(multiplikator.getNazov());
+        assertEquals(multiplikator.getId(), id);
     }
 
 }

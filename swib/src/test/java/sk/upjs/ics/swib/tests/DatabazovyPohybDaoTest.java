@@ -12,6 +12,7 @@ import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Pohyb;
 import sk.upjs.ics.swib.entity.Ucet;
 import sk.upjs.ics.swib.factory.DaoFactory;
+import sk.upjs.ics.swib.generator.TestUtils;
 
 /**
  *
@@ -19,34 +20,34 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 public class DatabazovyPohybDaoTest {
 
-    /*
-    
-     UPOZORNENIE!!!
-    
-     Pocet pohybov sa moze zmenit, teda treba pred testovanim overit,
-     kolko ich v dazabaze naozaj je (napr cez squirell)
-
-     */
     private JdbcTemplate jdbcTemplate;
     private DatabazovyPohybDao databazovyPohybDao;
     private Ucet ucet;
 
-    private static final int POCET_POHYBOV = 122;
-
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
+
+        DatabazovyKlientDao klientDao = DaoFactory.INSTANCE.databazovyKlientDao();
+        List<Klient> klienti = klientDao.dajVsetkych();
+        if (!klienti.isEmpty()) {
+            Klient klient = klienti.get(0);
+            DatabazovyUcetDao ucetDao = DaoFactory.INSTANCE.databazovyUcetDao();
+            List<Ucet> ucty = ucetDao.dajVsetky(klient);
+            if (!ucty.isEmpty()) {
+                this.ucet = ucty.get(0);
+            }
+        }
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        databazovyPohybDao = new DatabazovyPohybDao(jdbcTemplate);
-        DatabazovyKlientDao dao1 = new DatabazovyKlientDao(jdbcTemplate);
-        Klient klient = dao1.dajVsetkych().get(0);
-        DatabazovyUcetDao dao2 = new DatabazovyUcetDao(jdbcTemplate);
-        ucet = dao2.dajVsetky(klient).get(0);
+        this.databazovyPohybDao = DaoFactory.INSTANCE.databazovyPohybDao();
     }
 
     @Test
     public void dajVsetkyTest() {
+        if (ucet == null) {
+            return;
+        }
         List<Pohyb> zoznamPohybov = databazovyPohybDao.dajVsetky(ucet);
-        assertEquals(POCET_POHYBOV, zoznamPohybov.size());
+        assertEquals(TestUtils.pocetPohybov(ucet), zoznamPohybov.size());
     }
 }

@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyPorovnavacDao;
 import sk.upjs.ics.swib.entity.Porovnavac;
 import sk.upjs.ics.swib.factory.DaoFactory;
+import sk.upjs.ics.swib.generator.TestUtils;
 
 /**
  *
@@ -15,36 +16,32 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 public class DatabazovyPorovnavacDaoTest {
 
-    /*
-    
-     UPOZORNENIE!!!
-    
-     Pocet sa moze zmenit, teda treba pred testovanim overit,
-     kolko ich v dazabaze naozaj je (napr cez squirell)
-
-     */
     private JdbcTemplate jdbcTemplate;
     private DatabazovyPorovnavacDao databazovyPorovnavacDao;
-
-    private static final int POCET = 1;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyPorovnavacDao = new DatabazovyPorovnavacDao(jdbcTemplate);
+        this.databazovyPorovnavacDao = DaoFactory.INSTANCE.databazovyPorovnavacDao();
     }
 
     @Test
     public void dajVsetkyTest() {
         List<Porovnavac> vsetky = databazovyPorovnavacDao.dajVsetky();
-        assertEquals(POCET, vsetky.size());
+        assertEquals(TestUtils.pocetZDB("CoPorovnavam"), vsetky.size());
     }
 
     @Test
     public void dajIndexTest() {
-        int id = databazovyPorovnavacDao.dajIndex("skuska");
-        assertEquals(id, 1);
+        List<Porovnavac> vsetky = databazovyPorovnavacDao.dajVsetky();
+        if (vsetky.isEmpty()) {
+            return;
+        }
+        Porovnavac porovnavac = vsetky.get(0);
+
+        int id = databazovyPorovnavacDao.dajIndex(porovnavac.getNazov());
+        assertEquals(porovnavac.getId(), id);
     }
 
 }
