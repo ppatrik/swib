@@ -16,11 +16,13 @@ public class OfiCalculator implements Calculator{
  
     DatabazovyBonusDao databazovyBonusDao = DaoFactory.INSTANCE.databazovyBonusDao();
     DatabazovyKlientDao databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
-    
+    private BigDecimal klientovaRealnaHodnota;
     
     @Override
     public void uplatniBonus(BigDecimal nasobic, Bonus bonus) {
-        nasobic = nasobic.add(bonus.getKolkoJeBonus());
+        if(this.klientovaRealnaHodnota.compareTo(bonus.getJeVacsiAko()) == 1){
+            nasobic = nasobic.add(bonus.getKolkoJeBonus());
+        }
     }
 
     @Override
@@ -33,13 +35,16 @@ public class OfiCalculator implements Calculator{
               }
 
     @Override
-    public BigDecimal mesacnaUrokovaSadzba(Klient klient, BigDecimal sumaNaPozicanie, int dobaVMesiacoch, Uver uver) throws NieJeMozneSplacat {
+    public BigDecimal mesacnaUrokovaSadzba(Klient klient, BigDecimal sumaNaPozicanie, int dobaVMesiacoch, Uver uver, BigDecimal klientovaRealnaHodnota, int pocetDeti) throws NieJeMozneSplacat {
+       this.klientovaRealnaHodnota = klientovaRealnaHodnota;
        BigDecimal maxKlientoveMesacneSplatky = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient);
        BigDecimal nasobic = BigDecimal.ONE;
        uplatniBonusy(nasobic, uver);
        sumaNaPozicanie = sumaNaPozicanie.multiply(nasobic);
        BigDecimal decimalDobaVMesiacoch = new BigDecimal(dobaVMesiacoch);
        sumaNaPozicanie = sumaNaPozicanie.divide(decimalDobaVMesiacoch);
+       maxKlientoveMesacneSplatky = maxKlientoveMesacneSplatky.subtract(uver.getBonusNaManzelku());
+       maxKlientoveMesacneSplatky = maxKlientoveMesacneSplatky.subtract((new BigDecimal(pocetDeti)).multiply(uver.getBonusNaDieta()));
        if (sumaNaPozicanie.compareTo(maxKlientoveMesacneSplatky) <= 0){
            return sumaNaPozicanie;
        } else{
@@ -47,6 +52,15 @@ public class OfiCalculator implements Calculator{
        }
          
     }
+
+    public void setKlientovaRealnaHodnota(BigDecimal klientovaRealnaHodnota) {
+        this.klientovaRealnaHodnota = klientovaRealnaHodnota;
+    }
+
+    public BigDecimal getKlientovaRealnaHodnota() {
+        return klientovaRealnaHodnota;
+    }
+    
     
 }
 

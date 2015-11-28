@@ -67,6 +67,8 @@ public interface Calculator {
      * @param sumaNaPozicanie suma, ktoru si klient chce poziciat
      * @param dobaVMesiacoch doba, kolko mesiacov chce klient pozicku splacat
      * @param uver typ uveru, aky si klient vybral
+     * @param klientovaRealnaHodnota zadana hodnota od klienta
+     * @param pocetDeti pocet deti
      * @return vrati vypocitanu mesacnu urokovu sadzbu
      * @throws NieJeMozneSplacat vyhodi vynimku ak pre daneho klienta nie je
      * mozne splacat na zaklade zvolencyh paramatrov zvoleny uver
@@ -75,6 +77,8 @@ public interface Calculator {
             Klient klient,
             BigDecimal sumaNaPozicanie,
             int dobaVMesiacoch,
-            Uver uver)
+            Uver uver,
+            BigDecimal klientovaRealnaHodnota,
+            int pocetDeti)
             throws NieJeMozneSplacat;
 }
