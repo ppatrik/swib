@@ -1,7 +1,9 @@
 package sk.upjs.ics.swib.gui;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
+import javafx.print.Collation;
 import javax.swing.table.AbstractTableModel;
 import sk.upjs.ics.swib.dao.DatabazovyPohybDao;
 import sk.upjs.ics.swib.entity.Pohyb;
@@ -17,6 +19,7 @@ public class PohybTableModel extends AbstractTableModel{
     private Ucet ucet;
     private List<Pohyb> pohyby;
     private final DatabazovyPohybDao databazovyPohybDao = DaoFactory.INSTANCE.databazovyPohybDao();
+    private final PohybComparator pohybComparator = new PohybComparator();
     
     private static final int COLUMN_NUMBER = 2;
     private static final String[] COLUMN_TITLE = {"Dátum", "Suma"};
@@ -28,6 +31,7 @@ public class PohybTableModel extends AbstractTableModel{
     public PohybTableModel(Ucet ucet) {
         this.ucet = ucet;
         this.pohyby = this.databazovyPohybDao.dajVsetky(ucet);
+        Collections.sort(pohyby, pohybComparator);
     }        
 
     @Override

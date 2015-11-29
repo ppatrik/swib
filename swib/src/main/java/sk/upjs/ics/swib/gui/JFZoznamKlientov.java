@@ -67,7 +67,7 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
             }
         });
 
-        btnZobraz.setText("Zobraz");
+        btnZobraz.setText("Zobraz...");
         btnZobraz.setEnabled(false);
         btnZobraz.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -75,7 +75,7 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
             }
         });
 
-        btnPocitajUver.setText("Počítaj úver");
+        btnPocitajUver.setText("Počítaj úver...");
         btnPocitajUver.setEnabled(false);
         btnPocitajUver.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -111,7 +111,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnZobraz">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Zobraz"/>
+        <Property name="text" type="java.lang.String" value="Zobraz..."/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
@@ -120,7 +120,7 @@
     </Component>
     <Component class="javax.swing.JButton" name="btnPocitajUver">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Po&#x10d;&#xed;taj &#xfa;ver"/>
+        <Property name="text" type="java.lang.String" value="Po&#x10d;&#xed;taj &#xfa;ver..."/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
