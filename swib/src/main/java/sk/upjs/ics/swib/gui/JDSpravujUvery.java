@@ -1,6 +1,7 @@
 package sk.upjs.ics.swib.gui;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 import javax.swing.JOptionPane;
 import sk.upjs.ics.swib.entity.Bonus;
 import sk.upjs.ics.swib.entity.Uver;
@@ -57,8 +58,8 @@ public class JDSpravujUvery extends javax.swing.JDialog {
         btnNovy = new javax.swing.JButton();
         lblSumaZaDieta = new javax.swing.JLabel();
         lblSumaZaManzelku = new javax.swing.JLabel();
-        jftfSumaZaDieta = new javax.swing.JFormattedTextField();
-        jftfSumaZaManzelku = new javax.swing.JFormattedTextField();
+        jsSumaZaDieta = new javax.swing.JSpinner();
+        jsSumaZaManzelku = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -129,13 +130,10 @@ public class JDSpravujUvery extends javax.swing.JDialog {
         lblSumaZaManzelku.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblSumaZaManzelku.setText("Suma za manželku:");
 
-        jftfSumaZaDieta.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        jftfSumaZaDieta.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jftfSumaZaDieta.setText("0");
+        jsSumaZaDieta.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(0.01d)));
+        jsSumaZaDieta.setEnabled(false);
 
-        jftfSumaZaManzelku.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        jftfSumaZaManzelku.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jftfSumaZaManzelku.setText("0");
+        jsSumaZaManzelku.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -148,10 +146,10 @@ public class JDSpravujUvery extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblSumaZaManzelku)
                             .addComponent(lblSumaZaDieta))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(10, 10, 10)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jftfSumaZaDieta, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
-                            .addComponent(jftfSumaZaManzelku))
+                            .addComponent(jsSumaZaDieta, javax.swing.GroupLayout.DEFAULT_SIZE, 74, Short.MAX_VALUE)
+                            .addComponent(jsSumaZaManzelku))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnOK))
                     .addGroup(layout.createSequentialGroup()
@@ -170,7 +168,7 @@ public class JDSpravujUvery extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(16, Short.MAX_VALUE)
+                .addContainerGap(13, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcombUvery, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnNovy))
@@ -186,14 +184,14 @@ public class JDSpravujUvery extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnPosunNadol)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSumaZaDieta)
-                    .addComponent(jftfSumaZaDieta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jsSumaZaDieta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblSumaZaManzelku)
-                    .addComponent(jftfSumaZaManzelku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnOK))
+                    .addComponent(btnOK)
+                    .addComponent(jsSumaZaManzelku, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(3, 3, 3))
         );
 
@@ -207,7 +205,11 @@ public class JDSpravujUvery extends javax.swing.JDialog {
 
     private void jcombUveryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcombUveryActionPerformed
         if (vybranyUver != null) {
-            ulozBonusy();
+            ulozBonusy();            
+            vybranyBonus = null;
+            btnPosunNadol.setEnabled(false);
+            btnPosunNahor.setEnabled(false);
+            btnUpravBonus.setEnabled(false);
         }
 
         int index = jcombUvery.getSelectedIndex();
@@ -216,18 +218,24 @@ public class JDSpravujUvery extends javax.swing.JDialog {
             bonusListModel = new BonusListModel(vybranyUver);
             jlZoznamBonusov.setModel(bonusListModel);
             btnPridajBonus.setEnabled(true);
-            jftfSumaZaDieta.setText(vybranyUver.getBonusNaDieta().toString());
-            jftfSumaZaManzelku.setText(vybranyUver.getBonusNaManzelku().toString());
+            //jftfSumaZaDieta.setText(vybranyUver.getBonusNaDieta().toString());
+            jsSumaZaDieta.setValue(vybranyUver.getBonusNaDieta().doubleValue());
+            //jftfSumaZaManzelku.setText(vybranyUver.getBonusNaManzelku().toString());
+            jsSumaZaManzelku.setValue(vybranyUver.getBonusNaManzelku().doubleValue());
+            jsSumaZaDieta.setEnabled(true);
+            jsSumaZaManzelku.setEnabled(true);
         }
     }//GEN-LAST:event_jcombUveryActionPerformed
 
     private void ulozBonusy() {
-        BigDecimal sumaZaManzelku = new BigDecimal(jftfSumaZaManzelku.getText());
-        BigDecimal sumaZaDieta = new BigDecimal(jftfSumaZaDieta.getText());
-        if (vybranyUver.getBonusNaManzelku() != sumaZaManzelku || vybranyUver.getBonusNaDieta() != sumaZaDieta) {
-            vybranyUver.setBonusNaManzelku(sumaZaManzelku);
-            vybranyUver.setBonusNaDieta(sumaZaDieta);
-            uverComboBoxModel.uprav(vybranyUver);
+        if (vybranyUver != null) {
+            BigDecimal sumaZaManzelku = new BigDecimal((double)jsSumaZaManzelku.getValue(), MathContext.DECIMAL64); //jftfSumaZaManzelku.getText());
+            BigDecimal sumaZaDieta = new BigDecimal((double)jsSumaZaDieta.getValue(), MathContext.DECIMAL64); //jftfSumaZaDieta.getText());
+            if (vybranyUver.getBonusNaManzelku() != sumaZaManzelku || vybranyUver.getBonusNaDieta() != sumaZaDieta) {
+                vybranyUver.setBonusNaManzelku(sumaZaManzelku);
+                vybranyUver.setBonusNaDieta(sumaZaDieta);
+                uverComboBoxModel.uprav(vybranyUver);
+            }
         }
     }
 
@@ -271,11 +279,18 @@ public class JDSpravujUvery extends javax.swing.JDialog {
                 null,
                 "Nový úver");
 
-        Uver novyUver = new Uver();
-        novyUver.setNazov(nazov);
-        novyUver.setBonusNaDieta(BigDecimal.ZERO);
-        novyUver.setBonusNaManzelku(BigDecimal.ZERO);
-        uverComboBoxModel.pridajUver(novyUver);
+        if (nazov == null) {
+            // do nothing and chill, storno clicked
+        } else if (!(nazov == "Nový úver" || "".equals(nazov))){
+            Uver novyUver = new Uver();
+            novyUver.setNazov(nazov);
+            novyUver.setBonusNaDieta(BigDecimal.ZERO);
+            novyUver.setBonusNaManzelku(BigDecimal.ZERO);
+            uverComboBoxModel.pridajUver(novyUver);
+        //} else 
+        } else {
+            JOptionPane.showMessageDialog(myParent, "Nezadali ste žiadne meno!");
+        }
     }//GEN-LAST:event_btnNovyActionPerformed
 
     private void upravBonus() {
@@ -334,9 +349,9 @@ public class JDSpravujUvery extends javax.swing.JDialog {
     private javax.swing.JButton btnUpravBonus;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JComboBox jcombUvery;
-    private javax.swing.JFormattedTextField jftfSumaZaDieta;
-    private javax.swing.JFormattedTextField jftfSumaZaManzelku;
     private javax.swing.JList jlZoznamBonusov;
+    private javax.swing.JSpinner jsSumaZaDieta;
+    private javax.swing.JSpinner jsSumaZaManzelku;
     private javax.swing.JLabel lblSumaZaDieta;
     private javax.swing.JLabel lblSumaZaManzelku;
     // End of variables declaration//GEN-END:variables

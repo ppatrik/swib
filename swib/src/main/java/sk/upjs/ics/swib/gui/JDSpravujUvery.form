@@ -31,10 +31,10 @@
                           <Component id="lblSumaZaManzelku" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="lblSumaZaDieta" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jftfSumaZaDieta" pref="93" max="32767" attributes="0"/>
-                          <Component id="jftfSumaZaManzelku" max="32767" attributes="0"/>
+                          <Component id="jsSumaZaDieta" pref="74" max="32767" attributes="0"/>
+                          <Component id="jsSumaZaManzelku" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="32767" attributes="0"/>
                       <Component id="btnOK" min="-2" max="-2" attributes="0"/>
@@ -61,7 +61,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <EmptySpace pref="16" max="32767" attributes="0"/>
+              <EmptySpace pref="13" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="jcombUvery" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnNovy" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -80,15 +80,15 @@
                   </Group>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="lblSumaZaDieta" min="-2" max="-2" attributes="0"/>
-                  <Component id="jftfSumaZaDieta" alignment="0" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lblSumaZaDieta" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jsSumaZaDieta" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="lblSumaZaManzelku" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="jftfSumaZaManzelku" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="btnOK" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jsSumaZaManzelku" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
           </Group>
@@ -199,22 +199,17 @@
         <Property name="text" type="java.lang.String" value="Suma za man&#x17e;elku:"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="jftfSumaZaDieta">
+    <Component class="javax.swing.JSpinner" name="jsSumaZaDieta">
       <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format subtype="0" type="0"/>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="0.01" type="number"/>
         </Property>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFormattedTextField" name="jftfSumaZaManzelku">
+    <Component class="javax.swing.JSpinner" name="jsSumaZaManzelku">
       <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format subtype="0" type="0"/>
-        </Property>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="0"/>
+        <Property name="enabled" type="boolean" value="false"/>
       </Properties>
     </Component>
   </SubComponents>

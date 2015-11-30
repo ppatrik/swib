@@ -116,9 +116,25 @@ public class JDKlientInfo extends javax.swing.JDialog {
 
         jtfMeno.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jtfMeno.setText(klient.getMeno());
+        jtfMeno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfMenoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfMenoKeyReleased(evt);
+            }
+        });
 
         jtfPriezvisko.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jtfPriezvisko.setText(klient.getPriezvisko());
+        jtfPriezvisko.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfPriezviskoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfPriezviskoKeyReleased(evt);
+            }
+        });
 
         lblDatumNarodenia.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblDatumNarodenia.setText("Dátum narodenia");
@@ -214,6 +230,22 @@ public class JDKlientInfo extends javax.swing.JDialog {
             jTPohybyUctu.setModel(pohybTableModel);
         }
     }//GEN-LAST:event_jTUctyKlientaMouseClicked
+
+    private void jtfPriezviskoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPriezviskoKeyPressed
+        btnOK.setEnabled(!jtfPriezvisko.getText().equals(""));
+    }//GEN-LAST:event_jtfPriezviskoKeyPressed
+
+    private void jtfMenoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfMenoKeyPressed
+        btnOK.setEnabled(!jtfMeno.getText().equals(""));
+    }//GEN-LAST:event_jtfMenoKeyPressed
+
+    private void jtfMenoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfMenoKeyReleased
+        btnOK.setEnabled(!jtfMeno.getText().equals(""));
+    }//GEN-LAST:event_jtfMenoKeyReleased
+
+    private void jtfPriezviskoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPriezviskoKeyReleased
+        btnOK.setEnabled(!jtfPriezvisko.getText().equals(""));
+    }//GEN-LAST:event_jtfPriezviskoKeyReleased
 
     /**
      * @param args the command line arguments
