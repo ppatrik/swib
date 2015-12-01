@@ -42,6 +42,7 @@ public class DatabazovyUverDaoTest {
     public void testBpridaj() {
         List<Uver> zoznamUverovPov = databazovyUverDao.dajVsetky();
         Uver uver = new Uver();
+        uver.setId((int) (1000000 + Math.random() * 1000000));
         uver.setNazov("skuska2");
         uver.setBonusNaManzelku(BigDecimal.ONE);
         uver.setBonusNaDieta(BigDecimal.TEN);

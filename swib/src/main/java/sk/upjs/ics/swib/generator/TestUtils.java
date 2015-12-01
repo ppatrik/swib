@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.TreeMap;
 import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Pohyb;
@@ -149,11 +150,17 @@ public class TestUtils {
         return id.intValue();
     }
 
-    public static BigDecimal maxSplatky(Klient klient) {
+    public static BigDecimal priemernyMesacnyZostPrir(Klient klient, boolean onlyPositive) {
+        // ak je onlyPositive nastavene na true, pocitame priemerny mesacny prirastok, inak zostatok
         Map<String, BigDecimal> mesiaceZostatky = new HashMap<String, BigDecimal>();
         for (Ucet ucet : DaoFactory.INSTANCE.databazovyUcetDao().dajVsetky(klient)) {
             for (Pohyb pohyb : DaoFactory.INSTANCE.databazovyPohybDao().dajVsetky(ucet)) {
-                String key = pohyb.getDatum().get(Calendar.MONTH) + "" + pohyb.getDatum().get(Calendar.YEAR);
+                if (onlyPositive && pohyb.getSuma().compareTo(new BigDecimal(BigInteger.ZERO)) == -1) {
+                    continue;
+                }
+                int month = pohyb.getDatum().get(Calendar.MONTH);
+                String monthS = (month < 10) ? "0" + month : month + "";
+                String key = pohyb.getDatum().get(Calendar.YEAR) + "" + monthS;
                 if (mesiaceZostatky.containsKey(key)) {
                     BigDecimal suma = mesiaceZostatky.get(key);
                     suma = suma.add(pohyb.getSuma());
@@ -163,12 +170,46 @@ public class TestUtils {
                 }
             }
         }
-        BigDecimal priemer = new BigDecimal(BigInteger.ZERO);
+
+        if (mesiaceZostatky.isEmpty()) {
+            return null;
+        }
+        BigDecimal priemer = new BigDecimal("0.0000");
         for (BigDecimal suma : mesiaceZostatky.values()) {
             priemer = priemer.add(suma);
         }
-        priemer = priemer.divide(new BigDecimal(mesiaceZostatky.size()), 4, RoundingMode.DOWN);
-        return priemer;
+        return priemer.divide(new BigDecimal(mesiaceZostatky.size()), 4, RoundingMode.DOWN);
+    }
+
+    public static BigDecimal priemernyMesacnyZostatok2(Klient klient) {
+        // pocitanie zostatku spolu s predchadzajucimi mesiacmi
+        Map<String, BigDecimal> mesiaceZostatky = new TreeMap<String, BigDecimal>();
+        for (Ucet ucet : DaoFactory.INSTANCE.databazovyUcetDao().dajVsetky(klient)) {
+            for (Pohyb pohyb : DaoFactory.INSTANCE.databazovyPohybDao().dajVsetky(ucet)) {
+                int month = pohyb.getDatum().get(Calendar.MONTH);
+                String monthS = (month < 10) ? "0" + month : month + "";
+                String key = pohyb.getDatum().get(Calendar.YEAR) + "" + monthS;
+                if (mesiaceZostatky.containsKey(key)) {
+                    BigDecimal suma = mesiaceZostatky.get(key);
+                    suma = suma.add(pohyb.getSuma());
+                    mesiaceZostatky.put(key, suma);
+                } else {
+                    mesiaceZostatky.put(key, pohyb.getSuma());
+                }
+            }
+        }
+
+        if (mesiaceZostatky.isEmpty()) {
+            return null;
+        }
+        BigDecimal priemer = new BigDecimal("0.0000");
+        BigDecimal sucetDoteraz  = new BigDecimal("0.0000");
+        // TreeMap a spravne vyskladanie kluca mi zabezpeci, ze mesiace pojdu zaradom, aj roky
+        for (BigDecimal suma : mesiaceZostatky.values()) {
+            sucetDoteraz = sucetDoteraz.add(suma);
+            priemer = priemer.add(sucetDoteraz);
+        }
+        return priemer.divide(new BigDecimal(mesiaceZostatky.size()), 4, RoundingMode.DOWN);
     }
 
 }

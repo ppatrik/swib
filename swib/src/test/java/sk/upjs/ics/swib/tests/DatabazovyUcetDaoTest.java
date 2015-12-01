@@ -43,16 +43,22 @@ public class DatabazovyUcetDaoTest {
 
     @Test
     public void testAdajVsetky() {
+        if (klient == null) {
+            return;
+        }
         List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky(klient);
         assertEquals(TestUtils.pocetUctov(klient), zoznamUctov.size());
     }
 
     @Test
     public void testBpridaj() {
+        if (klient == null) {
+            return;
+        }
         List<Ucet> zoznamUctovPov = databazovyUcetDao.dajVsetky(klient);
         Ucet ucet = new Ucet();
         ucet.setCisloUctu("xxxxxxxxxx");
-        ucet.setId(100000);
+        ucet.setId(klient.getId());
         ucet.setKlientId(klient.getId());
         ucet.setName(10101010);
         ucet.setSpor(false);
@@ -65,6 +71,9 @@ public class DatabazovyUcetDaoTest {
 
     @Test
     public void testCuprav() {
+        if (klient == null) {
+            return;
+        }
         List<Ucet> zoznamUctov = databazovyUcetDao.dajVsetky(klient);
         if (zoznamUctov.isEmpty()) {
             return;
@@ -85,6 +94,9 @@ public class DatabazovyUcetDaoTest {
 
     @Test
     public void testDodstran() {
+        if (klient == null) {
+            return;
+        }
         List<Ucet> zoznamUctovPov = databazovyUcetDao.dajVsetky(klient);
         if (zoznamUctovPov.isEmpty()) {
             return;

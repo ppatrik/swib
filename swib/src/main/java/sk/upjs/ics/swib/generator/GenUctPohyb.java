@@ -45,7 +45,6 @@ public class GenUctPohyb {
                     TestUtils.pridajPohyb(pohyb, jdbcTemplate);
                 }
             }
-            System.out.println(klientDao.mozeNaMesiacMaximalneSplacat(klient));
         }
     }
 

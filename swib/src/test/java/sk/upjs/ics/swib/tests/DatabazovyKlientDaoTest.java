@@ -46,10 +46,11 @@ public class DatabazovyKlientDaoTest {
         Klient klient = new Klient();
         klient.setMeno("skuska");
         klient.setPriezvisko("skuska");
-        klient.setCisloPreukazu("xxxxxxxxxx");
+        klient.setCisloPreukazu((int) (Math.random() * 10000) + "" + (int) (Math.random() * 10000));
         klient.setDatumNarodenia(new GregorianCalendar());
-        klient.setRodneCislo("0000000000");
-        klient.setId(1000000);
+        klient.setRodneCislo((int) (Math.random() * 10000) + "" + (int) (Math.random() * 10000));
+        klient.setCisloKarty((int) (Math.random() * 10000000));
+        klient.setId((int) (1000000 + Math.random() * 1000000));
 
         databazovyKlientDao.pridaj(klient);
         List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
@@ -102,7 +103,39 @@ public class DatabazovyKlientDaoTest {
             return;
         }
         Klient klient = zoznamKlientov.get(0);
-        BigDecimal maxSplacat = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient).setScale(4, RoundingMode.DOWN);
-        assertEquals(TestUtils.maxSplatky(klient), maxSplacat);
+        BigDecimal maxSplacat = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient);
+        if (maxSplacat != null) {
+            maxSplacat = maxSplacat.setScale(4, RoundingMode.DOWN);
+        }
+        assertEquals(TestUtils.priemernyMesacnyZostPrir(klient, false), maxSplacat);
     }
+
+//    @Test
+//    public void testFPriemernyMesacnyPrirastok() {
+//        List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
+//        if (zoznamKlientov.isEmpty()) {
+//            return;
+//        }
+//        Klient klient = zoznamKlientov.get(0);
+//        BigDecimal maxSplacat = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient);
+//        if (maxSplacat != null) {
+//            maxSplacat = maxSplacat.setScale(4, RoundingMode.DOWN);
+//        }
+//        assertEquals(TestUtils.priemernyMesacnyZostPrir(klient, true), maxSplacat);
+//    }
+    
+    //    @Test
+//    public void testGPriemernyMesacnyZostatok2() {
+//        List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
+//        if (zoznamKlientov.isEmpty()) {
+//            return;
+//        }
+//        Klient klient = zoznamKlientov.get(0);
+//        BigDecimal maxSplacat = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient);
+//        if (maxSplacat != null) {
+//            maxSplacat = maxSplacat.setScale(4, RoundingMode.DOWN);
+//        }
+//        assertEquals(TestUtils.priemernyMesacnyZostatok2(klient), maxSplacat);
+//    }
+
 }
