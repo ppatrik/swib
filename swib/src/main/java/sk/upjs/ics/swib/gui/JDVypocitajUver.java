@@ -1,22 +1,39 @@
 package sk.upjs.ics.swib.gui;
 
+import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
+import sk.upjs.ics.swib.entity.Klient;
+import sk.upjs.ics.swib.entity.Uver;
+import sk.upjs.ics.swib.factory.DaoFactory;
+
 /**
  *
  * @author Johnny
  */
 public class JDVypocitajUver extends javax.swing.JDialog {
-    UverComboBoxModel uverComboBoxModel = new UverComboBoxModel();
-    private String vybranyUver = null;
-    
+
+    private final UverComboBoxModel uverComboBoxModel = new UverComboBoxModel();
+    private DatabazovyKlientDao databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
+    private Klient klient;
+
+    private Uver vybranyUver = null;
+
     /**
      * Creates new form JDVypocitajUver
+     *
      * @param parent
+     * @param modal
      */
     public JDVypocitajUver(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         jcombZoznamUverov.setModel(uverComboBoxModel);
-        
+        jtfPMP.setText("0");       
+        setTitle("Vzpočítaj úver • " + klient.getMeno() + " " + klient.getPriezvisko());
+    }
+
+    public JDVypocitajUver(java.awt.Frame parent, Klient klient) {
+        this(parent, true);
+        this.klient = klient;
     }
 
     /**
@@ -48,6 +65,8 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         lblPMZ = new javax.swing.JLabel();
         jcombZoznamUverov = new javax.swing.JComboBox();
         jspPocetDeti = new javax.swing.JSpinner();
+        jtfPMPUpraveny = new javax.swing.JTextField();
+        btnVyplnUpraveny = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -121,6 +140,18 @@ public class JDVypocitajUver extends javax.swing.JDialog {
 
         jspPocetDeti.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
 
+        jtfPMPUpraveny.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jtfPMPUpraveny.setText("0");
+        jtfPMPUpraveny.setEnabled(false);
+
+        btnVyplnUpraveny.setText("Upravený úbytok");
+        btnVyplnUpraveny.setEnabled(false);
+        btnVyplnUpraveny.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVyplnUpravenyActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -146,7 +177,10 @@ public class JDVypocitajUver extends javax.swing.JDialog {
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(lblPMPU)
                                         .addComponent(lblPMP)))
-                                .addGap(5, 5, 5)))
+                                .addGap(5, 5, 5))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(btnVyplnUpraveny)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(btnPocitaj)
@@ -159,7 +193,8 @@ public class JDVypocitajUver extends javax.swing.JDialog {
                                 .addGap(17, 17, 17))
                             .addComponent(jtfPMPU, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jtfPMP, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jtfPMZ, javax.swing.GroupLayout.Alignment.TRAILING)))
+                            .addComponent(jtfPMZ, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jtfPMPUpraveny)))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -209,7 +244,11 @@ public class JDVypocitajUver extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jtfPMZ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblPMZ))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jtfPMPUpraveny, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnVyplnUpraveny))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnPocitaj)
                             .addComponent(btnStorno)))
@@ -225,11 +264,13 @@ public class JDVypocitajUver extends javax.swing.JDialog {
     }//GEN-LAST:event_btnStornoActionPerformed
 
     private void jcombZoznamUverovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcombZoznamUverovActionPerformed
-        vybranyUver = uverComboBoxModel.getElementAt(jcombZoznamUverov.getSelectedIndex());
-        if (vybranyUver != null){
-            btnPocitaj.setEnabled(true);
-        }
+        vybranyUver = uverComboBoxModel.getUver(jcombZoznamUverov.getSelectedIndex());        
+        btnVyplnUpraveny.setEnabled(true);
     }//GEN-LAST:event_jcombZoznamUverovActionPerformed
+
+    private void btnVyplnUpravenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVyplnUpravenyActionPerformed
+        vyplnPMPUpraveny();
+    }//GEN-LAST:event_btnVyplnUpravenyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -259,6 +300,13 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         //</editor-fold>
 
         /* Create and display the dialog */
+        /* zerem parky na ranajky
+         * mozem kaslat paradajky
+         * zerem buchty plne maku
+         * ponuknem aj tvoju mamku
+         * zerem salam buchty syry
+         * uz ti isto tecu sliny
+        */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JDVypocitajUver dialog = new JDVypocitajUver(new javax.swing.JFrame(), true);
@@ -276,6 +324,7 @@ public class JDVypocitajUver extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnPocitaj;
     private javax.swing.JButton btnStorno;
+    private javax.swing.JButton btnVyplnUpraveny;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox jcbManzelka;
     private javax.swing.JComboBox jcombZoznamUverov;
@@ -283,6 +332,7 @@ public class JDVypocitajUver extends javax.swing.JDialog {
     private javax.swing.JTextArea jtaInfo;
     private javax.swing.JTextField jtfPMP;
     private javax.swing.JTextField jtfPMPU;
+    private javax.swing.JTextField jtfPMPUpraveny;
     private javax.swing.JTextField jtfPMZ;
     private javax.swing.JTextField jtfPocetMesiacov;
     private javax.swing.JTextField jtfSuma;
@@ -295,4 +345,17 @@ public class JDVypocitajUver extends javax.swing.JDialog {
     private javax.swing.JLabel lblVyskaInychNakladov;
     private javax.swing.JLabel lblVyskaUveru;
     // End of variables declaration//GEN-END:variables
+
+    private void vyplnPMPUpraveny() {
+        if (vybranyUver != null) {
+            int manzelka = 0;
+            if (jcbManzelka.isSelected()) {
+                manzelka = 1;
+            }
+            int hodnota = (int) jspPocetDeti.getValue() * vybranyUver.getBonusNaDieta().intValue()
+                    + manzelka * vybranyUver.getBonusNaManzelku().intValue()
+                    - (new Integer(jtfVyskaInychNakladov.getText()));
+            jtfPMPUpraveny.setText(hodnota + "");
+        }
+    }
 }

@@ -3,7 +3,6 @@ package sk.upjs.ics.swib.gui;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Ucet;
@@ -15,9 +14,8 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 public class UctyTableModel extends AbstractTableModel{
     
-    private Klient klient; //neviem ci mi to vlastne treba
-    private final JdbcTemplate jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-    private final DatabazovyUcetDao databazovyUcetDao = new DatabazovyUcetDao(jdbcTemplate);    
+    private Klient klient;
+    private final DatabazovyUcetDao databazovyUcetDao = DaoFactory.INSTANCE.databazovyUcetDao();
     private List<Ucet> ucty;
     
     private static final int COLUMN_NUMBER = 3;

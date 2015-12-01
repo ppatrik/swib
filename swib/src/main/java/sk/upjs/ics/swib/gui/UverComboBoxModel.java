@@ -3,7 +3,6 @@ package sk.upjs.ics.swib.gui;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyUverDao;
 import sk.upjs.ics.swib.entity.Uver;
 import sk.upjs.ics.swib.factory.DaoFactory;
@@ -13,8 +12,8 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  * @author Johnny
  */
 public class UverComboBoxModel extends AbstractListModel implements ComboBoxModel{
-    private JdbcTemplate jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-    private DatabazovyUverDao databazovyUverDao = new DatabazovyUverDao(jdbcTemplate);
+    
+    private final DatabazovyUverDao databazovyUverDao = DaoFactory.INSTANCE.databazovyUverDao();
     private List<Uver> zoznamUverov = databazovyUverDao.dajVsetky();
     private Object vybranyObjekt;
     
@@ -40,5 +39,20 @@ public class UverComboBoxModel extends AbstractListModel implements ComboBoxMode
     
     public Uver getUver(int index){
         return zoznamUverov.get(index);
+    }
+
+    void pridajUver(Uver uver) {
+        databazovyUverDao.pridaj(uver);
+        refresh();
+    }
+
+    private void refresh() {
+        zoznamUverov = databazovyUverDao.dajVsetky();
+        fireContentsChanged(this, 0, zoznamUverov.size());
+    }
+
+    void uprav(Uver uver) {
+        databazovyUverDao.uprav(uver);
+        refresh();
     }
 }

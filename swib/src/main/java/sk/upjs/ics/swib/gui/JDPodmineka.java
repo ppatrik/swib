@@ -1,10 +1,13 @@
 package sk.upjs.ics.swib.gui;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
+import sk.upjs.ics.swib.dao.DatabazovyBonusDao;
 import sk.upjs.ics.swib.entity.Bonus;
 import sk.upjs.ics.swib.entity.Multiplikator;
 import sk.upjs.ics.swib.entity.Porovnavac;
 import sk.upjs.ics.swib.entity.Uver;
+import sk.upjs.ics.swib.factory.DaoFactory;
 
 /**
  *
@@ -12,50 +15,44 @@ import sk.upjs.ics.swib.entity.Uver;
  */
 public class JDPodmineka extends javax.swing.JDialog {
     
-    private MultiplicatorComboBoxModel multiplicatorComboBoxModel = new MultiplicatorComboBoxModel();
-    private PorovnavacComboBoxModel porovnavacComboBoxModel = new PorovnavacComboBoxModel();
-    private BonusListModel bonusListModel;
+    private final int MAX_LENGTH = 20;
+    
+    private final MultiplicatorComboBoxModel multiplicatorComboBoxModel = new MultiplicatorComboBoxModel();
+    private final PorovnavacComboBoxModel porovnavacComboBoxModel = new PorovnavacComboBoxModel();    
+    private final DatabazovyBonusDao databazovyBonusDao = DaoFactory.INSTANCE.databazovyBonusDao();
     private Uver uver;
     private Bonus bonus;
-    
-    private String nazov = null;
-    private BigDecimal vacsiAko;
-    private BigDecimal vyska;
-    private int multiplikator;
-    private int porovnavac;
+    private JDSpravujUvery owner;
 
-    public JDPodmineka(java.awt.Frame parent, Uver uver, Bonus bonus) {
+    public JDPodmineka(java.awt.Frame parent, Uver uver, Bonus bonus, JDSpravujUvery owner) {
         this(parent, true);
-        this.nazov = bonus.getNazov();
-        this.vacsiAko = bonus.getJeVacsiAko();
-        this.vyska = bonus.getKolkoJeBonus();
-        this.multiplikator = bonus.getMultiplikatorId();
-        this.porovnavac = bonus.getPorovnavacId();        
+        this.bonus = bonus;
         this.uver = uver;
-        this.bonusListModel = new BonusListModel(uver);
+        this.owner = owner;        
         
-        //System.out.println(nazov+" "+multiplikator+" "+porovnavac);
-        
-        if (nazov != null){
-            jtfNazov.setText(nazov);
-            jftfVacsiAko.setText(vacsiAko.toString());
-            jftfVyskaBonusu.setText(vyska.toString());
-            jcombMultiplikator.setSelectedIndex(multiplikator-1);
-            jcombPorovnavac.setSelectedIndex(porovnavac-1);
+        if (bonus != null){
+            jtfNazov.setText(bonus.getNazov());
+            //jftfVacsiAko.setText(bonus.getJeVacsiAko().toString());
+            jsVacsiAko.setValue(bonus.getJeVacsiAko().doubleValue());
+            //jftfVyskaBonusu.setText(bonus.getKolkoJeBonus().toString());
+            jsVyskaBonusu.setValue(bonus.getKolkoJeBonus().doubleValue());
+            jcombMultiplikator.setSelectedIndex(bonus.getMultiplikatorId()-1);
+            jcombPorovnavac.setSelectedIndex(bonus.getPorovnavacId()-1);
         }                
     }      
 
-    public JDPodmineka(java.awt.Frame parent, Uver uver) {
+    public JDPodmineka(java.awt.Frame parent, Uver uver, JDSpravujUvery owner) {
         this(parent, true);
         this.uver = uver;
-        this.bonusListModel = new BonusListModel(uver);
+        this.owner = owner;
     }        
     
     public JDPodmineka(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         jcombMultiplikator.setModel(multiplicatorComboBoxModel);
-        jcombPorovnavac.setModel(porovnavacComboBoxModel);                
+        jcombPorovnavac.setModel(porovnavacComboBoxModel);         
+        setTitle("Správa podmienok");
     }
 
     /**
@@ -68,35 +65,37 @@ public class JDPodmineka extends javax.swing.JDialog {
     private void initComponents() {
 
         jtfNazov = new javax.swing.JTextField();
-        jftfVacsiAko = new javax.swing.JFormattedTextField();
         lblNazov = new javax.swing.JLabel();
         lblVacsiAko = new javax.swing.JLabel();
-        jftfVyskaBonusu = new javax.swing.JFormattedTextField();
         lblVyskaBonusu = new javax.swing.JLabel();
         jcombMultiplikator = new javax.swing.JComboBox();
         lblMultiplikator = new javax.swing.JLabel();
         jcombPorovnavac = new javax.swing.JComboBox();
         lblPorovnavac = new javax.swing.JLabel();
         btnUloz = new javax.swing.JButton();
+        jsVacsiAko = new javax.swing.JSpinner();
+        jsVyskaBonusu = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setSize(new java.awt.Dimension(213, 259));
 
-        jtfNazov.setToolTipText("Názov");
-
-        jftfVacsiAko.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        jftfVacsiAko.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jftfVacsiAko.setText("0");
+        jtfNazov.setText("Nový bonus");
+        jtfNazov.setToolTipText("max 20 znakov");
+        jtfNazov.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        jtfNazov.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfNazovKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfNazovKeyReleased(evt);
+            }
+        });
 
         lblNazov.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblNazov.setText("Názov:");
 
         lblVacsiAko.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblVacsiAko.setText("Väčší ako:");
-
-        jftfVyskaBonusu.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter()));
-        jftfVyskaBonusu.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jftfVyskaBonusu.setText("0");
 
         lblVyskaBonusu.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblVyskaBonusu.setText("Výška bonusu:");
@@ -118,6 +117,10 @@ public class JDPodmineka extends javax.swing.JDialog {
             }
         });
 
+        jsVacsiAko.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(0.009999999776482582d)));
+
+        jsVyskaBonusu.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(0.01d)));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -135,12 +138,12 @@ public class JDPodmineka extends javax.swing.JDialog {
                             .addComponent(lblVyskaBonusu)
                             .addComponent(lblMultiplikator)
                             .addComponent(lblPorovnavac))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jcombPorovnavac, javax.swing.GroupLayout.Alignment.TRAILING, 0, 134, Short.MAX_VALUE)
                             .addComponent(jcombMultiplikator, javax.swing.GroupLayout.Alignment.TRAILING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jftfVyskaBonusu, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jftfVacsiAko, javax.swing.GroupLayout.Alignment.TRAILING))))
+                            .addComponent(jsVacsiAko)
+                            .addComponent(jsVyskaBonusu))))
                 .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -156,12 +159,12 @@ public class JDPodmineka extends javax.swing.JDialog {
                     .addComponent(lblNazov))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jftfVacsiAko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblVacsiAko))
+                    .addComponent(lblVacsiAko)
+                    .addComponent(jsVacsiAko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jftfVyskaBonusu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblVyskaBonusu))
+                    .addComponent(lblVyskaBonusu)
+                    .addComponent(jsVyskaBonusu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jcombMultiplikator, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -178,24 +181,49 @@ public class JDPodmineka extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    /**
+     * vytvori novy alebo upravy stary bonus
+     * @param evt 
+     */
     private void btnUlozActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUlozActionPerformed
-        String novyNazov = jtfNazov.getText();
-        BigDecimal novyJeVacsiAko = new BigDecimal(jftfVacsiAko.getText());
-        BigDecimal novaVyskaBonusu = new BigDecimal(jftfVyskaBonusu.getText());
+        String novyNazov = jtfNazov.getText().substring(0, Math.min(MAX_LENGTH, jtfNazov.getText().length()));
+        BigDecimal novyJeVacsiAko = new BigDecimal((double) jsVacsiAko.getValue(), MathContext.DECIMAL64);//jftfVacsiAko.getText());
+        BigDecimal novaVyskaBonusu = new BigDecimal((double) jsVyskaBonusu.getValue(), MathContext.DECIMAL64);//jftfVyskaBonusu.getText());
         Multiplikator novyM = multiplicatorComboBoxModel.getMultiplikator(jcombMultiplikator.getSelectedIndex());
         Porovnavac novyP = porovnavacComboBoxModel.getPorovnavac(jcombPorovnavac.getSelectedIndex());
         
         if (bonus == null){
             Bonus novyBonus = new Bonus();
+            novyBonus.setNazov(novyNazov);
+            novyBonus.setUverId(uver.getId());
+            novyBonus.setJeVacsiAko(novyJeVacsiAko);
+            novyBonus.setKolkoJeBonus(novaVyskaBonusu);
+            novyBonus.setMultiplikatorId(novyM.getId());
+            novyBonus.setPorovnavacId(novyP.getId());
+            novyBonus.setOrderNumber(Math.max(new BonusListModel(uver).getSize(), 1));
+            databazovyBonusDao.pridaj(novyBonus);            
+            System.out.println("Pridany novy bonus");
+        } else {            
             bonus.setNazov(novyNazov);
             bonus.setJeVacsiAko(novyJeVacsiAko);
             bonus.setKolkoJeBonus(novaVyskaBonusu);
             bonus.setMultiplikatorId(novyM.getId());
-            bonus.setPorovnavacId(novyP.getId());
-            bonus.setOrderNumber(0);
-            bonusListModel.pirdajBonus(bonus);
-        }
+            bonus.setPorovnavacId(novyP.getId());            
+            databazovyBonusDao.uprav(bonus);
+            System.out.println("Bonus upraveny");
+        }                
+        
+        owner.setBonusListModel(new BonusListModel(uver));
+        dispose();
     }//GEN-LAST:event_btnUlozActionPerformed
+
+    private void jtfNazovKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNazovKeyPressed
+        btnUloz.setEnabled(!jtfNazov.getText().equals(""));
+    }//GEN-LAST:event_jtfNazovKeyPressed
+
+    private void jtfNazovKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfNazovKeyReleased
+        btnUloz.setEnabled(!jtfNazov.getText().equals(""));
+    }//GEN-LAST:event_jtfNazovKeyReleased
 
     /**
      * @param args the command line arguments
@@ -244,8 +272,8 @@ public class JDPodmineka extends javax.swing.JDialog {
     private javax.swing.JButton btnUloz;
     private javax.swing.JComboBox jcombMultiplikator;
     private javax.swing.JComboBox jcombPorovnavac;
-    private javax.swing.JFormattedTextField jftfVacsiAko;
-    private javax.swing.JFormattedTextField jftfVyskaBonusu;
+    private javax.swing.JSpinner jsVacsiAko;
+    private javax.swing.JSpinner jsVyskaBonusu;
     private javax.swing.JTextField jtfNazov;
     private javax.swing.JLabel lblMultiplikator;
     private javax.swing.JLabel lblNazov;

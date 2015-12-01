@@ -41,12 +41,12 @@
                           <Component id="lblMultiplikator" alignment="0" min="-2" max="-2" attributes="0"/>
                           <Component id="lblPorovnavac" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="9" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jcombPorovnavac" alignment="1" pref="134" max="32767" attributes="0"/>
                           <Component id="jcombMultiplikator" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jftfVyskaBonusu" alignment="1" max="32767" attributes="0"/>
-                          <Component id="jftfVacsiAko" alignment="1" max="32767" attributes="0"/>
+                          <Component id="jsVacsiAko" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jsVyskaBonusu" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -69,13 +69,13 @@
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jftfVacsiAko" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblVacsiAko" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jsVacsiAko" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="jftfVyskaBonusu" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="lblVyskaBonusu" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="jsVyskaBonusu" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -97,17 +97,16 @@
   <SubComponents>
     <Component class="javax.swing.JTextField" name="jtfNazov">
       <Properties>
-        <Property name="toolTipText" type="java.lang.String" value="N&#xe1;zov"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="jftfVacsiAko">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format subtype="0" type="0"/>
+        <Property name="text" type="java.lang.String" value="Nov&#xfd; bonus"/>
+        <Property name="toolTipText" type="java.lang.String" value="max 20 znakov"/>
+        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+          <Color id="Text Cursor"/>
         </Property>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
+      <Events>
+        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfNazovKeyPressed"/>
+        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jtfNazovKeyReleased"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblNazov">
       <Properties>
@@ -123,15 +122,6 @@
           <Font name="Tahoma" size="11" style="1"/>
         </Property>
         <Property name="text" type="java.lang.String" value="V&#xe4;&#x10d;&#x161;&#xed; ako:"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JFormattedTextField" name="jftfVyskaBonusu">
-      <Properties>
-        <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-          <Format subtype="0" type="0"/>
-        </Property>
-        <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" value="0"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="lblVyskaBonusu">
@@ -189,6 +179,20 @@
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnUlozActionPerformed"/>
       </Events>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="jsVacsiAko">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="0.009999999776482582" type="number"/>
+        </Property>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JSpinner" name="jsVyskaBonusu">
+      <Properties>
+        <Property name="model" type="javax.swing.SpinnerModel" editor="org.netbeans.modules.form.editors2.SpinnerModelEditor">
+          <SpinnerModel initial="0.0" numberType="java.lang.Double" stepSize="0.01" type="number"/>
+        </Property>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

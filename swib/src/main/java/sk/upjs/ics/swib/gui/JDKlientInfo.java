@@ -2,12 +2,18 @@ package sk.upjs.ics.swib.gui;
 
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Ucet;
+import java.util.Calendar;
+import java.util.Date;
+import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
+import sk.upjs.ics.swib.factory.DaoFactory;
 
 /**
  *
  * @author Johnny
  */
 public class JDKlientInfo extends javax.swing.JDialog {
+    
+    private final DatabazovyKlientDao databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
     
     private Klient klient;
     private UctyTableModel uctyTableModel;
@@ -22,12 +28,20 @@ public class JDKlientInfo extends javax.swing.JDialog {
         super(parent, modal);        
     }
 
+    /**
+     * custom konstruktor
+     * @param parent
+     * @param klient 
+     */
     JDKlientInfo(java.awt.Frame parent, Klient klient) {
         this(parent, true);
         this.klient = klient;
         uctyTableModel = new UctyTableModel(klient);
         setTitle(klient.getMeno()+" "+klient.getPriezvisko());
         initComponents();
+        jSDate.setValue(klient.getDatumNarodenia().getTime());
+        databazovyKlientDao.uprav(klient);
+        setTitle("Info • " + klient.getMeno() + " " + klient.getPriezvisko());
     }
 
     /**
@@ -40,9 +54,7 @@ public class JDKlientInfo extends javax.swing.JDialog {
     private void initComponents() {
 
         lblMeno = new javax.swing.JLabel();
-        lblMenoKlienta = new javax.swing.JLabel();
         lblPriezvisko = new javax.swing.JLabel();
-        lblPriezviskoKlienta = new javax.swing.JLabel();
         lblCisloPreukazu = new javax.swing.JLabel();
         lblCisloPreukazuKlienta = new javax.swing.JLabel();
         btnOK = new javax.swing.JButton();
@@ -51,6 +63,10 @@ public class JDKlientInfo extends javax.swing.JDialog {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTPohybyUctu = new javax.swing.JTable();
         lblOddelovac = new javax.swing.JLabel();
+        jtfMeno = new javax.swing.JTextField();
+        jtfPriezvisko = new javax.swing.JTextField();
+        lblDatumNarodenia = new javax.swing.JLabel();
+        jSDate = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
@@ -58,13 +74,9 @@ public class JDKlientInfo extends javax.swing.JDialog {
         lblMeno.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblMeno.setText("Meno:");
 
-        lblMenoKlienta.setText(klient.getMeno());
-
         lblPriezvisko.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblPriezvisko.setText("Priezvisko: ");
         lblPriezvisko.setToolTipText("");
-
-        lblPriezviskoKlienta.setText(klient.getPriezvisko());
 
         lblCisloPreukazu.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblCisloPreukazu.setText("Číslo preukazu: ");
@@ -102,6 +114,33 @@ public class JDKlientInfo extends javax.swing.JDialog {
 
         lblOddelovac.setText("»");
 
+        jtfMeno.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jtfMeno.setText(klient.getMeno());
+        jtfMeno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfMenoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfMenoKeyReleased(evt);
+            }
+        });
+
+        jtfPriezvisko.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        jtfPriezvisko.setText(klient.getPriezvisko());
+        jtfPriezvisko.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jtfPriezviskoKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jtfPriezviskoKeyReleased(evt);
+            }
+        });
+
+        lblDatumNarodenia.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        lblDatumNarodenia.setText("Dátum narodenia");
+
+        jSDate.setModel(new javax.swing.SpinnerDateModel(new java.util.Date(-2208906060000L), new java.util.Date(-2208906060000L), new java.util.Date(4575826740000L), java.util.Calendar.DAY_OF_YEAR));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -113,26 +152,32 @@ public class JDKlientInfo extends javax.swing.JDialog {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btnOK))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblMeno)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblMenoKlienta))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblPriezvisko)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblPriezviskoKlienta))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lblCisloPreukazu)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblCisloPreukazuKlienta)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 273, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblOddelovac)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lblCisloPreukazu)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(lblCisloPreukazuKlienta))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblPriezvisko)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jtfPriezvisko))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lblMeno)
+                                        .addGap(34, 34, 34)
+                                        .addComponent(jtfMeno, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(53, 53, 53)
+                                .addComponent(lblDatumNarodenia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jSDate, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -141,11 +186,13 @@ public class JDKlientInfo extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMeno)
-                    .addComponent(lblMenoKlienta))
+                    .addComponent(jtfMeno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblDatumNarodenia)
+                    .addComponent(jSDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblPriezvisko)
-                    .addComponent(lblPriezviskoKlienta))
+                    .addComponent(jtfPriezvisko, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCisloPreukazu)
@@ -165,6 +212,11 @@ public class JDKlientInfo extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnOKActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOKActionPerformed
+        klient.setMeno(jtfMeno.getText());
+        klient.setPriezvisko(jtfPriezvisko.getText());
+        Calendar datumNarodenia = klient.getDatumNarodenia();
+        datumNarodenia.setTime((Date) jSDate.getValue());
+        klient.setDatumNarodenia(datumNarodenia);
         this.dispose();
     }//GEN-LAST:event_btnOKActionPerformed
 
@@ -179,11 +231,27 @@ public class JDKlientInfo extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_jTUctyKlientaMouseClicked
 
+    private void jtfPriezviskoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPriezviskoKeyPressed
+        btnOK.setEnabled(!jtfPriezvisko.getText().equals(""));
+    }//GEN-LAST:event_jtfPriezviskoKeyPressed
+
+    private void jtfMenoKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfMenoKeyPressed
+        btnOK.setEnabled(!jtfMeno.getText().equals(""));
+    }//GEN-LAST:event_jtfMenoKeyPressed
+
+    private void jtfMenoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfMenoKeyReleased
+        btnOK.setEnabled(!jtfMeno.getText().equals(""));
+    }//GEN-LAST:event_jtfMenoKeyReleased
+
+    private void jtfPriezviskoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfPriezviskoKeyReleased
+        btnOK.setEnabled(!jtfPriezvisko.getText().equals(""));
+    }//GEN-LAST:event_jtfPriezviskoKeyReleased
+
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
+        /* Set the Nimbus look and feel kowabunga*/
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
@@ -223,16 +291,18 @@ public class JDKlientInfo extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnOK;
+    private javax.swing.JSpinner jSDate;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTPohybyUctu;
     private javax.swing.JTable jTUctyKlienta;
+    private javax.swing.JTextField jtfMeno;
+    private javax.swing.JTextField jtfPriezvisko;
     private javax.swing.JLabel lblCisloPreukazu;
     private javax.swing.JLabel lblCisloPreukazuKlienta;
+    private javax.swing.JLabel lblDatumNarodenia;
     private javax.swing.JLabel lblMeno;
-    private javax.swing.JLabel lblMenoKlienta;
     private javax.swing.JLabel lblOddelovac;
     private javax.swing.JLabel lblPriezvisko;
-    private javax.swing.JLabel lblPriezviskoKlienta;
     // End of variables declaration//GEN-END:variables
 }

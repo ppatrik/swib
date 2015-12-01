@@ -3,7 +3,6 @@ package sk.upjs.ics.swib.gui;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.dao.DatabazovyPorovnavacDao;
 import sk.upjs.ics.swib.entity.Porovnavac;
 import sk.upjs.ics.swib.factory.DaoFactory;
@@ -13,10 +12,10 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  * @author Johnny
  */
 class PorovnavacComboBoxModel extends AbstractListModel implements ComboBoxModel{
-    JdbcTemplate jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-    DatabazovyPorovnavacDao databazovyPorovnavacDao = new DatabazovyPorovnavacDao(jdbcTemplate);
-    List<Porovnavac> zoznamPorovnavacov = databazovyPorovnavacDao.dajVsetky();
-    Object vybranyPorovnavac;
+    
+    private final DatabazovyPorovnavacDao databazovyPorovnavacDao = DaoFactory.INSTANCE.databazovyPorovnavacDao();
+    private List<Porovnavac> zoznamPorovnavacov = databazovyPorovnavacDao.dajVsetky();
+    private Object vybranyPorovnavac;
 
     @Override
     public int getSize() {

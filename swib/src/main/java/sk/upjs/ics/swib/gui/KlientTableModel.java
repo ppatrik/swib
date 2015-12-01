@@ -1,8 +1,8 @@
 package sk.upjs.ics.swib.gui;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import org.springframework.jdbc.core.JdbcTemplate;
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
 import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
@@ -14,9 +14,8 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 public class KlientTableModel extends AbstractTableModel {
 
-    private final JdbcTemplate jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-    private final DatabazovyKlientDao databazovyKlientDao = new DatabazovyKlientDao(jdbcTemplate);
-    private final DatabazovyUcetDao databazovyUcetDao = new DatabazovyUcetDao(jdbcTemplate);
+    private final DatabazovyKlientDao databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
+    private final DatabazovyUcetDao databazovyUcetDao = DaoFactory.INSTANCE.databazovyUcetDao();
 
     private List<Klient> zoznamK = databazovyKlientDao.dajVsetkych();
 
