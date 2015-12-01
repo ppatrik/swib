@@ -21,6 +21,23 @@ public interface Calculator {
      ako ich zareprezentovat?
      Metoda sa potom zavola medzi krokom 1. a 2. v metode mesacnaUrokovaSadzba
      */
+    
+    /**
+     * Prehlada pole Porovnavacov a podla bonus.porovnavacID najde zadany znak
+     *
+     * @param bonus bonus, v ktorom najdem id Porovnavaca
+     * @return String porovnavaca podla bonus.porovnavacID
+     */
+    public String prehladajPorovnavace(Bonus bonus);
+            
+    /**
+     * Prehlada pole Multiplikatorov a podla bonus.multiplikatorID najde zadany znak
+     *
+     * @param bonus bonus, v ktorom najdem id Multiplikatora
+     * @return String multiplikatora podla bonus.multiplikatorID
+     */
+    public String prehladajMultiplikatori(Bonus bonus);
+    
     /**
      * Zmeni hodnotu nasobic ak bola splnena podmienka na uplatnenie daneho
      * bonusu
@@ -67,7 +84,6 @@ public interface Calculator {
      * @param sumaNaPozicanie suma, ktoru si klient chce poziciat
      * @param dobaVMesiacoch doba, kolko mesiacov chce klient pozicku splacat
      * @param uver typ uveru, aky si klient vybral
-     * @param klientovaRealnaHodnota zadana hodnota od klienta
      * @param pocetDeti pocet deti
      * @return vrati vypocitanu mesacnu urokovu sadzbu
      * @throws NieJeMozneSplacat vyhodi vynimku ak pre daneho klienta nie je
@@ -78,7 +94,6 @@ public interface Calculator {
             BigDecimal sumaNaPozicanie,
             int dobaVMesiacoch,
             Uver uver,
-            BigDecimal klientovaRealnaHodnota,
             int pocetDeti)
             throws NieJeMozneSplacat;
 }
