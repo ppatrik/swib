@@ -10,4 +10,5 @@ public interface KlientDao {
     void odstran(Klient klient);
     void uprav(Klient klient);
     BigDecimal mozeNaMesiacMaximalneSplacat(Klient klient);
+    BigDecimal priemernyMesacnyPrijem(Klient klient)
 }
