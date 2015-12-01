@@ -58,7 +58,6 @@ public class DatabazovyUcetDaoTest {
         List<Ucet> zoznamUctovPov = databazovyUcetDao.dajVsetky(klient);
         Ucet ucet = new Ucet();
         ucet.setCisloUctu("xxxxxxxxxx");
-        ucet.setId(klient.getId());
         ucet.setKlientId(klient.getId());
         ucet.setName(10101010);
         ucet.setSpor(false);
