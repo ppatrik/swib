@@ -58,5 +58,12 @@ public class DatabazovyKlientDao implements KlientDao {
                 + "where uk.KlientID = ? AND p.Suma > 0 group by month(p.datum), year(p.datum) )items";
         return (BigDecimal) jdbcTemplate.queryForObject(sql, BigDecimal.class, klient.getId());
     }
+ @Override
+    public BigDecimal priemernyMesacnyZostatok(Klient klient) {
+    String sql ="select AVG(items.Zostatky) from (" 
+             + "select SUM(p.suma) AS Zostatky from Ucet as uk inner join Pohyby as p on p.UcetID=uk.ID " 
+             + "where uk.KlientID = ? group by month(p.datum), year(p.datum) )AS items"; 
+    return (BigDecimal) jdbcTemplate.queryForObject(sql, BigDecimal.class, klient.getId());
+    }
 
 }
