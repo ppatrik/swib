@@ -22,11 +22,13 @@ public class OfiCalculator implements Calculator {
     DatabazovyKlientDao databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
     DatabazovyMultiplikatorDao databazovyMultiplikatorDao = DaoFactory.INSTANCE.databazovyMultiplikatorDao();
     DatabazovyPorovnavacDao databazovyPorovnavacDao = DaoFactory.INSTANCE.databazovyPorovnavacDao();
+    
     private BigDecimal klientovaRealnaHodnota;
     private List<Multiplikator> poleMultiplikatorov = databazovyMultiplikatorDao.dajVsetky();
     private List<Porovnavac> polePorovnavacov = databazovyPorovnavacDao.dajVsetky();
-    private Set<Integer> vyskytPorovnavaca = new HashSet<>();
+    private Set<Integer> vyskytPorovnavaca;
     private BigDecimal hodnotaSumyNaPozicanie;
+    private Klient danyKlient;
 
     @Override
     public String prehladajPorovnavace(Bonus bonus) {
@@ -56,8 +58,8 @@ public class OfiCalculator implements Calculator {
         String operator = prehladajMultiplikatori(bonus);
         if (vyskytPorovnavaca.add(bonus.getPorovnavacId()) == true) {
             switch (porovnavac) {
-      //      case "PMP": klientovaRealnaHodnota = ;
-                //              break;
+            case "PMP": klientovaRealnaHodnota = databazovyKlientDao.priemernyMesacnyPrijem(danyKlient);
+                              break;
                 case "Suma":
                     klientovaRealnaHodnota = hodnotaSumyNaPozicanie;
                     break;
@@ -92,6 +94,8 @@ public class OfiCalculator implements Calculator {
 
     @Override
     public BigDecimal mesacnaUrokovaSadzba(Klient klient, BigDecimal sumaNaPozicanie, int dobaVMesiacoch, Uver uver, int pocetDeti) throws NieJeMozneSplacat {
+        vyskytPorovnavaca = new HashSet<>();
+        danyKlient = klient;
         this.hodnotaSumyNaPozicanie = sumaNaPozicanie;
         BigDecimal maxKlientoveMesacneSplatky = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient);
         BigDecimal nasobic = BigDecimal.ONE;
