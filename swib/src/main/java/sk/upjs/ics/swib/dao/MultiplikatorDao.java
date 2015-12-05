@@ -6,4 +6,5 @@ import sk.upjs.ics.swib.entity.Multiplikator;
 public interface MultiplikatorDao {
     List<Multiplikator> dajVsetky();
     int dajIndex(String nazov);
+    String dajNazov(int index);
 }

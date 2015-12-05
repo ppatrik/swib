@@ -2,7 +2,7 @@ package sk.upjs.ics.swib.gui;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
-import sk.upjs.ics.swib.dao.DatabazovyBonusDao;
+import sk.upjs.ics.swib.dao.BonusDao;
 import sk.upjs.ics.swib.entity.Bonus;
 import sk.upjs.ics.swib.entity.Multiplikator;
 import sk.upjs.ics.swib.entity.Porovnavac;
@@ -19,7 +19,7 @@ public class JDPodmineka extends javax.swing.JDialog {
     
     private final MultiplicatorComboBoxModel multiplicatorComboBoxModel = new MultiplicatorComboBoxModel();
     private final PorovnavacComboBoxModel porovnavacComboBoxModel = new PorovnavacComboBoxModel();    
-    private final DatabazovyBonusDao databazovyBonusDao = DaoFactory.INSTANCE.databazovyBonusDao();
+    private final BonusDao databazovyBonusDao = DaoFactory.INSTANCE.bonusDao();
     private Uver uver;
     private Bonus bonus;
     private JDSpravujUvery owner;

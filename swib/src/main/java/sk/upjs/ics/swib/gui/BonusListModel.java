@@ -3,7 +3,7 @@ package sk.upjs.ics.swib.gui;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.AbstractListModel;
-import sk.upjs.ics.swib.dao.DatabazovyBonusDao;
+import sk.upjs.ics.swib.dao.BonusDao;
 import sk.upjs.ics.swib.entity.Bonus;
 import sk.upjs.ics.swib.entity.Uver;
 import sk.upjs.ics.swib.factory.DaoFactory;
@@ -14,7 +14,7 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 public class BonusListModel extends AbstractListModel {
 
-    private final DatabazovyBonusDao databazovyBonusDao = DaoFactory.INSTANCE.databazovyBonusDao();
+    private final BonusDao databazovyBonusDao = DaoFactory.INSTANCE.bonusDao();
     private final BonusComparator bonusComparator = new BonusComparator();
     List<Bonus> zoznamBonusov = null;
     Uver uver;

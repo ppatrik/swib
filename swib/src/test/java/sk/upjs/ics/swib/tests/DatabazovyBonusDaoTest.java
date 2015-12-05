@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.springframework.jdbc.core.JdbcTemplate;
-import sk.upjs.ics.swib.dao.DatabazovyBonusDao;
-import sk.upjs.ics.swib.dao.DatabazovyUverDao;
+import sk.upjs.ics.swib.dao.BonusDao;
+import sk.upjs.ics.swib.dao.UverDao;
 import sk.upjs.ics.swib.entity.Bonus;
 import sk.upjs.ics.swib.entity.Uver;
 import sk.upjs.ics.swib.factory.DaoFactory;
@@ -26,20 +26,20 @@ import sk.upjs.ics.swib.generator.TestUtils;
 public class DatabazovyBonusDaoTest {
 
     private JdbcTemplate jdbcTemplate;
-    private DatabazovyBonusDao databazovyBonusDao;
+    private BonusDao databazovyBonusDao;
     private Uver uver;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
 
-        DatabazovyUverDao dao = DaoFactory.INSTANCE.databazovyUverDao();
+        UverDao dao = DaoFactory.INSTANCE.uverDao();
         List<Uver> uvery = dao.dajVsetky();
         if (!uvery.isEmpty()) {
             uver = uvery.get(0);
         }
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyBonusDao = DaoFactory.INSTANCE.databazovyBonusDao();
+        this.databazovyBonusDao = DaoFactory.INSTANCE.bonusDao();
     }
 
     @Test

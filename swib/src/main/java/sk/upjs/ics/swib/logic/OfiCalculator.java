@@ -1,123 +1,95 @@
 package sk.upjs.ics.swib.logic;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import sk.upjs.ics.swib.dao.DatabazovyBonusDao;
-import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
-import sk.upjs.ics.swib.dao.DatabazovyMultiplikatorDao;
-import sk.upjs.ics.swib.dao.DatabazovyPorovnavacDao;
+import sk.upjs.ics.swib.dao.MultiplikatorDao;
+import sk.upjs.ics.swib.dao.PorovnavacDao;
 import sk.upjs.ics.swib.entity.Bonus;
-import sk.upjs.ics.swib.entity.Klient;
-import sk.upjs.ics.swib.entity.Multiplikator;
-import sk.upjs.ics.swib.entity.Porovnavac;
-import sk.upjs.ics.swib.entity.Uver;
 import sk.upjs.ics.swib.exceptions.NieJeMozneSplacat;
 import sk.upjs.ics.swib.factory.DaoFactory;
 
 public class OfiCalculator implements Calculator {
 
-    DatabazovyBonusDao databazovyBonusDao = DaoFactory.INSTANCE.databazovyBonusDao();
-    DatabazovyKlientDao databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
-    DatabazovyMultiplikatorDao databazovyMultiplikatorDao = DaoFactory.INSTANCE.databazovyMultiplikatorDao();
-    DatabazovyPorovnavacDao databazovyPorovnavacDao = DaoFactory.INSTANCE.databazovyPorovnavacDao();
-    
-    private BigDecimal klientovaRealnaHodnota;
-    private List<Multiplikator> poleMultiplikatorov = databazovyMultiplikatorDao.dajVsetky();
-    private List<Porovnavac> polePorovnavacov = databazovyPorovnavacDao.dajVsetky();
-    private Set<Integer> vyskytPorovnavaca;
-    private BigDecimal hodnotaSumyNaPozicanie;
-    private Klient danyKlient;
+    MultiplikatorDao multiplikatorDao = DaoFactory.INSTANCE.multiplikatorDao();
+    PorovnavacDao porovnavacDao = DaoFactory.INSTANCE.porovnavacDao();
 
     @Override
-    public String prehladajPorovnavace(Bonus bonus) {
-        String porovnavac = "";
-        for (int i = 0; i < polePorovnavacov.size(); i++) {
-            if (bonus.getPorovnavacId() == polePorovnavacov.get(i).getId()) {
-                porovnavac = polePorovnavacov.get(i).getNazov();
-            }
+    public BigDecimal uplatniBonus(
+            BigDecimal nasobic,
+            Bonus bonus,
+            KonstantyPreKlienta konstanty) {
+        BigDecimal klientovaRealnaHodnota = null;
+        String porovnavac = porovnavacDao.dajNazov(bonus.getPorovnavacId());
+        String operator = multiplikatorDao.dajNazov(bonus.getMultiplikatorId());
+
+        switch (porovnavac) {
+            case "PMP":
+                klientovaRealnaHodnota = konstanty.getPriemernyMesacnyPrijem();
+                break;
+            case "Suma":
+                klientovaRealnaHodnota = konstanty.getSumaNaPozicanie();
+                break;
+            case "PMZ":
+                klientovaRealnaHodnota = konstanty.getPriemernyMesacnyZostatok();
+                break;
         }
-        return porovnavac;
-    }
 
-    @Override
-    public String prehladajMultiplikatori(Bonus bonus) {
-        String operator = "";
-        for (int i = 0; i < poleMultiplikatorov.size(); i++) {
-            if (bonus.getMultiplikatorId() == poleMultiplikatorov.get(i).getId()) {
-                operator = poleMultiplikatorov.get(i).getNazov();
-            }
+        if (klientovaRealnaHodnota == null) {
+            return nasobic;
         }
-        return operator;
-    }
-
-    @Override
-    public void uplatniBonus(BigDecimal nasobic, Bonus bonus) {
-        String porovnavac = prehladajPorovnavace(bonus);
-        String operator = prehladajMultiplikatori(bonus);
-        if (vyskytPorovnavaca.add(bonus.getPorovnavacId()) == true) {
-            switch (porovnavac) {
-            case "PMP": klientovaRealnaHodnota = databazovyKlientDao.priemernyMesacnyPrijem(danyKlient);
-                              break;
-                case "Suma":
-                    klientovaRealnaHodnota = hodnotaSumyNaPozicanie;
-                    break;
-       //     case "PMZ": klientovaRealnaHodnota = ;
-                //              break;
-            }
-
-            if (this.klientovaRealnaHodnota.compareTo(bonus.getJeVacsiAko()) == 1) {
+        if (klientovaRealnaHodnota.compareTo(bonus.getJeVacsiAko()) == 1) {
+            if (konstanty.getVyskytPorovnavaca().add(bonus.getPorovnavacId()) == true) {
                 switch (operator) {
                     case "+":
-                        nasobic = nasobic.add(bonus.getKolkoJeBonus());
-                        break;
+                        return nasobic.add(bonus.getKolkoJeBonus());
                     case "-":
-                        nasobic = nasobic.subtract(bonus.getKolkoJeBonus());
-                        break;
+                        return nasobic.subtract(bonus.getKolkoJeBonus());
                     case "*":
-                        nasobic = nasobic.multiply(bonus.getKolkoJeBonus());
-                        break;
+                        return nasobic.multiply(bonus.getKolkoJeBonus());
                 }
+            } else {
+                return nasobic;
             }
         }
+        return nasobic;
     }
 
     @Override
-    public void uplatniBonusy(BigDecimal nasobic, Uver uver) {
-        List<Bonus> bonusy = databazovyBonusDao.dajVsetky(uver);
+    public BigDecimal uplatniBonusy(
+            BigDecimal nasobic,
+            List<Bonus> bonusy,
+            KonstantyPreKlienta konstanty) {
         for (int i = 0; i < bonusy.size(); i++) {
-            uplatniBonus(nasobic, bonusy.get(i));
-
+            nasobic = uplatniBonus(nasobic, bonusy.get(i), konstanty);
         }
+
+        return nasobic;
     }
 
     @Override
-    public BigDecimal mesacnaUrokovaSadzba(Klient klient, BigDecimal sumaNaPozicanie, int dobaVMesiacoch, Uver uver, int pocetDeti) throws NieJeMozneSplacat {
-        vyskytPorovnavaca = new HashSet<>();
-        danyKlient = klient;
-        this.hodnotaSumyNaPozicanie = sumaNaPozicanie;
-        BigDecimal maxKlientoveMesacneSplatky = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient);
+    public BigDecimal mesacnaUrokovaSadzba(
+            KonstantyPreKlienta konstanty,
+            List<Bonus> bonusy)
+            throws NieJeMozneSplacat {
         BigDecimal nasobic = BigDecimal.ONE;
-        uplatniBonusy(nasobic, uver);
-        sumaNaPozicanie = sumaNaPozicanie.multiply(nasobic);
-        BigDecimal decimalDobaVMesiacoch = new BigDecimal(dobaVMesiacoch);
-        sumaNaPozicanie = sumaNaPozicanie.divide(decimalDobaVMesiacoch);
-        maxKlientoveMesacneSplatky = maxKlientoveMesacneSplatky.subtract(uver.getBonusNaManzelku());
-        maxKlientoveMesacneSplatky = maxKlientoveMesacneSplatky.subtract((new BigDecimal(pocetDeti)).multiply(uver.getBonusNaDieta()));
-        if (sumaNaPozicanie.compareTo(maxKlientoveMesacneSplatky) <= 0) {
-            return sumaNaPozicanie;
+        BigDecimal mesacnaUrokovaSadzba = null;
+
+        konstanty.getSumaNaPozicanie();
+        BigDecimal maxKlientoveMesacneSplatky = konstanty.getMozeNaMesiacMaximalneSplacat();
+        nasobic = uplatniBonusy(nasobic, bonusy, konstanty);
+        mesacnaUrokovaSadzba = konstanty.getSumaNaPozicanie()
+                .multiply(nasobic)
+                .divide(new BigDecimal("" + konstanty.getDobaVMesiacoch()));
+        if (konstanty.getBonusNaManzelku() != null) {
+            maxKlientoveMesacneSplatky = maxKlientoveMesacneSplatky.subtract(konstanty.getBonusNaManzelku());
+        }
+        maxKlientoveMesacneSplatky = maxKlientoveMesacneSplatky.subtract(
+                (new BigDecimal("" + konstanty.getPocetDeti())).multiply(konstanty.getBonusNaDieta())
+        );
+        if (mesacnaUrokovaSadzba.compareTo(maxKlientoveMesacneSplatky) <= 0) {
+            return mesacnaUrokovaSadzba;
         } else {
             throw new NieJeMozneSplacat();
         }
-
-    }
-
-    public void setKlientovaRealnaHodnota(BigDecimal klientovaRealnaHodnota) {
-        this.klientovaRealnaHodnota = klientovaRealnaHodnota;
-    }
-
-    public BigDecimal getKlientovaRealnaHodnota() {
-        return klientovaRealnaHodnota;
     }
 }

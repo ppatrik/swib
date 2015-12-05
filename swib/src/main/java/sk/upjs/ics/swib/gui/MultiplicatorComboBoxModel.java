@@ -3,7 +3,7 @@ package sk.upjs.ics.swib.gui;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-import sk.upjs.ics.swib.dao.DatabazovyMultiplikatorDao;
+import sk.upjs.ics.swib.dao.MultiplikatorDao;
 import sk.upjs.ics.swib.entity.Multiplikator;
 import sk.upjs.ics.swib.factory.DaoFactory;
 
@@ -13,7 +13,7 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 class MultiplicatorComboBoxModel extends AbstractListModel implements ComboBoxModel{    
     
-    private final DatabazovyMultiplikatorDao databazovyMultiplikatorDao = DaoFactory.INSTANCE.databazovyMultiplikatorDao();
+    private final MultiplikatorDao databazovyMultiplikatorDao = DaoFactory.INSTANCE.multiplikatorDao();
     private final List<Multiplikator> zoznamMultiplikatorov = databazovyMultiplikatorDao.dajVsetky();
     private Object vybranyMultiplikator;
 

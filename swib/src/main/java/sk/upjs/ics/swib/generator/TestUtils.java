@@ -153,8 +153,8 @@ public class TestUtils {
     public static BigDecimal priemernyMesacnyZostPrir(Klient klient, boolean onlyPositive) {
         // ak je onlyPositive nastavene na true, pocitame priemerny mesacny prirastok, inak zostatok
         Map<String, BigDecimal> mesiaceZostatky = new HashMap<String, BigDecimal>();
-        for (Ucet ucet : DaoFactory.INSTANCE.databazovyUcetDao().dajVsetky(klient)) {
-            for (Pohyb pohyb : DaoFactory.INSTANCE.databazovyPohybDao().dajVsetky(ucet)) {
+        for (Ucet ucet : DaoFactory.INSTANCE.ucetDao().dajVsetky(klient)) {
+            for (Pohyb pohyb : DaoFactory.INSTANCE.pohybDao().dajVsetky(ucet)) {
                 if (onlyPositive && pohyb.getSuma().compareTo(new BigDecimal(BigInteger.ZERO)) == -1) {
                     continue;
                 }
@@ -184,8 +184,8 @@ public class TestUtils {
     public static BigDecimal priemernyMesacnyZostatok2(Klient klient) {
         // pocitanie zostatku spolu s predchadzajucimi mesiacmi
         Map<String, BigDecimal> mesiaceZostatky = new TreeMap<String, BigDecimal>();
-        for (Ucet ucet : DaoFactory.INSTANCE.databazovyUcetDao().dajVsetky(klient)) {
-            for (Pohyb pohyb : DaoFactory.INSTANCE.databazovyPohybDao().dajVsetky(ucet)) {
+        for (Ucet ucet : DaoFactory.INSTANCE.ucetDao().dajVsetky(klient)) {
+            for (Pohyb pohyb : DaoFactory.INSTANCE.pohybDao().dajVsetky(ucet)) {
                 int month = pohyb.getDatum().get(Calendar.MONTH);
                 String monthS = (month < 10) ? "0" + month : month + "";
                 String key = pohyb.getDatum().get(Calendar.YEAR) + "" + monthS;

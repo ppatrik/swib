@@ -3,9 +3,8 @@ package sk.upjs.ics.swib.gui;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
-import javafx.print.Collation;
 import javax.swing.table.AbstractTableModel;
-import sk.upjs.ics.swib.dao.DatabazovyPohybDao;
+import sk.upjs.ics.swib.dao.PohybDao;
 import sk.upjs.ics.swib.entity.Pohyb;
 import sk.upjs.ics.swib.entity.Ucet;
 import sk.upjs.ics.swib.factory.DaoFactory;
@@ -18,7 +17,7 @@ public class PohybTableModel extends AbstractTableModel{
     
     private Ucet ucet;
     private List<Pohyb> pohyby;
-    private final DatabazovyPohybDao databazovyPohybDao = DaoFactory.INSTANCE.databazovyPohybDao();
+    private final PohybDao databazovyPohybDao = DaoFactory.INSTANCE.pohybDao();
     private final PohybComparator pohybComparator = new PohybComparator();
     
     private static final int COLUMN_NUMBER = 2;

@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.springframework.jdbc.core.JdbcTemplate;
-import sk.upjs.ics.swib.dao.DatabazovyMultiplikatorDao;
+import sk.upjs.ics.swib.dao.MultiplikatorDao;
 import sk.upjs.ics.swib.entity.Multiplikator;
 import sk.upjs.ics.swib.factory.DaoFactory;
 import sk.upjs.ics.swib.generator.TestUtils;
@@ -17,13 +17,13 @@ import sk.upjs.ics.swib.generator.TestUtils;
 public class DatabazovyMultiplikatorDaoTest {
 
     private JdbcTemplate jdbcTemplate;
-    private DatabazovyMultiplikatorDao databazovyMultiplikatorDao;
+    private MultiplikatorDao databazovyMultiplikatorDao;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyMultiplikatorDao = DaoFactory.INSTANCE.databazovyMultiplikatorDao();
+        this.databazovyMultiplikatorDao = DaoFactory.INSTANCE.multiplikatorDao();
     }
 
     @Test
@@ -42,5 +42,17 @@ public class DatabazovyMultiplikatorDaoTest {
         int id = databazovyMultiplikatorDao.dajIndex(multiplikator.getNazov());
         assertEquals(multiplikator.getId(), id);
     }
+    @Test
+    public void dajNazovTest() {
+        List<Multiplikator> vsetky = databazovyMultiplikatorDao.dajVsetky();
+        if (vsetky.isEmpty()) {
+            return;
+        }
+        Multiplikator multiplikator = vsetky.get(0);
+
+        String nazov = databazovyMultiplikatorDao.dajNazov(multiplikator.getId());
+        assertEquals(multiplikator.getNazov(), nazov);
+    }
+    
 
 }

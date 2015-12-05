@@ -27,8 +27,14 @@ public class DatabazovyPorovnavacDao implements PorovnavacDao {
     @Override
     public int dajIndex(String nazov) {
         String sql = "SELECT ID FROM " + TABLE_NAME + " WHERE Nazov= ? ";
-        Integer id = (Integer) jdbcTemplate.queryForObject(sql, new Object[] { nazov }, Integer.class);
+        Integer id = (Integer) jdbcTemplate.queryForObject(sql, new Object[]{nazov}, Integer.class);
         return id.intValue();
     }
 
+    @Override
+    public String dajNazov(int index) {
+        String sql = "SELECT Nazov FROM " + TABLE_NAME + " WHERE ID= ? ";
+        String nazov = jdbcTemplate.queryForObject(sql, new Object[]{index}, String.class);
+        return nazov;
+    }
 }

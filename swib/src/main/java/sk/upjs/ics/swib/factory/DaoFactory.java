@@ -3,6 +3,7 @@ package sk.upjs.ics.swib.factory;
 import com.mysql.jdbc.jdbc2.optional.MysqlDataSource;
 import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
+import sk.upjs.ics.swib.dao.BonusDao;
 import sk.upjs.ics.swib.dao.DatabazovyBonusDao;
 import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
 import sk.upjs.ics.swib.dao.DatabazovyMultiplikatorDao;
@@ -10,19 +11,25 @@ import sk.upjs.ics.swib.dao.DatabazovyPohybDao;
 import sk.upjs.ics.swib.dao.DatabazovyPorovnavacDao;
 import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
 import sk.upjs.ics.swib.dao.DatabazovyUverDao;
+import sk.upjs.ics.swib.dao.KlientDao;
+import sk.upjs.ics.swib.dao.MultiplikatorDao;
+import sk.upjs.ics.swib.dao.PohybDao;
+import sk.upjs.ics.swib.dao.PorovnavacDao;
+import sk.upjs.ics.swib.dao.UcetDao;
+import sk.upjs.ics.swib.dao.UverDao;
 
 public enum DaoFactory {
 
     INSTANCE;
 
     private JdbcTemplate jdbcTemplate;
-    private DatabazovyBonusDao databazovyBonusDao;
-    private DatabazovyKlientDao databazovyKlientDao;
-    private DatabazovyUcetDao databazovyUcetDao;
-    private DatabazovyMultiplikatorDao databazovyMultiplikatorDao;
-    private DatabazovyPohybDao databazovyPohybDao;
-    private DatabazovyPorovnavacDao databazovyPorovnavacDao;
-    private DatabazovyUverDao databazovyUverDao;
+    private BonusDao bonusDao;
+    private KlientDao klientDao;
+    private UcetDao ucetDao;
+    private MultiplikatorDao multiplikatorDao;
+    private PohybDao pohybDao;
+    private PorovnavacDao porovnavacDao;
+    private UverDao uverDao;
 
     public JdbcTemplate jdbcTemplate() {
         if (this.jdbcTemplate == null) {
@@ -30,54 +37,54 @@ public enum DaoFactory {
         }
         return this.jdbcTemplate;
     }
-    
-    public DatabazovyBonusDao databazovyBonusDao() {
-        if (this.databazovyBonusDao == null) {
-            this.databazovyBonusDao = new DatabazovyBonusDao(DaoFactory.INSTANCE.jdbcTemplate());
+
+    public BonusDao bonusDao() {
+        if (this.bonusDao == null) {
+            this.bonusDao = new DatabazovyBonusDao(jdbcTemplate());
         }
-        return this.databazovyBonusDao;
+        return this.bonusDao;
     }
-    
-    public DatabazovyKlientDao databazovyKlientDao() {
-        if (this.databazovyKlientDao == null) {
-            this.databazovyKlientDao = new DatabazovyKlientDao(DaoFactory.INSTANCE.jdbcTemplate());
+
+    public KlientDao klientDao() {
+        if (this.klientDao == null) {
+            this.klientDao = new DatabazovyKlientDao(jdbcTemplate());
         }
-        return this.databazovyKlientDao;
+        return this.klientDao;
     }
-    
-    public DatabazovyUcetDao databazovyUcetDao() {
-        if (this.databazovyUcetDao == null) {
-            this.databazovyUcetDao = new DatabazovyUcetDao(DaoFactory.INSTANCE.jdbcTemplate());
+
+    public UcetDao ucetDao() {
+        if (this.ucetDao == null) {
+            this.ucetDao = new DatabazovyUcetDao(jdbcTemplate());
         }
-        return this.databazovyUcetDao;
+        return this.ucetDao;
     }
-    
-    public DatabazovyMultiplikatorDao databazovyMultiplikatorDao() {
-        if (this.databazovyMultiplikatorDao == null) {
-            this.databazovyMultiplikatorDao = new DatabazovyMultiplikatorDao(DaoFactory.INSTANCE.jdbcTemplate());
+
+    public MultiplikatorDao multiplikatorDao() {
+        if (this.multiplikatorDao == null) {
+            this.multiplikatorDao = new DatabazovyMultiplikatorDao(jdbcTemplate());
         }
-        return this.databazovyMultiplikatorDao;
+        return this.multiplikatorDao;
     }
-    
-    public DatabazovyPohybDao databazovyPohybDao() {
-        if (this.databazovyPohybDao == null) {
-            this.databazovyPohybDao = new DatabazovyPohybDao(DaoFactory.INSTANCE.jdbcTemplate());
+
+    public PohybDao pohybDao() {
+        if (this.pohybDao == null) {
+            this.pohybDao = new DatabazovyPohybDao(jdbcTemplate());
         }
-        return this.databazovyPohybDao;
+        return this.pohybDao;
     }
-    
-    public DatabazovyPorovnavacDao databazovyPorovnavacDao() {
-        if (this.databazovyPorovnavacDao == null) {
-            this.databazovyPorovnavacDao = new DatabazovyPorovnavacDao(DaoFactory.INSTANCE.jdbcTemplate());
+
+    public PorovnavacDao porovnavacDao() {
+        if (this.porovnavacDao == null) {
+            this.porovnavacDao = new DatabazovyPorovnavacDao(jdbcTemplate());
         }
-        return this.databazovyPorovnavacDao;
+        return this.porovnavacDao;
     }
-    
-    public DatabazovyUverDao databazovyUverDao() {
-        if (this.databazovyUverDao == null) {
-            this.databazovyUverDao = new DatabazovyUverDao(DaoFactory.INSTANCE.jdbcTemplate());
+
+    public UverDao uverDao() {
+        if (this.uverDao == null) {
+            this.uverDao = new DatabazovyUverDao(jdbcTemplate());
         }
-        return this.databazovyUverDao;
+        return this.uverDao;
     }
 
     public DataSource dataSource() {
@@ -85,11 +92,11 @@ public enum DaoFactory {
         if ("true".equals(System.getProperty("testovaciRezim"))) {
             dataSource.setURL("jdbc:mysql://46.229.230.241:3306/hq007701db");
             dataSource.setUser("hq007700");
-            dataSource.setPassword("NaseTimoveHeslo2015");
+            dataSource.setPassword("2015PatrikSaZabava");
         } else {
             dataSource.setURL("jdbc:mysql://46.229.230.241:3306/hq007700db");
             dataSource.setUser("hq007700");
-            dataSource.setPassword("NaseTimoveHeslo2015");
+            dataSource.setPassword("2015PatrikSaZabava");
         }
 
         return dataSource;

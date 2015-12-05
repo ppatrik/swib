@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.springframework.jdbc.core.JdbcTemplate;
-import sk.upjs.ics.swib.dao.DatabazovyUverDao;
+import sk.upjs.ics.swib.dao.UverDao;
 import sk.upjs.ics.swib.entity.Uver;
 import sk.upjs.ics.swib.factory.DaoFactory;
 import sk.upjs.ics.swib.generator.TestUtils;
@@ -23,13 +23,13 @@ import sk.upjs.ics.swib.generator.TestUtils;
 public class DatabazovyUverDaoTest {
 
     private JdbcTemplate jdbcTemplate;
-    private DatabazovyUverDao databazovyUverDao;
+    private UverDao databazovyUverDao;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyUverDao = DaoFactory.INSTANCE.databazovyUverDao();
+        this.databazovyUverDao = DaoFactory.INSTANCE.uverDao();
     }
 
     @Test

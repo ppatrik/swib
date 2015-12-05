@@ -3,7 +3,7 @@ package sk.upjs.ics.swib.gui;
 import java.math.BigDecimal;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
-import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
+import sk.upjs.ics.swib.dao.UcetDao;
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Ucet;
 import sk.upjs.ics.swib.factory.DaoFactory;
@@ -15,7 +15,7 @@ import sk.upjs.ics.swib.factory.DaoFactory;
 public class UctyTableModel extends AbstractTableModel{
     
     private Klient klient;
-    private final DatabazovyUcetDao databazovyUcetDao = DaoFactory.INSTANCE.databazovyUcetDao();
+    private final UcetDao databazovyUcetDao = DaoFactory.INSTANCE.ucetDao();
     private List<Ucet> ucty;
     
     private static final int COLUMN_NUMBER = 3;

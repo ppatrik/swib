@@ -6,4 +6,5 @@ import sk.upjs.ics.swib.entity.Porovnavac;
 public interface PorovnavacDao {
     List<Porovnavac> dajVsetky();
     int dajIndex(String nazov);
+    String dajNazov(int index);
 }

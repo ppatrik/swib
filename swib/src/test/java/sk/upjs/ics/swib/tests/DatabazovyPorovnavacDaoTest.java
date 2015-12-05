@@ -5,7 +5,7 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 import org.junit.Before;
 import org.springframework.jdbc.core.JdbcTemplate;
-import sk.upjs.ics.swib.dao.DatabazovyPorovnavacDao;
+import sk.upjs.ics.swib.dao.PorovnavacDao;
 import sk.upjs.ics.swib.entity.Porovnavac;
 import sk.upjs.ics.swib.factory.DaoFactory;
 import sk.upjs.ics.swib.generator.TestUtils;
@@ -17,13 +17,13 @@ import sk.upjs.ics.swib.generator.TestUtils;
 public class DatabazovyPorovnavacDaoTest {
 
     private JdbcTemplate jdbcTemplate;
-    private DatabazovyPorovnavacDao databazovyPorovnavacDao;
+    private PorovnavacDao databazovyPorovnavacDao;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyPorovnavacDao = DaoFactory.INSTANCE.databazovyPorovnavacDao();
+        this.databazovyPorovnavacDao = DaoFactory.INSTANCE.porovnavacDao();
     }
 
     @Test
@@ -43,5 +43,18 @@ public class DatabazovyPorovnavacDaoTest {
         int id = databazovyPorovnavacDao.dajIndex(porovnavac.getNazov());
         assertEquals(porovnavac.getId(), id);
     }
+    
+    @Test
+    public void dajNazovTest() {
+        List<Porovnavac> vsetky = databazovyPorovnavacDao.dajVsetky();
+        if (vsetky.isEmpty()) {
+            return;
+        }
+        Porovnavac porovnavac = vsetky.get(0);
+
+        String nazov = databazovyPorovnavacDao.dajNazov(porovnavac.getId());
+        assertEquals(porovnavac.getNazov(), nazov);
+    }
+    
 
 }

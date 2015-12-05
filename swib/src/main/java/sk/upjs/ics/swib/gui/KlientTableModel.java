@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import sk.upjs.ics.swib.entity.Klient;
-import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
-import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
+import sk.upjs.ics.swib.dao.KlientDao;
+import sk.upjs.ics.swib.dao.UcetDao;
 import sk.upjs.ics.swib.factory.DaoFactory;
 
 /**
@@ -14,8 +14,8 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 public class KlientTableModel extends AbstractTableModel {
 
-    private final DatabazovyKlientDao databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
-    private final DatabazovyUcetDao databazovyUcetDao = DaoFactory.INSTANCE.databazovyUcetDao();
+    private final KlientDao databazovyKlientDao = DaoFactory.INSTANCE.klientDao();
+    private final UcetDao databazovyUcetDao = DaoFactory.INSTANCE.ucetDao();
 
     private List<Klient> zoznamK = databazovyKlientDao.dajVsetkych();
 

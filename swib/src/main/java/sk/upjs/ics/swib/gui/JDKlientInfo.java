@@ -4,7 +4,7 @@ import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Ucet;
 import java.util.Calendar;
 import java.util.Date;
-import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
+import sk.upjs.ics.swib.dao.KlientDao;
 import sk.upjs.ics.swib.factory.DaoFactory;
 
 /**
@@ -13,7 +13,7 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 public class JDKlientInfo extends javax.swing.JDialog {
     
-    private final DatabazovyKlientDao databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
+    private final KlientDao databazovyKlientDao = DaoFactory.INSTANCE.klientDao();
     
     private Klient klient;
     private UctyTableModel uctyTableModel;

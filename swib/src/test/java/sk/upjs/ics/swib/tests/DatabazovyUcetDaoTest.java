@@ -9,8 +9,8 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.springframework.jdbc.core.JdbcTemplate;
-import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
-import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
+import sk.upjs.ics.swib.dao.KlientDao;
+import sk.upjs.ics.swib.dao.UcetDao;
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Ucet;
 import sk.upjs.ics.swib.factory.DaoFactory;
@@ -25,20 +25,20 @@ import sk.upjs.ics.swib.generator.TestUtils;
 public class DatabazovyUcetDaoTest {
 
     private JdbcTemplate jdbcTemplate;
-    private DatabazovyUcetDao databazovyUcetDao;
+    private UcetDao databazovyUcetDao;
     private Klient klient;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
 
-        DatabazovyKlientDao dao = DaoFactory.INSTANCE.databazovyKlientDao();
+        KlientDao dao = DaoFactory.INSTANCE.klientDao();
         List<Klient> klienti = dao.dajVsetkych();
         if (!klienti.isEmpty()) {
             klient = klienti.get(0);
         }
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyUcetDao = DaoFactory.INSTANCE.databazovyUcetDao();
+        this.databazovyUcetDao = DaoFactory.INSTANCE.ucetDao();
     }
 
     @Test

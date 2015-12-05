@@ -1,6 +1,6 @@
 package sk.upjs.ics.swib.gui;
 
-import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
+import sk.upjs.ics.swib.dao.KlientDao;
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Uver;
 import sk.upjs.ics.swib.factory.DaoFactory;
@@ -12,7 +12,7 @@ import sk.upjs.ics.swib.factory.DaoFactory;
 public class JDVypocitajUver extends javax.swing.JDialog {
 
     private final UverComboBoxModel uverComboBoxModel = new UverComboBoxModel();
-    private DatabazovyKlientDao databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
+    private KlientDao databazovyKlientDao = DaoFactory.INSTANCE.klientDao();
     private Klient klient;
 
     private Uver vybranyUver = null;

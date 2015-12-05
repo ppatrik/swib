@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.FixMethodOrder;
 import org.junit.runners.MethodSorters;
 import org.springframework.jdbc.core.JdbcTemplate;
-import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
+import sk.upjs.ics.swib.dao.KlientDao;
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.factory.DaoFactory;
 import sk.upjs.ics.swib.generator.TestUtils;
@@ -25,13 +25,13 @@ import sk.upjs.ics.swib.generator.TestUtils;
 public class DatabazovyKlientDaoTest {
 
     private JdbcTemplate jdbcTemplate;
-    private DatabazovyKlientDao databazovyKlientDao;
+    private KlientDao databazovyKlientDao;
 
     @Before
     public void setUp() {
         System.setProperty("testovaciRezim", "true");
         this.jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        this.databazovyKlientDao = DaoFactory.INSTANCE.databazovyKlientDao();
+        this.databazovyKlientDao = DaoFactory.INSTANCE.klientDao();
     }
 
     @Test
@@ -122,7 +122,7 @@ public class DatabazovyKlientDaoTest {
         }
         assertEquals(TestUtils.priemernyMesacnyZostPrir(klient, true), maxSplacat);
     }
-    
+
     //    @Test
 //    public void testGPriemernyMesacnyZostatok2() {
 //        List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
@@ -136,5 +136,4 @@ public class DatabazovyKlientDaoTest {
 //        }
 //        assertEquals(TestUtils.priemernyMesacnyZostatok2(klient), maxSplacat);
 //    }
-
 }

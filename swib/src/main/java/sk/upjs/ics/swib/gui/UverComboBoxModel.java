@@ -3,7 +3,7 @@ package sk.upjs.ics.swib.gui;
 import java.util.List;
 import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
-import sk.upjs.ics.swib.dao.DatabazovyUverDao;
+import sk.upjs.ics.swib.dao.UverDao;
 import sk.upjs.ics.swib.entity.Uver;
 import sk.upjs.ics.swib.factory.DaoFactory;
 
@@ -13,7 +13,7 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  */
 public class UverComboBoxModel extends AbstractListModel implements ComboBoxModel{
     
-    private final DatabazovyUverDao databazovyUverDao = DaoFactory.INSTANCE.databazovyUverDao();
+    private final UverDao databazovyUverDao = DaoFactory.INSTANCE.uverDao();
     private List<Uver> zoznamUverov = databazovyUverDao.dajVsetky();
     private Object vybranyObjekt;
     

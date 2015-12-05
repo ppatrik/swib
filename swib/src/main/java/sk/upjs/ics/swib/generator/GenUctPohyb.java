@@ -12,8 +12,8 @@ import java.util.Map.Entry;
 import java.util.Random;
 import java.util.Set;
 import org.springframework.jdbc.core.JdbcTemplate;
-import sk.upjs.ics.swib.dao.DatabazovyKlientDao;
-import sk.upjs.ics.swib.dao.DatabazovyUcetDao;
+import sk.upjs.ics.swib.dao.KlientDao;
+import sk.upjs.ics.swib.dao.UcetDao;
 
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Pohyb;
@@ -32,8 +32,8 @@ public class GenUctPohyb {
         List<UctyKlienta> ucty = gup.genUctyKlienta();
         System.setProperty("testovaciRezim", "true");
         JdbcTemplate jdbcTemplate = DaoFactory.INSTANCE.jdbcTemplate();
-        DatabazovyKlientDao klientDao = DaoFactory.INSTANCE.databazovyKlientDao();
-        DatabazovyUcetDao ucetDao = DaoFactory.INSTANCE.databazovyUcetDao();
+        KlientDao klientDao = DaoFactory.INSTANCE.klientDao();
+        UcetDao ucetDao = DaoFactory.INSTANCE.ucetDao();
         for (UctyKlienta u : ucty) {
             Klient klient = u.getKlient();
             klientDao.pridaj(klient);
