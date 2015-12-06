@@ -53,10 +53,22 @@ public class DatabazovyKlientDao implements KlientDao {
 
     @Override
     public BigDecimal priemernyMesacnyPrijem(Klient klient) {
-    String sql = "select AVG(items.Sumy) from ("
+        String sql = "select AVG(items.Sumy) from ("
                 + "select SUM(p.suma) AS Sumy from Ucet as uk inner join Pohyby as p on p.UcetID=uk.ID "
                 + "where uk.KlientID = ? AND p.Suma > 0 group by month(p.datum), year(p.datum) )items";
         return (BigDecimal) jdbcTemplate.queryForObject(sql, BigDecimal.class, klient.getId());
+    }
+
+    @Override
+    public BigDecimal priemernyMesacnyZostatok(Klient klient) {
+        String sql = "select avg(q2.cum) from (select t1.date, t1.sumy, sum(t2.Sumy) cum "
+                + "from (select SUM(p.suma) AS sumy , CONVERT(CONCAT(year(p.datum), IF (month(p.datum) > 9, month(p.datum),CONCAT(0,month(p.datum)))) ,UNSIGNED INTEGER) as date "
+                + "from Ucet as uk inner join Pohyby as p on p.UcetID=uk.ID "
+                + "where uk.KlientID = ? group by date ORDER BY date) as t1, "
+                + "(select SUM(p.suma) AS sumy , CONVERT(CONCAT(year(p.datum), IF (month(p.datum) > 9, month(p.datum),CONCAT(0,month(p.datum)))) ,UNSIGNED INTEGER) as date "
+                + "from Ucet as uk inner join Pohyby as p on p.UcetID=uk.ID "
+                + "where uk.KlientID = ? group by date ORDER BY date) as t2 WHERE t1.date>=t2.date GROUP BY t1.date ) as q2";
+        return (BigDecimal) jdbcTemplate.queryForObject(sql, BigDecimal.class, klient.getId(), klient.getId());
     }
 
 }

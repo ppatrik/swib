@@ -128,31 +128,31 @@ public class TestUtils {
     public static int pocetZDB(String table) {
         System.setProperty("testovaciRezim", "true");
         String sql = "SELECT COUNT(*) FROM " + table;
-        Integer id = (Integer) DaoFactory.INSTANCE.jdbcTemplate().queryForObject(sql, Integer.class);
-        return id.intValue();
+        Integer id = DaoFactory.INSTANCE.jdbcTemplate().queryForObject(sql, Integer.class);
+        return id;
     }
 
     public static int pocetUctov(Klient klient) {
         String sql = "SELECT COUNT(*) FROM Ucet u JOIN Klient k on u.KlientID = k.ID WHERE k.ID = " + klient.getId();
-        Integer id = (Integer) DaoFactory.INSTANCE.jdbcTemplate().queryForObject(sql, Integer.class);
-        return id.intValue();
+        Integer id = DaoFactory.INSTANCE.jdbcTemplate().queryForObject(sql, Integer.class);
+        return id;
     }
 
     public static int pocetPohybov(Ucet ucet) {
         String sql = "SELECT COUNT(*) FROM Pohyby p JOIN Ucet u on p.UcetID = u.ID WHERE u.ID =" + ucet.getId();
-        Integer id = (Integer) DaoFactory.INSTANCE.jdbcTemplate().queryForObject(sql, Integer.class);
-        return id.intValue();
+        Integer id = DaoFactory.INSTANCE.jdbcTemplate().queryForObject(sql, Integer.class);
+        return id;
     }
 
     public static int pocetBonusov(Uver uver) {
         String sql = "SELECT COUNT(*) FROM Bonusy b JOIN Uvery u on b.UveryId = b.ID WHERE u.ID = " + uver.getId();
-        Integer id = (Integer) DaoFactory.INSTANCE.jdbcTemplate().queryForObject(sql, Integer.class);
-        return id.intValue();
+        Integer id = DaoFactory.INSTANCE.jdbcTemplate().queryForObject(sql, Integer.class);
+        return id;
     }
 
     public static BigDecimal priemernyMesacnyZostPrir(Klient klient, boolean onlyPositive) {
         // ak je onlyPositive nastavene na true, pocitame priemerny mesacny prirastok, inak zostatok
-        Map<String, BigDecimal> mesiaceZostatky = new HashMap<String, BigDecimal>();
+        Map<String, BigDecimal> mesiaceZostatky = new HashMap<>();
         for (Ucet ucet : DaoFactory.INSTANCE.ucetDao().dajVsetky(klient)) {
             for (Pohyb pohyb : DaoFactory.INSTANCE.pohybDao().dajVsetky(ucet)) {
                 if (onlyPositive && pohyb.getSuma().compareTo(new BigDecimal(BigInteger.ZERO)) == -1) {
@@ -183,7 +183,7 @@ public class TestUtils {
 
     public static BigDecimal priemernyMesacnyZostatok2(Klient klient) {
         // pocitanie zostatku spolu s predchadzajucimi mesiacmi
-        Map<String, BigDecimal> mesiaceZostatky = new TreeMap<String, BigDecimal>();
+        Map<String, BigDecimal> mesiaceZostatky = new TreeMap<>();
         for (Ucet ucet : DaoFactory.INSTANCE.ucetDao().dajVsetky(klient)) {
             for (Pohyb pohyb : DaoFactory.INSTANCE.pohybDao().dajVsetky(ucet)) {
                 int month = pohyb.getDatum().get(Calendar.MONTH);

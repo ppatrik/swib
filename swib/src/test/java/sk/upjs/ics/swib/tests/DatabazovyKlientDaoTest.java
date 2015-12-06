@@ -116,24 +116,24 @@ public class DatabazovyKlientDaoTest {
             return;
         }
         Klient klient = zoznamKlientov.get(0);
-        BigDecimal maxSplacat = databazovyKlientDao.priemernyMesacnyPrijem(klient);
-        if (maxSplacat != null) {
-            maxSplacat = maxSplacat.setScale(4, RoundingMode.DOWN);
+        BigDecimal pmp = databazovyKlientDao.priemernyMesacnyPrijem(klient);
+        if (pmp != null) {
+            pmp = pmp.setScale(4, RoundingMode.DOWN);
         }
-        assertEquals(TestUtils.priemernyMesacnyZostPrir(klient, true), maxSplacat);
+        assertEquals(TestUtils.priemernyMesacnyZostPrir(klient, true), pmp);
     }
 
-    //    @Test
-//    public void testGPriemernyMesacnyZostatok2() {
-//        List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
-//        if (zoznamKlientov.isEmpty()) {
-//            return;
-//        }
-//        Klient klient = zoznamKlientov.get(0);
-//        BigDecimal maxSplacat = databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient);
-//        if (maxSplacat != null) {
-//            maxSplacat = maxSplacat.setScale(4, RoundingMode.DOWN);
-//        }
-//        assertEquals(TestUtils.priemernyMesacnyZostatok2(klient), maxSplacat);
-//    }
+    @Test
+    public void testGPriemernyMesacnyZostatok2() {
+        List<Klient> zoznamKlientov = databazovyKlientDao.dajVsetkych();
+        if (zoznamKlientov.isEmpty()) {
+            return;
+        }        
+        Klient klient = zoznamKlientov.get(0);
+        BigDecimal pmz = databazovyKlientDao.priemernyMesacnyZostatok(klient);
+        if (pmz != null) {
+            pmz = pmz.setScale(4, RoundingMode.DOWN);
+        }
+        assertEquals(TestUtils.priemernyMesacnyZostatok2(klient), pmz);
+    }
 }
