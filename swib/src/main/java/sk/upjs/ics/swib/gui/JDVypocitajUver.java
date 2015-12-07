@@ -31,6 +31,9 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         initComponents();
         jcombZoznamUverov.setModel(uverComboBoxModel);
         jtfPMP.setText("0");        
+        jtfPMP.setText(databazovyKlientDao.priemernyMesacnyPrijem(klient).toString());
+        jtfPMPU.setText(databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient).toString());
+        jtfPMZ.setText("0");
     }
 
     public JDVypocitajUver(java.awt.Frame parent, Klient klient) {        
