@@ -1,9 +1,15 @@
 package sk.upjs.ics.swib.gui;
 
+import java.math.BigDecimal;
+import java.util.List;
 import sk.upjs.ics.swib.dao.KlientDao;
+import sk.upjs.ics.swib.entity.Bonus;
 import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Uver;
+import sk.upjs.ics.swib.exceptions.NieJeMozneSplacat;
 import sk.upjs.ics.swib.factory.DaoFactory;
+import sk.upjs.ics.swib.logic.KonstantyPreKlienta;
+import sk.upjs.ics.swib.logic.OfiCalculator;
 
 /**
  *
@@ -12,7 +18,7 @@ import sk.upjs.ics.swib.factory.DaoFactory;
 public class JDVypocitajUver extends javax.swing.JDialog {
 
     private final UverComboBoxModel uverComboBoxModel = new UverComboBoxModel();
-    private KlientDao databazovyKlientDao = DaoFactory.INSTANCE.klientDao();
+    private final KlientDao databazovyKlientDao = DaoFactory.INSTANCE.klientDao();
     private Klient klient;
 
     private Uver vybranyUver = null;
@@ -27,13 +33,16 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         super(parent, modal);
         initComponents();
         jcombZoznamUverov.setModel(uverComboBoxModel);
-        jtfPMP.setText("0");       
-        setTitle("Vzpočítaj úver • " + klient.getMeno() + " " + klient.getPriezvisko());
+        jtfPMP.setText("0");                
     }
 
-    public JDVypocitajUver(java.awt.Frame parent, Klient klient) {
-        this(parent, true);
+    public JDVypocitajUver(java.awt.Frame parent, Klient klient) {        
+        this(parent, true);        
         this.klient = klient;
+        setTitle("Vypočítaj úver • " + klient.getMeno() + " " + klient.getPriezvisko());
+        jtfPMP.setText(databazovyKlientDao.priemernyMesacnyPrijem(klient).toString());
+        jtfPMPU.setText(databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient).toString());
+        jtfPMZ.setText("0");
     }
 
     /**
@@ -45,12 +54,9 @@ public class JDVypocitajUver extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jtfSuma = new javax.swing.JTextField();
-        jtfPocetMesiacov = new javax.swing.JTextField();
         btnPocitaj = new javax.swing.JButton();
         btnStorno = new javax.swing.JButton();
         lblVyskaInychNakladov = new javax.swing.JLabel();
-        jtfVyskaInychNakladov = new javax.swing.JTextField();
         lblVyskaUveru = new javax.swing.JLabel();
         lblPocetMesiacov = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -67,18 +73,20 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         jspPocetDeti = new javax.swing.JSpinner();
         jtfPMPUpraveny = new javax.swing.JTextField();
         btnVyplnUpraveny = new javax.swing.JButton();
+        jsVyskaUveru = new javax.swing.JSpinner();
+        jsPocetMesiacov = new javax.swing.JSpinner();
+        jsVyskaInychNakladov = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setResizable(false);
 
-        jtfSuma.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jtfSuma.setText("0");
-
-        jtfPocetMesiacov.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jtfPocetMesiacov.setText("0");
-
         btnPocitaj.setText("Počítaj");
         btnPocitaj.setEnabled(false);
+        btnPocitaj.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPocitajActionPerformed(evt);
+            }
+        });
 
         btnStorno.setText("Storno");
         btnStorno.addActionListener(new java.awt.event.ActionListener() {
@@ -89,9 +97,6 @@ public class JDVypocitajUver extends javax.swing.JDialog {
 
         lblVyskaInychNakladov.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblVyskaInychNakladov.setText("Výška iných nákladov (mesačne):");
-
-        jtfVyskaInychNakladov.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        jtfVyskaInychNakladov.setText("0");
 
         lblVyskaUveru.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         lblVyskaUveru.setText("Výška úveru:");
@@ -138,7 +143,7 @@ public class JDVypocitajUver extends javax.swing.JDialog {
             }
         });
 
-        jspPocetDeti.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(0), Integer.valueOf(0), null, Integer.valueOf(1)));
+        jspPocetDeti.setModel(new javax.swing.SpinnerNumberModel());
 
         jtfPMPUpraveny.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         jtfPMPUpraveny.setText("0");
@@ -152,6 +157,12 @@ public class JDVypocitajUver extends javax.swing.JDialog {
             }
         });
 
+        jsVyskaUveru.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(1.0d), Double.valueOf(1.0d), null, Double.valueOf(0.010000000000000009d)));
+
+        jsPocetMesiacov.setModel(new javax.swing.SpinnerNumberModel(Integer.valueOf(1), Integer.valueOf(1), null, Integer.valueOf(1)));
+
+        jsVyskaInychNakladov.setModel(new javax.swing.SpinnerNumberModel(Double.valueOf(0.0d), null, null, Double.valueOf(0.01d)));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -159,55 +170,57 @@ public class JDVypocitajUver extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jScrollPane1)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 349, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lblVyskaInychNakladov)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jtfVyskaInychNakladov, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblPMZ)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jcbManzelka)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(lblPMPU)
-                                        .addComponent(lblPMP)))
-                                .addGap(5, 5, 5))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnVyplnUpraveny)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btnPocitaj)
-                                .addGap(5, 5, 5)
-                                .addComponent(btnStorno))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(lblPocetDeti)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jspPocetDeti, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(17, 17, 17))
-                            .addComponent(jtfPMPU, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jtfPMP, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jtfPMZ, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jtfPMPUpraveny)))
+                                .addComponent(jsVyskaInychNakladov)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(lblPMZ)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblPMPU)
+                                            .addComponent(lblPMP))
+                                        .addGap(5, 5, 5))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(btnVyplnUpraveny)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(30, 30, 30)
+                                .addComponent(jcbManzelka)
+                                .addGap(18, 18, 18)
+                                .addComponent(lblPocetDeti)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(layout.createSequentialGroup()
-                                    .addComponent(lblVyskaUveru)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jtfSuma, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(layout.createSequentialGroup()
+                            .addComponent(jcombZoznamUverov, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblPocetMesiacov)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jtfPocetMesiacov, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jcombZoznamUverov, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                    .addComponent(lblVyskaUveru))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jsVyskaUveru, javax.swing.GroupLayout.DEFAULT_SIZE, 105, Short.MAX_VALUE)
+                                    .addComponent(jsPocetMesiacov))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(btnPocitaj)
+                            .addGap(5, 5, 5)
+                            .addComponent(btnStorno))
+                        .addComponent(jtfPMPU, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jtfPMP, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jtfPMZ, javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jtfPMPUpraveny))
+                    .addComponent(jspPocetDeti, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -216,20 +229,20 @@ public class JDVypocitajUver extends javax.swing.JDialog {
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblVyskaInychNakladov)
-                    .addComponent(jtfVyskaInychNakladov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblPocetDeti)
                     .addComponent(jcbManzelka)
-                    .addComponent(jspPocetDeti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jspPocetDeti, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblPocetDeti)
+                    .addComponent(jsVyskaInychNakladov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jcombZoznamUverov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblVyskaUveru)
-                    .addComponent(jtfSuma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jsVyskaUveru, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblPocetMesiacov)
-                    .addComponent(jtfPocetMesiacov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jsPocetMesiacov, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -264,13 +277,33 @@ public class JDVypocitajUver extends javax.swing.JDialog {
     }//GEN-LAST:event_btnStornoActionPerformed
 
     private void jcombZoznamUverovActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcombZoznamUverovActionPerformed
-        vybranyUver = uverComboBoxModel.getUver(jcombZoznamUverov.getSelectedIndex());        
+        vybranyUver = uverComboBoxModel.getUver(jcombZoznamUverov.getSelectedIndex());
         btnVyplnUpraveny.setEnabled(true);
+        if (((double)jsVyskaUveru.getValue()) != 0){
+            btnPocitaj.setEnabled(true);
+        }
     }//GEN-LAST:event_jcombZoznamUverovActionPerformed
 
     private void btnVyplnUpravenyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVyplnUpravenyActionPerformed
         vyplnPMPUpraveny();
     }//GEN-LAST:event_btnVyplnUpravenyActionPerformed
+
+    private void btnPocitajActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPocitajActionPerformed
+        OfiCalculator ofiCalculator = new OfiCalculator();        
+        double vyskaUveru = (double) jsVyskaUveru.getValue();
+        int pocetMesiacov = (int) jsPocetMesiacov.getValue();
+        int pocetDeti = (int) jspPocetDeti.getValue();
+        KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(new BigDecimal(vyskaUveru), new BigDecimal(jtfPMP.getText()), new BigDecimal(jtfPMPU.getText()), pocetMesiacov, pocetDeti, vybranyUver.getBonusNaDieta(), vybranyUver.getBonusNaManzelku(), new BigDecimal(jtfPMZ.getText()));
+        List<Bonus> bonusy = DaoFactory.INSTANCE.bonusDao().dajVsetky(vybranyUver);
+        try{
+            BigDecimal mesacnaUS = ofiCalculator.mesacnaUrokovaSadzba(konstantyPreKlienta, bonusy);
+            jtaInfo.setText("Úver povolený:\n"+
+                    "Výška úveru: " + vyskaUveru + "\n" +
+                    "Mesačná splátka: " + mesacnaUS);
+        } catch (NieJeMozneSplacat e){
+            jtaInfo.setText("Nie je možné splácať tento úver");
+        }
+    }//GEN-LAST:event_btnPocitajActionPerformed
 
     /**
      * @param args the command line arguments
@@ -306,7 +339,7 @@ public class JDVypocitajUver extends javax.swing.JDialog {
          * ponuknem aj tvoju mamku
          * zerem salam buchty syry
          * uz ti isto tecu sliny
-        */
+         */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 JDVypocitajUver dialog = new JDVypocitajUver(new javax.swing.JFrame(), true);
@@ -328,15 +361,15 @@ public class JDVypocitajUver extends javax.swing.JDialog {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JCheckBox jcbManzelka;
     private javax.swing.JComboBox jcombZoznamUverov;
+    private javax.swing.JSpinner jsPocetMesiacov;
+    private javax.swing.JSpinner jsVyskaInychNakladov;
+    private javax.swing.JSpinner jsVyskaUveru;
     private javax.swing.JSpinner jspPocetDeti;
     private javax.swing.JTextArea jtaInfo;
     private javax.swing.JTextField jtfPMP;
     private javax.swing.JTextField jtfPMPU;
     private javax.swing.JTextField jtfPMPUpraveny;
     private javax.swing.JTextField jtfPMZ;
-    private javax.swing.JTextField jtfPocetMesiacov;
-    private javax.swing.JTextField jtfSuma;
-    private javax.swing.JTextField jtfVyskaInychNakladov;
     private javax.swing.JLabel lblPMP;
     private javax.swing.JLabel lblPMPU;
     private javax.swing.JLabel lblPMZ;
@@ -352,9 +385,9 @@ public class JDVypocitajUver extends javax.swing.JDialog {
             if (jcbManzelka.isSelected()) {
                 manzelka = 1;
             }
-            int hodnota = (int) jspPocetDeti.getValue() * vybranyUver.getBonusNaDieta().intValue()
-                    + manzelka * vybranyUver.getBonusNaManzelku().intValue()
-                    - (new Integer(jtfVyskaInychNakladov.getText()));
+            double hodnota = manzelka * vybranyUver.getBonusNaManzelku().doubleValue() 
+                    + ((double) jsVyskaInychNakladov.getValue()) 
+                    - ((int) jspPocetDeti.getValue()) * vybranyUver.getBonusNaDieta().doubleValue();
             jtfPMPUpraveny.setText(hodnota + "");
         }
     }

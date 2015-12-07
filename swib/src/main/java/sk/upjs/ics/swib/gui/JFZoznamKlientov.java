@@ -169,7 +169,7 @@ public class JFZoznamKlientov extends javax.swing.JFrame {
     }//GEN-LAST:event_btnKoniecActionPerformed
 
     private void btnPocitajUverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPocitajUverActionPerformed
-        JDVypocitajUver jDVypocitajUver = new JDVypocitajUver(this, true);
+        JDVypocitajUver jDVypocitajUver = new JDVypocitajUver(this, vybranyKlient);
         jDVypocitajUver.setVisible(true);
     }//GEN-LAST:event_btnPocitajUverActionPerformed
 
