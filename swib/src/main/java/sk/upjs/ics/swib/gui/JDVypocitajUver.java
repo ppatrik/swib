@@ -1,6 +1,7 @@
 package sk.upjs.ics.swib.gui;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import sk.upjs.ics.swib.dao.KlientDao;
 import sk.upjs.ics.swib.entity.Bonus;
@@ -40,9 +41,9 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         this(parent, true);        
         this.klient = klient;
         setTitle("Vypočítaj úver • " + klient.getMeno() + " " + klient.getPriezvisko());
-        jtfPMP.setText(databazovyKlientDao.priemernyMesacnyPrijem(klient).toString());
-        jtfPMPU.setText(databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient).toString());
-        jtfPMZ.setText("0");
+        jtfPMP.setText(databazovyKlientDao.priemernyMesacnyPrijem(klient).setScale(2, RoundingMode.DOWN).toString());
+        jtfPMPU.setText(databazovyKlientDao.mozeNaMesiacMaximalneSplacat(klient).setScale(2, RoundingMode.DOWN).toString());
+        jtfPMZ.setText(databazovyKlientDao.priemernyMesacnyZostatok(klient).setScale(2, RoundingMode.DOWN).toString());
     }
 
     /**
@@ -385,8 +386,9 @@ public class JDVypocitajUver extends javax.swing.JDialog {
             if (jcbManzelka.isSelected()) {
                 manzelka = 1;
             }
-            double hodnota = manzelka * vybranyUver.getBonusNaManzelku().doubleValue() 
-                    + ((double) jsVyskaInychNakladov.getValue()) 
+            BigDecimal pmp = new BigDecimal(jtfPMP.getText());
+            double hodnota = pmp.doubleValue() - manzelka * vybranyUver.getBonusNaManzelku().doubleValue() 
+                    - ((double) jsVyskaInychNakladov.getValue()) 
                     - ((int) jspPocetDeti.getValue()) * vybranyUver.getBonusNaDieta().doubleValue();
             jtfPMPUpraveny.setText(hodnota + "");
         }

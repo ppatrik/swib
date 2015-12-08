@@ -1,6 +1,7 @@
 package sk.upjs.ics.swib.logic;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import sk.upjs.ics.swib.dao.MultiplikatorDao;
 import sk.upjs.ics.swib.dao.PorovnavacDao;
@@ -79,7 +80,7 @@ public class OfiCalculator implements Calculator {
         nasobic = uplatniBonusy(nasobic, bonusy, konstanty);
         mesacnaUrokovaSadzba = konstanty.getSumaNaPozicanie()
                 .multiply(nasobic)
-                .divide(new BigDecimal("" + konstanty.getDobaVMesiacoch()));
+                .divide(new BigDecimal("" + konstanty.getDobaVMesiacoch()),4, RoundingMode.DOWN);
         if (konstanty.getBonusNaManzelku() != null) {
             maxKlientoveMesacneSplatky = maxKlientoveMesacneSplatky.subtract(konstanty.getBonusNaManzelku());
         }
