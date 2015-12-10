@@ -77,6 +77,7 @@ public class JDPodmineka extends javax.swing.JDialog {
         jsVyskaBonusu = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         setSize(new java.awt.Dimension(213, 259));
 
         jtfNazov.setText("Nový bonus");

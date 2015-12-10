@@ -4,6 +4,7 @@ import sk.upjs.ics.swib.entity.Klient;
 import sk.upjs.ics.swib.entity.Ucet;
 import java.util.Calendar;
 import java.util.Date;
+import javax.swing.JSpinner;
 import sk.upjs.ics.swib.dao.KlientDao;
 import sk.upjs.ics.swib.factory.DaoFactory;
 
@@ -40,6 +41,7 @@ public class JDKlientInfo extends javax.swing.JDialog {
         setTitle(klient.getMeno()+" "+klient.getPriezvisko());
         initComponents();
         jSDate.setValue(klient.getDatumNarodenia().getTime());
+        jSDate.setEditor(new JSpinner.DateEditor(jSDate, "dd.MM.yyyy"));
         databazovyKlientDao.uprav(klient);
         setTitle("Info • " + klient.getMeno() + " " + klient.getPriezvisko());
     }

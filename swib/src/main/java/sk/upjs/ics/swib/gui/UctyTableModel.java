@@ -1,6 +1,7 @@
 package sk.upjs.ics.swib.gui;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
 import sk.upjs.ics.swib.dao.UcetDao;
@@ -50,7 +51,7 @@ public class UctyTableModel extends AbstractTableModel{
             case 1 :
                 return ucet.getName();
             case 2 :
-                return ucet.getZostatok();
+                return ucet.getZostatok().setScale(2, RoundingMode.DOWN);
             default :
                 return null;
         }        

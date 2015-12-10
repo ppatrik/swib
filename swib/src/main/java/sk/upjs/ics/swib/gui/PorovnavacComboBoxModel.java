@@ -24,7 +24,7 @@ class PorovnavacComboBoxModel extends AbstractListModel implements ComboBoxModel
 
     @Override
     public String getElementAt(int index) {
-        return zoznamPorovnavacov.get(index).getNazov()+"("+zoznamPorovnavacov.get(index).getId()+")";
+        return zoznamPorovnavacov.get(index).getNazov();
     }
 
     @Override
@@ -39,12 +39,5 @@ class PorovnavacComboBoxModel extends AbstractListModel implements ComboBoxModel
     
     public Porovnavac getPorovnavac(int index){
         return zoznamPorovnavacov.get(index);
-    }
- 
-    public void vypis(){
-        for (Porovnavac p : zoznamPorovnavacov) {
-            System.out.println(p.getNazov()+" "+p.getId());
-        }
-        System.out.println("==============================");
     }
 }

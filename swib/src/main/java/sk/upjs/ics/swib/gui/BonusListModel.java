@@ -15,7 +15,6 @@ import sk.upjs.ics.swib.factory.DaoFactory;
 public class BonusListModel extends AbstractListModel {
 
     private final BonusDao databazovyBonusDao = DaoFactory.INSTANCE.bonusDao();
-    private final BonusComparator bonusComparator = new BonusComparator();
     List<Bonus> zoznamBonusov = null;
     Uver uver;
 
@@ -26,7 +25,7 @@ public class BonusListModel extends AbstractListModel {
     public BonusListModel(Uver uver) {
         this.uver = uver;
         zoznamBonusov = databazovyBonusDao.dajVsetky(uver);        
-        Collections.sort(zoznamBonusov, bonusComparator);
+        Collections.sort(zoznamBonusov, (b1, b2) -> b1.getOrderNumber() - b2.getOrderNumber());
     }
 
     @Override
@@ -41,7 +40,7 @@ public class BonusListModel extends AbstractListModel {
      */
     @Override
     public String getElementAt(int index) {
-        return zoznamBonusov.get(index).getOrderNumber() + ". " + zoznamBonusov.get(index).getNazov() + "(" + zoznamBonusov.get(index).getId() + ")";
+        return zoznamBonusov.get(index).getOrderNumber() + ". " + zoznamBonusov.get(index).getNazov();
     }
 
     public Bonus getBonus(int index) {
@@ -91,7 +90,7 @@ public class BonusListModel extends AbstractListModel {
     
     private void refresh(){
         zoznamBonusov = databazovyBonusDao.dajVsetky(uver);
-        Collections.sort(zoznamBonusov, bonusComparator);
+        Collections.sort(zoznamBonusov, (b1, b2) -> b1.getOrderNumber() - b2.getOrderNumber());
         fireContentsChanged(uver, 0, zoznamBonusov.size());
     }
 }

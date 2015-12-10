@@ -300,7 +300,7 @@ public class JDVypocitajUver extends javax.swing.JDialog {
             BigDecimal mesacnaUS = ofiCalculator.mesacnaUrokovaSadzba(konstantyPreKlienta, bonusy);
             jtaInfo.setText("Úver povolený:\n"+
                     "Výška úveru: " + vyskaUveru + "\n" +
-                    "Mesačná splátka: " + mesacnaUS);
+                    "Mesačná splátka: " + mesacnaUS.setScale(2, RoundingMode.DOWN));
         } catch (NieJeMozneSplacat e){
             jtaInfo.setText("Nie je možné splácať tento úver");
         }
@@ -386,7 +386,7 @@ public class JDVypocitajUver extends javax.swing.JDialog {
             if (jcbManzelka.isSelected()) {
                 manzelka = 1;
             }
-            BigDecimal pmp = new BigDecimal(jtfPMP.getText());
+            BigDecimal pmp = new BigDecimal(jtfPMPU.getText());
             double hodnota = pmp.doubleValue() - manzelka * vybranyUver.getBonusNaManzelku().doubleValue() 
                     - ((double) jsVyskaInychNakladov.getValue()) 
                     - ((int) jspPocetDeti.getValue()) * vybranyUver.getBonusNaDieta().doubleValue();

@@ -1,6 +1,8 @@
 package sk.upjs.ics.swib.gui;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
 import javax.swing.table.AbstractTableModel;
@@ -18,7 +20,7 @@ public class PohybTableModel extends AbstractTableModel{
     private Ucet ucet;
     private List<Pohyb> pohyby;
     private final PohybDao databazovyPohybDao = DaoFactory.INSTANCE.pohybDao();
-    private final PohybComparator pohybComparator = new PohybComparator();
+    private SimpleDateFormat formatter = new SimpleDateFormat("dd.MM.yyyy HH:mm");
     
     private static final int COLUMN_NUMBER = 2;
     private static final String[] COLUMN_TITLE = {"Dátum", "Suma"};
@@ -30,8 +32,8 @@ public class PohybTableModel extends AbstractTableModel{
     public PohybTableModel(Ucet ucet) {
         this.ucet = ucet;
         this.pohyby = this.databazovyPohybDao.dajVsetky(ucet);
-        Collections.sort(pohyby, pohybComparator);
-    }        
+        Collections.sort(pohyby, (p1, p2) -> p1.getDatum().compareTo(p2.getDatum()));
+    }    
 
     @Override
     public int getRowCount() {
@@ -48,10 +50,9 @@ public class PohybTableModel extends AbstractTableModel{
         Pohyb pohyb = pohyby.get(rowIndex);
         switch (columnIndex) {
             case 0 :
-                //return pohyb.getDatum().getTime().getDay()+"."+pohyb.getDatum().getTime().getMonth()+"."+pohyb.getDatum().getTime().getYear();
-                return pohyb.getDatum().getTime().toGMTString();
+                return formatter.format(pohyb.getDatum().getTime());
             case 1 :
-                return pohyb.getSuma();
+                return pohyb.getSuma().setScale(2, RoundingMode.DOWN);
             default :
                 return null;
         }

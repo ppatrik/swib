@@ -24,7 +24,7 @@ class MultiplicatorComboBoxModel extends AbstractListModel implements ComboBoxMo
 
     @Override
     public String getElementAt(int index) {
-        return zoznamMultiplikatorov.get(index).getNazov()+"("+zoznamMultiplikatorov.get(index).getId()+")";
+        return zoznamMultiplikatorov.get(index).getNazov();
     }
 
     @Override

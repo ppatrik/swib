@@ -24,7 +24,7 @@ public class UverComboBoxModel extends AbstractListModel implements ComboBoxMode
 
     @Override
     public String getElementAt(int index) {
-        return zoznamUverov.get(index).getNazov()+"("+zoznamUverov.get(index).getId()+")";
+        return zoznamUverov.get(index).getNazov();
     }
 
     @Override
