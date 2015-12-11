@@ -2,6 +2,7 @@ package sk.upjs.ics.swib.gui;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import javax.swing.JOptionPane;
 import sk.upjs.ics.swib.dao.BonusDao;
 import sk.upjs.ics.swib.entity.Bonus;
 import sk.upjs.ics.swib.entity.Multiplikator;
@@ -14,11 +15,11 @@ import sk.upjs.ics.swib.factory.DaoFactory;
  * @author Johnny
  */
 public class JDPodmineka extends javax.swing.JDialog {
-    
+
     private final int MAX_LENGTH = 20;
-    
+
     private final MultiplicatorComboBoxModel multiplicatorComboBoxModel = new MultiplicatorComboBoxModel();
-    private final PorovnavacComboBoxModel porovnavacComboBoxModel = new PorovnavacComboBoxModel();    
+    private final PorovnavacComboBoxModel porovnavacComboBoxModel = new PorovnavacComboBoxModel();
     private final BonusDao databazovyBonusDao = DaoFactory.INSTANCE.bonusDao();
     private Uver uver;
     private Bonus bonus;
@@ -28,30 +29,30 @@ public class JDPodmineka extends javax.swing.JDialog {
         this(parent, true);
         this.bonus = bonus;
         this.uver = uver;
-        this.owner = owner;        
-        
-        if (bonus != null){
+        this.owner = owner;
+
+        if (bonus != null) {
             jtfNazov.setText(bonus.getNazov());
             //jftfVacsiAko.setText(bonus.getJeVacsiAko().toString());
             jsVacsiAko.setValue(bonus.getJeVacsiAko().doubleValue());
             //jftfVyskaBonusu.setText(bonus.getKolkoJeBonus().toString());
             jsVyskaBonusu.setValue(bonus.getKolkoJeBonus().doubleValue());
-            jcombMultiplikator.setSelectedIndex(bonus.getMultiplikatorId()-1);
-            jcombPorovnavac.setSelectedIndex(bonus.getPorovnavacId()-1);
-        }                
-    }      
+            jcombMultiplikator.setSelectedIndex(bonus.getMultiplikatorId() - 1);
+            jcombPorovnavac.setSelectedIndex(bonus.getPorovnavacId() - 1);
+        }
+    }
 
     public JDPodmineka(java.awt.Frame parent, Uver uver, JDSpravujUvery owner) {
         this(parent, true);
         this.uver = uver;
         this.owner = owner;
-    }        
-    
+    }
+
     public JDPodmineka(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
         jcombMultiplikator.setModel(multiplicatorComboBoxModel);
-        jcombPorovnavac.setModel(porovnavacComboBoxModel);         
+        jcombPorovnavac.setModel(porovnavacComboBoxModel);
         setTitle("Správa podmienok");
     }
 
@@ -184,16 +185,27 @@ public class JDPodmineka extends javax.swing.JDialog {
 
     /**
      * vytvori novy alebo upravy stary bonus
-     * @param evt 
+     *
+     * @param evt
      */
     private void btnUlozActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUlozActionPerformed
         String novyNazov = jtfNazov.getText().substring(0, Math.min(MAX_LENGTH, jtfNazov.getText().length()));
         BigDecimal novyJeVacsiAko = new BigDecimal((double) jsVacsiAko.getValue(), MathContext.DECIMAL64);//jftfVacsiAko.getText());
         BigDecimal novaVyskaBonusu = new BigDecimal((double) jsVyskaBonusu.getValue(), MathContext.DECIMAL64);//jftfVyskaBonusu.getText());
-        Multiplikator novyM = multiplicatorComboBoxModel.getMultiplikator(jcombMultiplikator.getSelectedIndex());
-        Porovnavac novyP = porovnavacComboBoxModel.getPorovnavac(jcombPorovnavac.getSelectedIndex());
-        
-        if (bonus == null){
+        int selectedIndex = jcombMultiplikator.getSelectedIndex();
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Vyber multiplikator!");
+            return;
+        }
+        Multiplikator novyM = multiplicatorComboBoxModel.getMultiplikator(selectedIndex);
+        selectedIndex = jcombPorovnavac.getSelectedIndex();
+        if (selectedIndex == -1) {
+            JOptionPane.showMessageDialog(this, "Vyber porovnávač!");
+            return;
+        }
+        Porovnavac novyP = porovnavacComboBoxModel.getPorovnavac(selectedIndex);
+
+        if (bonus == null) {
             Bonus novyBonus = new Bonus();
             novyBonus.setNazov(novyNazov);
             novyBonus.setUverId(uver.getId());
@@ -201,19 +213,17 @@ public class JDPodmineka extends javax.swing.JDialog {
             novyBonus.setKolkoJeBonus(novaVyskaBonusu);
             novyBonus.setMultiplikatorId(novyM.getId());
             novyBonus.setPorovnavacId(novyP.getId());
-            novyBonus.setOrderNumber(Math.max(new BonusListModel(uver).getSize(), 1));
-            databazovyBonusDao.pridaj(novyBonus);            
-            System.out.println("Pridany novy bonus");
-        } else {            
+            novyBonus.setOrderNumber(new BonusListModel(uver).getSize() + 1);
+            databazovyBonusDao.pridaj(novyBonus);
+        } else {
             bonus.setNazov(novyNazov);
             bonus.setJeVacsiAko(novyJeVacsiAko);
             bonus.setKolkoJeBonus(novaVyskaBonusu);
             bonus.setMultiplikatorId(novyM.getId());
-            bonus.setPorovnavacId(novyP.getId());            
+            bonus.setPorovnavacId(novyP.getId());
             databazovyBonusDao.uprav(bonus);
-            System.out.println("Bonus upraveny");
-        }                
-        
+        }
+
         owner.setBonusListModel(new BonusListModel(uver));
         dispose();
     }//GEN-LAST:event_btnUlozActionPerformed

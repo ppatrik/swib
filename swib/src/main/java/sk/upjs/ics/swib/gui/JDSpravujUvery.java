@@ -282,7 +282,7 @@ public class JDSpravujUvery extends javax.swing.JDialog {
 
         if (nazov == null) {
             // do nothing and chill, storno clicked
-        } else if (!(nazov == "Nový úver" || "".equals(nazov))){
+        } else if (!("Nový úver".equals(nazov) || "".equals(nazov))){
             Uver novyUver = new Uver();
             novyUver.setNazov(nazov);
             novyUver.setBonusNaDieta(BigDecimal.ZERO);

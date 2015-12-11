@@ -40,11 +40,4 @@ class MultiplicatorComboBoxModel extends AbstractListModel implements ComboBoxMo
     public Multiplikator getMultiplikator(int index){
         return zoznamMultiplikatorov.get(index);
     }
-    
-    public void vypis(){
-        for (Multiplikator m : zoznamMultiplikatorov) {
-            System.out.println(m.getNazov()+" "+m.getId());
-        }
-        System.out.println("==============================");
-    }
 }
