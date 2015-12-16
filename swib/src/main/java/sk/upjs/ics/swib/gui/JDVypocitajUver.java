@@ -294,7 +294,7 @@ public class JDVypocitajUver extends javax.swing.JDialog {
         double vyskaUveru = (double) jsVyskaUveru.getValue();
         int pocetMesiacov = (int) jsPocetMesiacov.getValue();
         int pocetDeti = (int) jspPocetDeti.getValue();
-        KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(new BigDecimal(vyskaUveru), new BigDecimal(jtfPMP.getText()), new BigDecimal(jtfPMPU.getText()), pocetMesiacov, pocetDeti, vybranyUver.getBonusNaDieta(), vybranyUver.getBonusNaManzelku(), new BigDecimal(jtfPMZ.getText()));
+        KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(new BigDecimal(vyskaUveru), new BigDecimal(jtfPMP.getText()), new BigDecimal(jtfPMPUpraveny.getText()), pocetMesiacov, new BigDecimal(jtfPMZ.getText()));
         List<Bonus> bonusy = DaoFactory.INSTANCE.bonusDao().dajVsetky(vybranyUver);
         try{
             BigDecimal mesacnaUS = ofiCalculator.mesacnaUrokovaSadzba(konstantyPreKlienta, bonusy);
@@ -390,7 +390,8 @@ public class JDVypocitajUver extends javax.swing.JDialog {
             double hodnota = pmp.doubleValue() - manzelka * vybranyUver.getBonusNaManzelku().doubleValue() 
                     - ((double) jsVyskaInychNakladov.getValue()) 
                     - ((int) jspPocetDeti.getValue()) * vybranyUver.getBonusNaDieta().doubleValue();
-            jtfPMPUpraveny.setText(hodnota + "");
+            BigDecimal vysledok = new BigDecimal(hodnota).setScale(2,RoundingMode.DOWN);
+            jtfPMPUpraveny.setText(vysledok.toString());
         }
     }
 }

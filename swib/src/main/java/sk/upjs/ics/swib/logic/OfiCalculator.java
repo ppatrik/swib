@@ -76,18 +76,13 @@ public class OfiCalculator implements Calculator {
         BigDecimal mesacnaUrokovaSadzba = null;
 
         konstanty.getSumaNaPozicanie();
-        BigDecimal maxKlientoveMesacneSplatky = konstanty.getMozeNaMesiacMaximalneSplacat();
         nasobic = uplatniBonusy(nasobic, bonusy, konstanty);
         mesacnaUrokovaSadzba = konstanty.getSumaNaPozicanie()
                 .multiply(nasobic)
                 .divide(new BigDecimal("" + konstanty.getDobaVMesiacoch()),4, RoundingMode.DOWN);
-        if (konstanty.getBonusNaManzelku() != null) {
-            maxKlientoveMesacneSplatky = maxKlientoveMesacneSplatky.subtract(konstanty.getBonusNaManzelku());
-        }
-        maxKlientoveMesacneSplatky = maxKlientoveMesacneSplatky.subtract(
-                (new BigDecimal("" + konstanty.getPocetDeti())).multiply(konstanty.getBonusNaDieta())
-        );
-        if (mesacnaUrokovaSadzba.compareTo(maxKlientoveMesacneSplatky) <= 0) {
+        System.out.println(mesacnaUrokovaSadzba);
+        System.out.println(konstanty.getMozeNaMesiacMaximalneSplacat());
+        if (mesacnaUrokovaSadzba.compareTo(konstanty.getMozeNaMesiacMaximalneSplacat()) <= 0) {
             return mesacnaUrokovaSadzba;
         } else {
             throw new NieJeMozneSplacat();

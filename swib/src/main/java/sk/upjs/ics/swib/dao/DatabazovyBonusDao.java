@@ -21,7 +21,7 @@ public class DatabazovyBonusDao implements BonusDao {
 
     @Override
     public List<Bonus> dajVsetky(Uver uver) {
-        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE UveryId = ?";
+        String sql = "SELECT * FROM " + TABLE_NAME + " WHERE UveryId = ? ORDER BY Poradie_bonusu";
         return jdbcTemplate.query(sql, mapovac, uver.getId());
     }
 

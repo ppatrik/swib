@@ -47,7 +47,7 @@ public class BonusListModel extends AbstractListModel {
         return zoznamBonusov.get(index);
     }
 
-    public void pirdajBonus(Bonus bonus) {
+    public void pridajBonus(Bonus bonus) {
         databazovyBonusDao.pridaj(bonus);
         zoznamBonusov = databazovyBonusDao.dajVsetky(uver);
     }   
