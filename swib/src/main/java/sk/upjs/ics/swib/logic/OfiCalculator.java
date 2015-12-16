@@ -80,8 +80,6 @@ public class OfiCalculator implements Calculator {
         mesacnaUrokovaSadzba = konstanty.getSumaNaPozicanie()
                 .multiply(nasobic)
                 .divide(new BigDecimal("" + konstanty.getDobaVMesiacoch()),4, RoundingMode.DOWN);
-        System.out.println(mesacnaUrokovaSadzba);
-        System.out.println(konstanty.getMozeNaMesiacMaximalneSplacat());
         if (mesacnaUrokovaSadzba.compareTo(konstanty.getMozeNaMesiacMaximalneSplacat()) <= 0) {
             return mesacnaUrokovaSadzba;
         } else {
