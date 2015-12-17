@@ -108,11 +108,8 @@ public class OfiCalculatorTest {
         KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(
                 new BigDecimal("30000"),
                 new BigDecimal("700"),
-                new BigDecimal("300"),
+                new BigDecimal("200"),
                 100,
-                0,
-                new BigDecimal("100"),
-                null,
                 new BigDecimal("1000")
         );
         List<Bonus> bonusy = inicializujBonusy();
@@ -129,11 +126,8 @@ public class OfiCalculatorTest {
         KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(
                 new BigDecimal("30000"),
                 new BigDecimal("701"),
-                new BigDecimal("300"),
+                new BigDecimal("200"),
                 100,
-                0,
-                new BigDecimal("100"),
-                null,
                 new BigDecimal("1000")
         );
         List<Bonus> bonusy = inicializujBonusy();
@@ -150,11 +144,8 @@ public class OfiCalculatorTest {
         KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(
                 new BigDecimal("30000"),
                 new BigDecimal("700"),
-                new BigDecimal("300"),
-                100,
-                0,
                 new BigDecimal("100"),
-                null,
+                100,
                 new BigDecimal("1000")
         );
         List<Bonus> bonusy = inicializujBonusy();
@@ -171,11 +162,8 @@ public class OfiCalculatorTest {
         KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(
                 new BigDecimal("30000"),
                 new BigDecimal("700"),
-                new BigDecimal("300"),
-                100,
-                0,
                 new BigDecimal("100"),
-                null,
+                100,
                 new BigDecimal("1000")
         );
         List<Bonus> bonusy = inicializujBonusy();
@@ -192,11 +180,8 @@ public class OfiCalculatorTest {
         KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(
                 new BigDecimal("30000"),
                 new BigDecimal("700"),
-                new BigDecimal("300"),
+                new BigDecimal("200"),
                 100,
-                0,
-                new BigDecimal("100"),
-                null,
                 new BigDecimal("1000")
         );
         List<Bonus> bonusy = inicializujBonusy();
@@ -213,11 +198,8 @@ public class OfiCalculatorTest {
         KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(
                 new BigDecimal("30000"),
                 new BigDecimal("701"),
-                new BigDecimal("300"),
+                new BigDecimal("200"),
                 100,
-                0,
-                new BigDecimal("100"),
-                null,
                 new BigDecimal("1000")
         );
         List<Bonus> bonusy = inicializujBonusy();
@@ -234,11 +216,8 @@ public class OfiCalculatorTest {
         KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(
                 new BigDecimal("30000"),
                 new BigDecimal("1801"),
-                new BigDecimal("300"),
+                new BigDecimal("200"),
                 100,
-                0,
-                new BigDecimal("100"),
-                null,
                 new BigDecimal("1000")
         );
         List<Bonus> bonusy = inicializujBonusy();
@@ -255,11 +234,8 @@ public class OfiCalculatorTest {
         KonstantyPreKlienta konstantyPreKlienta = new KonstantyPreKlienta(
                 new BigDecimal("30000"),
                 new BigDecimal("1801"),
-                new BigDecimal("300"),
+                new BigDecimal("200"),
                 100,
-                0,
-                new BigDecimal("100"),
-                null,
                 new BigDecimal("10000")
         );
         List<Bonus> bonusy = inicializujBonusy();
@@ -278,15 +254,9 @@ public class OfiCalculatorTest {
                 // priemernyMesacnyPrijem
                 new BigDecimal("3000"),
                 // mozeNaMesiacMaximalneSplacat
-                new BigDecimal("2000"),
+                new BigDecimal("1600"),
                 // dobaVMesiacoch
                 100,
-                // pocetDeti
-                1,
-                // bonusNaDieta
-                new BigDecimal("200"),
-                // bonusNaManzelku
-                new BigDecimal("200"),
                 // priemernyMesacnyZostatok
                 new BigDecimal("10000")
         );
@@ -306,15 +276,9 @@ public class OfiCalculatorTest {
                 // priemernyMesacnyPrijem
                 new BigDecimal("1000"),
                 // mozeNaMesiacMaximalneSplacat
-                new BigDecimal("400"),
+                new BigDecimal("0"),
                 // dobaVMesiacoch
                 200,
-                // pocetDeti
-                1,
-                // bonusNaDieta
-                new BigDecimal("200"),
-                // bonusNaManzelku
-                new BigDecimal("200"),
                 // priemernyMesacnyZostatok
                 new BigDecimal("10000")
         );
