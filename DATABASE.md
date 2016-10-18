@@ -1,13 +1,13 @@
 # Production env
-- host: 46.229.230.241
+- host: -
 - port: 3306
-- db: hq007700db
-- name: hq007700
-- pass: 2015PatrikSaZabava
+- db: -
+- name: -
+- pass: -
 
 # Test env
-- host: 46.229.230.241
+- host: -
 - port: 3306
-- db: hq007701db
-- name: hq007700
-- pass: 2015PatrikSaZabava
+- db: -
+- name: -
+- pass: -
